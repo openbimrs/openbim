@@ -149,3 +149,41 @@ though the registry name could not.
 
 **`wire-*` became `openbim-codec-*`.** Same crates, same boundary, a name that
 says what they are. They remain below both the IFC layer and the standards.
+
+## Amendment, 2026-08-24 — one directory per standard family
+
+The workspace was briefly flattened so every crate sat directly under
+`packages/`. That is now reverted: each standard gets a directory holding its
+crates, mirroring the repositories under `github.com/openbimrs` so a family can
+later be extracted to its own repository as a directory move.
+
+```
+packages/ifc/     ifc-* (18) + openbim-ifc      packages/dt/      openbim-dt
+packages/ids/     openbim-ids                   packages/core/    openbim-core
+packages/bcf/     openbim-bcf                   packages/codec/   openbim-codec-{xml,zip}
+packages/icdd/    openbim-icdd + icdd           packages/facade/  openbim
+packages/idm/     openbim-idm + idmxml          packages/analysis/ clash, diff
+packages/loin/    openbim-loin + loin
+```
+
+An alias crate sits beside the canonical crate it re-exports, so the `=` version
+pin is a sibling path and the pair moves as a unit.
+
+### What the flatten-then-regroup taught us
+
+Four architecture tests selected crates by **parent directory**. Flattening made
+each match zero crates — so they did not fail, they passed **vacuously**. A gate
+that proves nothing while reporting success is worse than no gate.
+
+The fix is redundant selection (name AND directory) plus a minimum-count
+assertion in every architecture test, so a filter that stops matching fails
+loudly. Both invariants are now enforced by:
+
+- `ifc-model/tests/package_architecture.rs` — layering, `>= 18` crates
+- `ifc-model/tests/module_reachability.rs` — reachability, `>= 18` crates
+- `ifc-model/tests/progressive_context.rs` — per-crate AGENTS.md + PLAN.md
+- `ifc-geometry/tests/no_backend_dependency.rs` — geometry allowlist
+- `scripts/check-alias-purity.sh` — aliases stay pure re-exports
+
+Each was re-verified by mutation after the move: introduce the violation, watch
+the gate fail, restore, watch it pass.
