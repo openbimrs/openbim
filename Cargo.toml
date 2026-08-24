@@ -72,21 +72,21 @@ ifc-validate = { path = "packages/ifc/ifc-validate" }
 
 # --- packages/wire: encoding substrate. Below BOTH ifc/ and openbim/, so the
 # one-way rule (ifc must never depend on openbim) survives sharing XML/ZIP. ---
-openbim-codec-xml = { path = "packages/codec/openbim-codec-xml" }
-openbim-codec-zip = { path = "packages/codec/openbim-codec-zip" }
+openbim-codec-xml = { path = "packages/codec/openbim-codec-xml", version = "0.1.0" }
+openbim-codec-zip = { path = "packages/codec/openbim-codec-zip", version = "0.1.0" }
 
 # --- packages/openbim: standards built ON the IFC layer, never inside it. ---
 # One crate per standard. Cargo features are additive across the whole graph,
 # so features of a single crate could not keep an RDF stack out of an IDS-only
 # build; separate packages can. See docs/adr/0015.
 openbim = { path = "packages/facade/openbim", default-features = false }
-openbim-core = { path = "packages/core/openbim-core" }
-openbim-dt = { path = "packages/dt/openbim-dt" }
-openbim-ids = { path = "packages/ids/openbim-ids" }
-openbim-bcf = { path = "packages/bcf/openbim-bcf" }
-openbim-icdd = { path = "packages/icdd/openbim-icdd" }
-openbim-idm = { path = "packages/idm/openbim-idm" }
-openbim-loin = { path = "packages/loin/openbim-loin" }
+openbim-core = { path = "packages/core/openbim-core", version = "0.1.0" }
+openbim-dt = { path = "packages/dt/openbim-dt", version = "0.1.0" }
+openbim-ids = { path = "packages/ids/openbim-ids", version = "0.1.0" }
+openbim-bcf = { path = "packages/bcf/openbim-bcf", version = "0.1.0" }
+openbim-icdd = { path = "packages/icdd/openbim-icdd", version = "0.1.0" }
+openbim-idm = { path = "packages/idm/openbim-idm", version = "0.1.0" }
+openbim-loin = { path = "packages/loin/openbim-loin", version = "0.1.0" }
 
 # --- packages/analysis: capabilities, NOT openBIM standards. They consume the
 # IFC layer and emit findings that openbim-bcf can export. ---
