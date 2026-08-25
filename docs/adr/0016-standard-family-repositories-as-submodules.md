@@ -51,9 +51,10 @@ The rules are:
    users to delete or clean an occupied directory.
 
 IDS was the pilot. ICDD was the second extracted family and also preserves a
-pure short-name package alias. IFC is the third and largest extraction: its 19
+pure short-name package alias. IFC was the third and largest extraction: its 19
 packages retain their relevant history and run the same architecture gates both
-standalone and under this superproject.
+standalone and under this superproject. CDE, EPD, and GAEB now follow the same
+canonical-child and exact-gitlink model.
 
 ## Alternatives considered
 
@@ -95,9 +96,16 @@ standalone and under this superproject.
 - `packages/ids` — IDS pilot submodule.
 - `packages/icdd` — ICDD canonical and short-name packages, pinned together.
 - `packages/ifc` — IFC workspace and test fixtures, pinned at its canonical commit.
+- `packages/cde`, `packages/epd`, and `packages/gaeb` — independently gated
+  canonical family repositories pinned at reviewed commits.
 - `.gitmodules` — canonical child URLs.
-- `Cargo.toml` — local integration patches.
+- `Cargo.toml` — workspace membership and local integration patches.
+- `packages/facade/openbim` — optional per-standard facade dependencies.
 - `scripts/check-submodules.sh` — fail-closed pin and initialization gate.
+- `scripts/test-submodule-guard.sh` — mutation tests for submodule failures.
+- `scripts/check-facade-isolation.py` — dependency-closure enforcement for each
+  isolated facade feature.
+- `scripts/check-alias-purity.sh` — structural canonical/alias type-identity gate.
 - `scripts/init-family-submodules.sh` — safe initialization and local-reference
   migration helper.
 - `.github/workflows/ci.yml` — recursive checkout.

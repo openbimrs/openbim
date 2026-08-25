@@ -14,7 +14,7 @@ of a monolith.
 
 Standard-family repositories are progressively becoming canonical standalone
 repositories pinned here as Git submodules. IDS established the extraction
-pattern; ICDD, CDE, EPD, and GAEB are now independently pinned families.
+pattern; IFC, ICDD, CDE, EPD, and GAEB are now independently pinned families.
 
 ## Clone for development
 
@@ -48,8 +48,9 @@ is initialized or advanced.
 | [`openbim-loin`](https://crates.io/crates/openbim-loin) | [docs.rs](https://docs.rs/openbim-loin) | [src](packages/loin/openbim-loin) | ISO 7817-3 / EN 17412-3 LOIN |
 | [`openbim-dt`](https://crates.io/crates/openbim-dt) | [docs.rs](https://docs.rs/openbim-dt) | [src](packages/dt/openbim-dt) | ISO 23387 data templates |
 
-Four standards were also free under their short names and ship as alias crates —
-pure re-exports, so the standard is reachable as practitioners name it:
+Four standards also have pure short-name alias crates, so the standard is
+reachable as practitioners name it. `icdd`, `idmxml`, and `loin` are published;
+`gaeb` is present in its canonical repository and awaits its first release:
 [`gaeb`](https://github.com/openbimrs/gaeb),
 [`icdd`](https://crates.io/crates/icdd),
 [`idmxml`](https://crates.io/crates/idmxml) and
@@ -76,11 +77,12 @@ structure, boundaries, and gates are real, but they do not yet provide working
 IFC, IDS, or EPD readers. The new `openbim-cde` family is different: its
 Foundation/Documents wire models are implemented and exercised, while
 HTTP/OAuth execution and full schema validation are explicitly not. GAEB is
-also implemented beyond scaffold: it recognizes DA XML 3.1–3.4 beta, extracts
-common BoQ item views, preserves unchanged bytes exactly, and supports atomic
-quantity edits; full XSD validation and complete generated bindings are not
-claimed. See each family README and `docs/ROADMAP.md` for the exact capability
-boundary.
+also implemented beyond scaffold: it recognizes DA XML 3.1–3.4 beta, resolves
+GAEB element namespaces, extracts common BoQ item views, preserves unchanged
+bytes exactly, and supports atomic quantity edits only for unique, non-empty IDs
+and one safely replaceable value range; mixed-content values fail closed. Full
+XSD validation and complete generated bindings are not claimed. See each family
+README and `docs/ROADMAP.md` for the exact capability boundary.
 
 The isolation is checkable rather than promised. Against the *published*
 crates:

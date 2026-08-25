@@ -20,9 +20,10 @@ section on release.
 - **GAEB DA XML family.** Added the independently gated `openbimrs/gaeb`
   repository at `packages/gaeb`, canonical `openbim-gaeb` crate, exact-version
   `gaeb` alias, and isolated facade feature. It performs content-based 3.1–3.4
-  beta detection, evidence-aware diagnostics, lossless unchanged-byte round
-  trips, common BoQ item extraction, and atomic quantity edits. Full XSD
-  validation and complete generated bindings remain explicitly out of scope.
+  beta detection, namespace-resolved evidence diagnostics, lossless unchanged-byte
+  round trips, common BoQ item extraction, and fail-closed quantity edits for one
+  safely replaceable value range. Full XSD validation and complete generated
+  bindings remain explicitly out of scope.
 - **First crates.io release: 13 crates at `0.1.0`.** The openBIM standards ship
   as separate crates rather than features of one, so a consumer that wants IDS
   compiles IDS and nothing else. Verified against the published artifacts, not
@@ -46,6 +47,9 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- Enforced facade feature isolation from actual `cargo tree` dependency closures;
+  each isolated standard feature now fails the root gate if it pulls any other
+  standard family (with LOIN's normative DT dependency as the explicit exception).
 - Updated the EPD family pin and workspace dependency to `openbim-epd 0.1.1`,
   whose public examples use the corrected `InformationModuleGroup::group()` API
   and are compile-tested as crate documentation.
