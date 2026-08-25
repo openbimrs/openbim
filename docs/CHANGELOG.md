@@ -11,6 +11,15 @@ section on release.
 ## [Unreleased]
 
 ### Added
+- **CityGML, openBIMRL, and bSDD family reservations.** Added independently
+  gated canonical repositories, exact-version short aliases, exact superproject
+  pins, and isolated facade features for `openbim-citygml`/`citygml`,
+  `openbim-openbimrl`/`openbimrl`, and `openbim-bsdd`/`bsdd`. These `0.1.0`
+  packages reserve ownership only; no parser, language, API client, or
+  conformance implementation is claimed.
+- **GAEB crates.io release.** Published `openbim-gaeb 0.1.0` and its exact-version
+  pure alias `gaeb 0.1.0`, then advanced the family pin to the release-verified
+  child commit.
 - **ISO 22057 EPD family.** Added the independently gated `openbimrs/epd`
   repository at `packages/epd`, the `openbim-epd` crate, and an isolated `epd`
   facade feature. The scaffold models the standard edition and all 18

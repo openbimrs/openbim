@@ -56,6 +56,10 @@ packages retain their relevant history and run the same architecture gates both
 standalone and under this superproject. CDE, EPD, and GAEB now follow the same
 canonical-child and exact-gitlink model.
 
+CityGML, openBIMRL, and bSDD establish the same repository and exact-pin
+boundaries before implementation work begins. Their initial releases reserve
+both canonical and short package names and make no parser or conformance claims.
+
 ## Alternatives considered
 
 | Option | Why not |
@@ -98,6 +102,8 @@ canonical-child and exact-gitlink model.
 - `packages/ifc` — IFC workspace and test fixtures, pinned at its canonical commit.
 - `packages/cde`, `packages/epd`, and `packages/gaeb` — independently gated
   canonical family repositories pinned at reviewed commits.
+- `packages/{citygml,openbimrl,bsdd}` — reservation workspaces with canonical
+  and short-name packages.
 - `.gitmodules` — canonical child URLs.
 - `Cargo.toml` — workspace membership and local integration patches.
 - `packages/facade/openbim` — optional per-standard facade dependencies.

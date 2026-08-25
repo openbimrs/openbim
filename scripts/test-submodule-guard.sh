@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 checker="scripts/check-submodules.sh"
-children=(packages/ids packages/icdd packages/cde packages/ifc packages/gaeb packages/epd)
+children=(packages/ids packages/icdd packages/cde packages/ifc packages/gaeb packages/citygml packages/openbimrl packages/bsdd packages/epd)
 
 # Fail before installing any cleanup that could touch a pre-existing state.
 "$checker"

@@ -75,6 +75,9 @@ preflight_url packages/icdd https://github.com/openbimrs/icdd.git
 preflight_url packages/cde https://github.com/openbimrs/cde.git
 preflight_url packages/ifc https://github.com/openbimrs/ifc.git
 preflight_url packages/gaeb https://github.com/openbimrs/gaeb.git
+preflight_url packages/citygml https://github.com/openbimrs/citygml.git
+preflight_url packages/openbimrl https://github.com/openbimrs/openbimrl.git
+preflight_url packages/bsdd https://github.com/openbimrs/bsdd.git
 preflight_url packages/epd https://github.com/openbimrs/epd.git
 
 # A tracked directory from an older revision must be converted by Git first.

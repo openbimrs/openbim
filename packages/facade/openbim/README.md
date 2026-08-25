@@ -12,6 +12,10 @@ openbim = { version = "0.1", features = ["ids"] }
 | --- | --- | --- |
 | `dt` | `openbim-dt` | ISO 23387 data templates |
 | `ids` | `openbim-ids` | buildingSMART IDS |
+| `gaeb` | `openbim-gaeb` | GAEB DA XML |
+| `citygml` | `openbim-citygml` | OGC CityGML (reserved scaffold) |
+| `openbimrl` | `openbim-openbimrl` | OpenBIM.rs namespace (reserved scaffold) |
+| `bsdd` | `openbim-bsdd` | buildingSMART Data Dictionary (reserved scaffold) |
 | `bcf` | `openbim-bcf` | BCF (BIM Collaboration Format) |
 | `icdd` | `openbim-icdd` | ISO 21597 ICDD |
 | `idm` | `openbim-idm` | ISO 29481-3 idmXML |

@@ -14,7 +14,8 @@ of a monolith.
 
 Standard-family repositories are progressively becoming canonical standalone
 repositories pinned here as Git submodules. IDS established the extraction
-pattern; IFC, ICDD, CDE, EPD, and GAEB are now independently pinned families.
+pattern; IDS, IFC, ICDD, CDE, EPD, GAEB, CityGML, openBIMRL, and bSDD are now
+independently pinned families.
 
 ## Clone for development
 
@@ -39,7 +40,10 @@ is initialized or advanced.
 | [`openbim`](https://crates.io/crates/openbim) | [docs.rs](https://docs.rs/openbim) | [src](packages/facade/openbim) | Facade; one feature per standard |
 | [`openbim-core`](https://crates.io/crates/openbim-core) | [docs.rs](https://docs.rs/openbim-core) | [src](packages/core/openbim-core) | Vocabulary shared across standards |
 | [`openbim-ids`](https://crates.io/crates/openbim-ids) | [docs.rs](https://docs.rs/openbim-ids) | [repository](https://github.com/openbimrs/ids) | buildingSMART IDS |
-| [`openbim-gaeb`](https://github.com/openbimrs/gaeb) | API docs pending first release | [repository](https://github.com/openbimrs/gaeb) | GAEB DA XML 3.1–3.4 beta |
+| [`openbim-gaeb`](https://crates.io/crates/openbim-gaeb) | [docs.rs](https://docs.rs/openbim-gaeb) | [repository](https://github.com/openbimrs/gaeb) | GAEB DA XML 3.1–3.4 beta |
+| [`openbim-citygml`](https://crates.io/crates/openbim-citygml) | [docs.rs](https://docs.rs/openbim-citygml) | [repository](https://github.com/openbimrs/citygml) | OGC CityGML; reserved scaffold |
+| [`openbim-openbimrl`](https://crates.io/crates/openbim-openbimrl) | [docs.rs](https://docs.rs/openbim-openbimrl) | [repository](https://github.com/openbimrs/openbimrl) | reserved OpenBIM.rs namespace |
+| [`openbim-bsdd`](https://crates.io/crates/openbim-bsdd) | [docs.rs](https://docs.rs/openbim-bsdd) | [repository](https://github.com/openbimrs/bsdd) | buildingSMART Data Dictionary; reserved scaffold |
 | [`openbim-cde`](https://github.com/openbimrs/cde) | API docs pending first release | [repository](https://github.com/openbimrs/cde) | buildingSMART Foundation API 1.1 + Documents API 1.0 |
 | [`openbim-epd`](https://crates.io/crates/openbim-epd) | [docs.rs](https://docs.rs/openbim-epd) | [repository](https://github.com/openbimrs/epd) | ISO 22057 EPD data templates |
 | [`openbim-bcf`](https://crates.io/crates/openbim-bcf) | [docs.rs](https://docs.rs/openbim-bcf) | [src](packages/bcf/openbim-bcf) | BCF (BIM Collaboration Format) |
@@ -48,9 +52,12 @@ is initialized or advanced.
 | [`openbim-loin`](https://crates.io/crates/openbim-loin) | [docs.rs](https://docs.rs/openbim-loin) | [src](packages/loin/openbim-loin) | ISO 7817-3 / EN 17412-3 LOIN |
 | [`openbim-dt`](https://crates.io/crates/openbim-dt) | [docs.rs](https://docs.rs/openbim-dt) | [src](packages/dt/openbim-dt) | ISO 23387 data templates |
 
-Four standards also have published pure short-name alias crates, so each
-standard is reachable as practitioners name it:
+Seven families were also free under their short names and ship as alias crates —
+pure re-exports, so the standard is reachable as practitioners name it:
 [`gaeb`](https://crates.io/crates/gaeb),
+[`citygml`](https://crates.io/crates/citygml),
+[`openbimrl`](https://crates.io/crates/openbimrl),
+[`bsdd`](https://crates.io/crates/bsdd),
 [`icdd`](https://crates.io/crates/icdd),
 [`idmxml`](https://crates.io/crates/idmxml) and
 [`loin`](https://crates.io/crates/loin).

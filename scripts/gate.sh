@@ -54,6 +54,9 @@ for f in "--no-default-features" \
          "--no-default-features --features dt" \
          "--no-default-features --features ids" \
          "--no-default-features --features gaeb" \
+         "--no-default-features --features citygml" \
+         "--no-default-features --features openbimrl" \
+         "--no-default-features --features bsdd" \
          "--no-default-features --features epd" \
          "--no-default-features --features bcf" \
          "--no-default-features --features icdd" \
@@ -69,9 +72,9 @@ done
 # Isolated builds prove each crate declares its own complete dependency set:
 # feature unification inside a workspace build can otherwise hide a missing
 # dependency that only shows up for an external consumer.
-for c in openbim-codec-xml openbim-codec-zip openbim-ifc openbim-core openbim-dt openbim-ids openbim-gaeb openbim-cde openbim-epd openbim-bcf \
+for c in openbim-codec-xml openbim-codec-zip openbim-ifc openbim-core openbim-dt openbim-ids openbim-gaeb openbim-citygml openbim-openbimrl openbim-bsdd openbim-cde openbim-epd openbim-bcf \
          openbim-icdd openbim-idm openbim-loin openbim clash diff \
-         gaeb icdd idmxml loin; do
+         gaeb citygml openbimrl bsdd icdd idmxml loin; do
     step "isolated build -p $c" cargo build -p "$c"
 done
 

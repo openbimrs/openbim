@@ -19,6 +19,9 @@ openbim-core.workspace = true
 openbim-dt = { workspace = true, optional = true }
 openbim-ids = { workspace = true, optional = true }
 openbim-gaeb = { workspace = true, optional = true }
+openbim-citygml = { workspace = true, optional = true }
+openbim-openbimrl = { workspace = true, optional = true }
+openbim-bsdd = { workspace = true, optional = true }
 openbim-epd = { workspace = true, optional = true }
 openbim-bcf = { workspace = true, optional = true }
 openbim-icdd = { workspace = true, optional = true }
@@ -32,10 +35,13 @@ default = []
 dt = ["dep:openbim-dt"]
 ids = ["dep:openbim-ids"]
 gaeb = ["dep:openbim-gaeb"]
+citygml = ["dep:openbim-citygml"]
+openbimrl = ["dep:openbim-openbimrl"]
+bsdd = ["dep:openbim-bsdd"]
 epd = ["dep:openbim-epd"]
 bcf = ["dep:openbim-bcf"]
 icdd = ["dep:openbim-icdd"]
 idm = ["dep:openbim-idm"]
 # LOIN's schema imports ISO 23387, so `loin` implies `dt`.
 loin = ["dep:openbim-loin", "dt"]
-full = ["dt", "ids", "gaeb", "epd", "bcf", "icdd", "idm", "loin"]
+full = ["dt", "ids", "gaeb", "citygml", "openbimrl", "bsdd", "epd", "bcf", "icdd", "idm", "loin"]

@@ -184,6 +184,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "bsdd"
+version = "0.1.0"
+dependencies = [
+ "openbim-bsdd",
+]
+
+[[package]]
 name = "camino"
 version = "1.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -220,6 +227,13 @@ name = "cfg-if"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9330f8b2ff13f34540b44e946ef35111825727b38d33286ef986142615121801"
+
+[[package]]
+name = "citygml"
+version = "0.1.0"
+dependencies = [
+ "openbim-citygml",
+]
 
 [[package]]
 name = "clash"
@@ -610,6 +624,8 @@ name = "openbim"
 version = "0.1.0"
 dependencies = [
  "openbim-bcf",
+ "openbim-bsdd",
+ "openbim-citygml",
  "openbim-core",
  "openbim-dt",
  "openbim-epd",
@@ -618,6 +634,7 @@ dependencies = [
  "openbim-idm",
  "openbim-ids",
  "openbim-loin",
+ "openbim-openbimrl",
 ]
 
 [[package]]
@@ -628,12 +645,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "openbim-bsdd"
+version = "0.1.0"
+
+[[package]]
 name = "openbim-cde"
 version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "openbim-citygml"
+version = "0.1.0"
 
 [[package]]
 name = "openbim-codec-xml"
@@ -717,6 +742,17 @@ name = "openbim-loin"
 version = "0.1.0"
 dependencies = [
  "openbim-core",
+]
+
+[[package]]
+name = "openbim-openbimrl"
+version = "0.1.0"
+
+[[package]]
+name = "openbimrl"
+version = "0.1.0"
+dependencies = [
+ "openbim-openbimrl",
 ]
 
 [[package]]

@@ -25,6 +25,9 @@
 //! | `dt` | `openbim-dt` | ISO 23387 data templates |
 //! | `ids` | `openbim-ids` | buildingSMART IDS |
 //! | `gaeb` | `openbim-gaeb` | GAEB DA XML |
+//! | `citygml` | `openbim-citygml` | OGC CityGML (reserved scaffold) |
+//! | `openbimrl` | `openbim-openbimrl` | OpenBIM.rs namespace (reserved scaffold) |
+//! | `bsdd` | `openbim-bsdd` | buildingSMART Data Dictionary (reserved scaffold) |
 //! | `epd` | `openbim-epd` | ISO 22057 EPD data templates |
 //! | `bcf` | `openbim-bcf` | BCF (BIM Collaboration Format) |
 //! | `icdd` | `openbim-icdd` | ISO 21597 ICDD |
@@ -58,6 +61,15 @@ pub use openbim_ids as ids;
 
 #[cfg(feature = "gaeb")]
 pub use openbim_gaeb as gaeb;
+
+#[cfg(feature = "citygml")]
+pub use openbim_citygml as citygml;
+
+#[cfg(feature = "openbimrl")]
+pub use openbim_openbimrl as openbimrl;
+
+#[cfg(feature = "bsdd")]
+pub use openbim_bsdd as bsdd;
 
 #[cfg(feature = "epd")]
 pub use openbim_epd as epd;

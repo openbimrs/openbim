@@ -13,7 +13,7 @@ set -uo pipefail
 cd "$(dirname "$0")/.."
 
 # <family-dir>/<crate-name>
-ALIASES="gaeb/gaeb icdd/icdd idm/idmxml loin/loin"
+ALIASES="gaeb/gaeb citygml/citygml openbimrl/openbimrl bsdd/bsdd icdd/icdd idm/idmxml loin/loin"
 fail=0
 
 for crate in $ALIASES; do

@@ -16,3 +16,12 @@
 [submodule "packages/gaeb"]
 	path = packages/gaeb
 	url = https://github.com/openbimrs/gaeb.git
+[submodule "packages/citygml"]
+	path = packages/citygml
+	url = https://github.com/openbimrs/citygml.git
+[submodule "packages/openbimrl"]
+	path = packages/openbimrl
+	url = https://github.com/openbimrs/openbimrl.git
+[submodule "packages/bsdd"]
+	path = packages/bsdd
+	url = https://github.com/openbimrs/bsdd.git
