@@ -3,7 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-08-24
 - **Deciders:** Friedrich, nehirde
-- **Amended:** 2026-08-24 — flat `packages/`, `openbim-*` publish names, `openbim-codec-*` substrate
+- **Amended:** 2026-08-25 — ICDD short name is a library target, not an alias package
 - **Supersedes:** —
 
 ## Context
@@ -187,3 +187,22 @@ loudly. Both invariants are now enforced by:
 
 Each was re-verified by mutation after the move: introduce the violation, watch
 the gate fail, restore, watch it pass.
+
+## Amendment, 2026-08-25 — one ICDD package, two Cargo names
+
+The separate `icdd` alias package was an unnecessary interpretation of needing
+both names. Cargo already distinguishes a **package name** from its **library
+target name**. `openbim-icdd` is therefore the package published on crates.io,
+and its manifest declares:
+
+```toml
+[lib]
+name = "icdd"
+```
+
+Consumers depend on `openbim-icdd` but import `icdd`. Both names now identify
+the same compilation unit and source, with no wrapper package, lockfile entry,
+version pin, or duplicate release to maintain. The `icdd` package published at
+0.1.0 is historical and receives no parallel releases. The `idmxml` and `loin`
+alias packages are unchanged because their independently published short
+package names remain intentional.

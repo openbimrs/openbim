@@ -34,6 +34,11 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- **`openbim-icdd` now exposes the `icdd` library target directly.** There is
+  one implementation and one package in this workspace: depend on the
+  `openbim-icdd` package and write `use icdd::…`. The separately published
+  `icdd` 0.1.0 compatibility package remains historical and will not receive
+  parallel releases.
 - Updated GitHub Actions checkout to `actions/checkout@v7`, removing the
   deprecated Node 20 runtime warning and using current fork-safety behavior.
 - Raised the integration workspace MSRV from Rust 1.85 to 1.88, the minimum
@@ -53,9 +58,10 @@ section on release.
   `openbim-ifc` facade grouped, sitting beside `ids/`, `bcf/`, `icdd/`, `idm/`,
   `loin/` and `dt/`.
 - **Published names are `openbim-*`.** `ifc`, `bcf`, `ids`, `idm`, `dt` and
-  `codec` are all taken on crates.io by unrelated crates. Only `icdd`, `loin`
-  and `idmxml` were free, and those ship as alias crates. The IFC facade keeps
-  `ifc` as its **lib target name**, so consumers still write `use ifc::…`.
+  `codec` are all taken on crates.io by unrelated crates. `loin` and `idmxml`
+  ship as alias packages. The IFC and ICDD facades keep `ifc` and `icdd` as
+  their **lib target names**, so consumers still write `use ifc::…` and
+  `use icdd::…`.
 
 ### Fixed
 - **Architecture tests no longer pass vacuously after a layout change.** Four
