@@ -55,16 +55,17 @@ each crate's own `PLAN.md`.
 
 `PKG-ICDD-SPLIT` completed 2026-08-25:
 
-- `openbimrs/icdd` exact commit `edb815efe9b0c0db09e275453c42d60544d4f613`
+- `openbimrs/icdd` exact commit `a68f50deba5cac68002088641590c1e5685b7bbe`
   preserves every family path change through extraction and passes its standalone
   gate, including clean package verification for both `openbim-icdd` and `icdd`.
 - The short package is mutation-verified through Cargo's effective metadata as a
-  one-target, one-dependency, exact-version pure re-export; textual TOML decoys
-  and alternate active library paths are rejected.
+  one-target, one-dependency, exact-version pure re-export; textual TOML decoys,
+  alternate active library paths, alias-owned source files, target gates, and
+  feature overrides are rejected.
 - The superproject resolves both packages through the child gitlink and its full
   integration gate. Mutation probes reject wrong commits, dirty children, and
-  declared, configured, child-origin, or transport-rewritten URLs while
-  preserving pre-existing worktree, URL, and branch state.
+  missing, duplicated, poisoned, or transport-rewritten URLs while signal-safe
+  cleanup preserves pre-existing worktree, URL, and branch state.
 - The 25-file local standards corpus is excluded by the child `references/`
   ignore boundary and was preserved against a SHA-256 manifest during migration.
 
