@@ -66,12 +66,16 @@ section on release.
   package payloads. All four children now pin CI action inputs and kill 19
   semantic mutations before clean canonical and alias package verification.
 - Serialized submodule-guard reads and mutations through shared/exclusive locks
-  in the common Git directory so parallel gates in linked worktrees cannot
-  observe, snapshot, or restore each other's temporary URL and child-origin
-  mutations.
+  in the common Git directory. Recursive checks now require an inherited,
+  inode-validated descriptor that demonstrably holds the exclusive flock, so a
+  forged environment marker cannot bypass serialization.
 - Enforced facade feature isolation from actual `cargo tree` dependency closures;
-  each isolated standard feature now fails the root gate if it pulls any other
-  standard family (with LOIN's normative DT dependency as the explicit exception).
+  every isolated standard feature, including CityGML, openBIMRL, and bSDD, now
+  fails the root gate if it pulls any other standard family. Permanent mutation
+  probes cover each feature, with LOIN's normative DT dependency as the explicit
+  exception.
+- Advanced the openBIMRL and bSDD family pins to documentation corrections that
+  record the completed alias release and replace a retired upstream API link.
 - Updated the EPD family pin and workspace dependency to `openbim-epd 0.1.1`,
   whose public examples use the corrected `InformationModuleGroup::group()` API
   and are compile-tested as crate documentation.

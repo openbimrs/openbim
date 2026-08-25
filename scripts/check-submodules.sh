@@ -4,13 +4,24 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-# Read parent/child Git config under a shared lock. The mutation suite holds the
-# same file exclusively and exports the marker below before invoking this
-# checker, avoiding recursive lock acquisition while preventing unrelated
-# checker runs from observing temporary poisoned URLs.
-if [[ "${OPENBIM_SUBMODULE_GUARD_LOCK_HELD:-0}" != "1" ]]; then
-    common_git_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
-    exec 8>"$common_git_dir/openbim-submodule-guard.lock"
+# Read parent/child Git config under a shared lock. The mutation suite passes an
+# inherited descriptor for the same open file description while it holds the
+# lock exclusively. Validate both the lock-file inode and the live exclusive
+# flock before accepting that capability; a forgeable environment marker alone
+# must never disable serialization.
+common_git_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
+lock_file="$common_git_dir/openbim-submodule-guard.lock"
+inherited_lock_fd="${OPENBIM_SUBMODULE_GUARD_LOCK_FD:-}"
+if [ -n "$inherited_lock_fd" ]; then
+    if [[ ! "$inherited_lock_fd" =~ ^[0-9]+$ ]] \
+        || [ ! -e "/proc/self/fd/$inherited_lock_fd" ] \
+        || [ ! "$lock_file" -ef "/proc/self/fd/$inherited_lock_fd" ] \
+        || ! flock -n -x "$inherited_lock_fd"; then
+        printf 'invalid inherited submodule-guard lock capability\n' >&2
+        exit 1
+    fi
+else
+    exec 8>"$lock_file"
     flock -s 8
 fi
 

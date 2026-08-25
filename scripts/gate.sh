@@ -31,6 +31,7 @@ echo "=== openbim gate ==="
 step "submodule pins"         scripts/check-submodules.sh
 step "submodule guard mutations" scripts/test-submodule-guard.sh
 step "facade dependency isolation" scripts/check-facade-isolation.py
+step "facade isolation mutations" scripts/test-facade-isolation.py
 step "fmt --check"            cargo fmt --all -- --check
 step "build --workspace"      cargo build --workspace
 step "test --workspace"       cargo test --workspace

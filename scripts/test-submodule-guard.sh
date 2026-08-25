@@ -8,12 +8,23 @@ cd "$(dirname "$0")/.."
 # shared by linked worktrees. Serialize the mutation suite across those
 # worktrees so one run cannot snapshot and later restore another run's poison.
 common_git_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
-exec 9>"$common_git_dir/openbim-submodule-guard.lock"
+lock_file="$common_git_dir/openbim-submodule-guard.lock"
+exec 9>"$lock_file"
 flock 9
-export OPENBIM_SUBMODULE_GUARD_LOCK_HELD=1
+export OPENBIM_SUBMODULE_GUARD_LOCK_FD=9
 
 checker="scripts/check-submodules.sh"
 children=(packages/ids packages/icdd packages/loin packages/cde packages/ifc packages/gaeb packages/citygml packages/openbimrl packages/bsdd packages/epd)
+
+# A descriptor opened independently on the correct inode is not the inherited
+# locked open-file description. Prove that an environment value cannot bypass
+# serialization before using the real capability below.
+exec 7>"$lock_file"
+if OPENBIM_SUBMODULE_GUARD_LOCK_FD=7 "$checker" >/dev/null 2>&1; then
+    printf 'submodule guard accepted a forged lock descriptor\n' >&2
+    exit 1
+fi
+exec 7>&-
 
 # Fail before installing any cleanup that could touch a pre-existing state.
 "$checker"

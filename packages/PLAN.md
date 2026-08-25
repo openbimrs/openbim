@@ -90,11 +90,13 @@ completed 2026-08-25:
 - `openbimrs/citygml` exact commit
   `9beff1d715f6bf75cf3514617998e1e4baf38760`.
 - `openbimrs/openbimrl` exact commit
-  `a006ecbeefa90b37ae5bc4fe3396eb8de5cf65fd`.
+  `f34f9ea2977eab0fd3f4db257b8524cd6ed79d13`.
 - `openbimrs/bsdd` exact commit
-  `ea5044d516ca6c7784dae51ff6fc717e75a76331`.
+  `a60c749eb3f9b86baf5b843d014d0be946c0b964`.
 - `openbimrs/gaeb` alias-release hardening is pinned at
   `fb6c03feda5630cc582c9e41b3824fefcc303897`.
 - Each child passes Rust 1.85 and current-stable build, test, Clippy, rustdoc,
   exact alias purity, 19 semantic mutation probes, exact package allowlists,
   and full canonical plus alias package verification.
+- The openBIMRL alias plan records its completed registry publication, and the
+  bSDD README links to buildingSMART's maintained API documentation page.

@@ -15,6 +15,9 @@ Standard-family repositories are canonical sources and are pinned beneath
 - `packages/cde` → <https://github.com/openbimrs/cde>
 - `packages/epd` → <https://github.com/openbimrs/epd>
 - `packages/gaeb` → <https://github.com/openbimrs/gaeb>
+- `packages/citygml` → <https://github.com/openbimrs/citygml>
+- `packages/openbimrl` → <https://github.com/openbimrs/openbimrl>
+- `packages/bsdd` → <https://github.com/openbimrs/bsdd>
 - `packages/ifc` → <https://github.com/openbimrs/ifc>
 
 Clone with submodules:
