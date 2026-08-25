@@ -61,6 +61,11 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- Advanced ICDD to `openbim-icdd`/`icdd` `0.2.0`, making the standalone
+  `openbimrs/icdd` repository the sole ISO 21597 implementation boundary. The
+  canonical crate now owns bounded ZIP/RDF reading, typed index and linkset
+  views, deterministic writing, safe extraction, and federation extensions;
+  downstream Solibri and Poing migrations remain separate changes.
 - Advanced the DT family pin to connect its complete pre-standalone lineage and
   make the deployed Pages artifact match the validated documentation tree.
 - Retired the public sniff-only XML and ZIP wrapper packages. XML format

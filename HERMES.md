@@ -47,9 +47,9 @@ an unpushed submodule commit the parent dependency.
 ## Dependency direction
 
 ```text
-codec/core -> IFC and standards -> facade/apps/bindings
-Axiolid     -> explicit IFC geometry bridges only
-IFC         -X-> IDS or another standard family
+step/core -> IFC and standard families -> facade/apps/bindings
+Axiolid   -> explicit IFC geometry bridges only
+IFC       -X-> IDS or another standard family
 ```
 
 Standalone families use versioned registry dependencies. The root
