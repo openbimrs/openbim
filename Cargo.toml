@@ -1,7 +1,19 @@
 [workspace]
 resolver = "2"
 members = [
-    "packages/*/*",
+    # Canonical openBIM crates. The crate-name-constrained glob deliberately
+    # ignores repository control directories such as `.github/`, `docs/`, and
+    # `scripts/` inside standard-family submodules.
+    "packages/*/openbim-*",
+    "packages/facade/openbim",
+    # IFC leaf crates and the short aliases that were available on crates.io.
+    "packages/ifc/ifc-*",
+    "packages/icdd/icdd",
+    "packages/idm/idmxml",
+    "packages/loin/loin",
+    # Analysis capabilities are neither standards nor `openbim-*` crates.
+    "packages/analysis/clash",
+    "packages/analysis/diff",
     "bindings/python",
     "apps/*",
 ]
@@ -103,6 +115,12 @@ ahash = "0.8"
 memmap2 = "0.9"
 criterion = { version = "0.5", features = ["html_reports"] }
 quick-xml = "0.37"
+
+# Standalone family repositories use registry dependencies so each can build
+# outside this superproject. Integration builds substitute the local source to
+# guarantee one package identity and exercise the exact pinned family commits.
+[patch.crates-io]
+openbim-core = { path = "packages/core/openbim-core" }
 
 [profile.release]
 opt-level = 3

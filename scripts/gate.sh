@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Full gate for nehirde. Trusts EXIT CODES, not parsed output.
+# Full gate for openbim. Trusts EXIT CODES, not parsed output.
 #
 # Why this exists: an earlier ad-hoc `cargo test ... | grep "test result" | awk`
 # pipeline reported "0 failed" while a test was in fact failing. Two bugs:
@@ -11,7 +11,7 @@ set -uo pipefail
 export PATH="$HOME/.cargo/bin:$PATH"
 cd "$(dirname "$0")/.."
 
-gate_out="$(mktemp "${TMPDIR:-/tmp}/nehirde-gate.XXXXXX")" || exit 1
+gate_out="$(mktemp "${TMPDIR:-/tmp}/openbim-gate.XXXXXX")" || exit 1
 trap 'rm -f "$gate_out"' EXIT
 
 fail=0
@@ -27,7 +27,8 @@ step() {
     fi
 }
 
-echo "=== nehirde gate ==="
+echo "=== openbim gate ==="
+step "submodule pins"         scripts/check-submodules.sh
 step "fmt --check"            cargo fmt --all -- --check
 step "build --workspace"      cargo build --workspace
 step "test --workspace"       cargo test --workspace

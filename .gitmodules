@@ -1,0 +1,3 @@
+[submodule "packages/ids"]
+	path = packages/ids
+	url = https://github.com/openbimrs/ids.git

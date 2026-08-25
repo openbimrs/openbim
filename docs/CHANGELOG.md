@@ -34,6 +34,12 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- **IDS now has a canonical standalone repository.** The `packages/ids`
+  directory is a pinned submodule of `github.com/openbimrs/ids`, with preserved
+  family history, explicit release metadata, versioned cross-repository
+  dependencies, its own README and CI gate, and a parent integration patch that
+  prevents duplicate `openbim-core` package identities. Recursive checkout and
+  pin integrity are enforced by the superproject gate.
 - **Repository is now `openbim`** (`github.com/openbimrs/openbim`), freeing the
   name `nehirde` for the application built on top of these crates.
 - **`packages/` groups one directory per standard family**, mirroring the

@@ -21,6 +21,9 @@ each crate's own `PLAN.md`.
 
 ## Work queue
 
+- [x] `PKG-IDS-SPLIT` - extract the IDS family with history into
+      `openbimrs/ids`, make it independently buildable, and pin its verified
+      commit as the first standard-family submodule.
 - [ ] `PKG-PORT` - port the working idmXML and LOIN codecs out of the private
       poing repository into `idm/` and `loin/`, without vendoring ISO schemas
 - [ ] `PKG-CONSUME` - make poing and vendor/solibri depend on these crates
@@ -28,5 +31,11 @@ each crate's own `PLAN.md`.
 
 ## Completion log
 
-Nothing completed yet. Record the proof command and its result here when an
-item above is checked off.
+`PKG-IDS-SPLIT` completed 2026-08-25:
+
+- `openbimrs/ids` exact commit `35e0c3c84e56916f86cf2c3e2698f3654f1b4c2a`:
+  `scripts/gate.sh` passed, including clean `cargo package` verification.
+- Superproject pin mutations for wrong commit and wrong URL both failed, then
+  the restored pin passed.
+- A fresh `git clone --recurse-submodules` initialized the public child at the
+  exact pin and its complete `scripts/gate.sh` passed.

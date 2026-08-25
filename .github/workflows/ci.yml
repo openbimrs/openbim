@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  rust:
+    name: Integration gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository and family pins
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install Rust 1.85
+        uses: dtolnay/rust-toolchain@1.85.0
+        with:
+          components: clippy, rustfmt
+      - name: Run integration gate
+        run: scripts/gate.sh
