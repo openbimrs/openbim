@@ -33,7 +33,7 @@ each crate's own `PLAN.md`.
 
 `PKG-IDS-SPLIT` completed 2026-08-25:
 
-- `openbimrs/ids` exact commit `7cdeec6a0630eebefa4f814301752e76de29f082`:
+- `openbimrs/ids` exact commit `25d2e6f84b3ac343de4aa059e03ee471d38dc333`:
   `scripts/gate.sh` passed on its declared Rust 1.85 MSRV, including clean
   `cargo package` verification.
 - Superproject pin mutations for wrong commit and wrong URL both failed, then
