@@ -31,3 +31,6 @@
 [submodule "packages/idm"]
 	path = packages/idm
 	url = https://github.com/openbimrs/idm.git
+[submodule "packages/dt"]
+	path = packages/dt
+	url = https://github.com/openbimrs/dt.git

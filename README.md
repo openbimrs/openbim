@@ -14,8 +14,8 @@ of a monolith.
 
 Standard-family repositories are progressively becoming canonical standalone
 repositories pinned here as Git submodules. IDS established the extraction
-pattern; IDS, IFC, ICDD, IDM, LOIN, CDE, EPD, GAEB, CityGML, openBIMRL, and bSDD are now
-independently pinned families.
+pattern; IDS, IFC, ICDD, IDM, LOIN, DT, CDE, EPD, GAEB, CityGML,
+openBIMRL, and bSDD are now independently pinned families.
 
 ## Clone for development
 
@@ -28,8 +28,8 @@ scripts/gate.sh
 ```
 
 For an existing checkout, run `scripts/init-family-submodules.sh`. The helper
-preserves local restricted `packages/{icdd,idm,loin}/references/` corpora while the
-children are initialized or advanced.
+preserves local restricted `packages/{icdd,idm,loin,dt}/references/` corpora
+while the children are initialized or advanced.
 
 ## Crates
 
@@ -50,7 +50,7 @@ children are initialized or advanced.
 | [`openbim-icdd`](https://crates.io/crates/openbim-icdd) | [docs.rs](https://docs.rs/openbim-icdd) | [src](packages/icdd/openbim-icdd) | ISO 21597 ICDD |
 | [`openbim-idm`](https://crates.io/crates/openbim-idm) | [project docs](https://openbimrs.github.io/idm/) | [repository](https://github.com/openbimrs/idm) | ISO 29481-3 idmXML; lossless Rust/Python engine, publication blocked pending schema rights |
 | [`openbim-loin`](https://crates.io/crates/openbim-loin) | [docs.rs](https://docs.rs/openbim-loin) | [repository](https://github.com/openbimrs/loin) | ISO 7817-3 / EN 17412-3 LOIN |
-| [`openbim-dt`](https://crates.io/crates/openbim-dt) | [docs.rs](https://docs.rs/openbim-dt) | [src](packages/dt/openbim-dt) | ISO 23387 data templates |
+| [`openbim-dt`](https://crates.io/crates/openbim-dt) | [docs.rs](https://docs.rs/openbim-dt) | [repository](https://github.com/openbimrs/dt) | ISO 23387 data templates |
 
 Seven families were also free under their short names and ship as alias crates —
 pure re-exports, so the standard is reachable as practitioners name it:
@@ -78,7 +78,8 @@ XML and ZIP handling without the IFC layer depending on a standard.
 ## Status
 
 The foundational crates remain published as reserved scaffolds; `openbim-epd`
-is at `0.1.1`, while the original release set remains at `0.1.0`. Their
+and `openbim-dt` are at `0.1.1`, while the remaining original release set stays
+at `0.1.0`. Their
 structure, boundaries, and gates are real, but they do not yet provide working
 IFC, IDS, or EPD readers. The new `openbim-cde` family is different: its
 Foundation/Documents wire models are implemented and exercised, while

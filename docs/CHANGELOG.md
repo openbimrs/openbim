@@ -11,7 +11,9 @@ section on release.
 ## [Unreleased]
 
 ### Added
-- **CityGML, openBIMRL, and bSDD family reservations.** Added independently
+- **ISO 23387 DT family.** Extracted the preserved `packages/dt` history into
+  the independently documented and gated `openbimrs/dt` repository, pinned its
+  exact public revision at `packages/dt`, a...[truncated] Added independently
   gated canonical repositories, exact-version short aliases, exact superproject
   pins, and isolated facade features for `openbim-citygml`/`citygml`,
   `openbim-openbimrl`/`openbimrl`, and `openbim-bsdd`/`bsdd`. These `0.1.0`
@@ -104,7 +106,8 @@ section on release.
   transport-rewritten URLs, with signal-safe, state-preserving mutation probes
   for each failure mode. Existing checkouts can run
   `scripts/init-family-submodules.sh` to signal-safely shelter and restore local
-  restricted `packages/{icdd,idm,loin}/references/` corpora during initialization.
+  restricted `packages/{icdd,idm,loin,dt}/references/` corpora during
+  initialization.
 - Updated GitHub Actions checkout to `actions/checkout@v7`, removing the
   deprecated Node 20 runtime warning and using current fork-safety behavior.
 - Raised the integration workspace MSRV from Rust 1.85 to 1.88, the minimum

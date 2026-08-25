@@ -8,6 +8,7 @@ reference_paths=(
     packages/icdd/references
     packages/idm/references
     packages/loin/references
+    packages/dt/references
 )
 sheltered_paths=()
 shelters=()
@@ -103,6 +104,7 @@ preflight_url packages/ids https://github.com/openbimrs/ids.git
 preflight_url packages/icdd https://github.com/openbimrs/icdd.git
 preflight_url packages/idm https://github.com/openbimrs/idm.git
 preflight_url packages/loin https://github.com/openbimrs/loin.git
+preflight_url packages/dt https://github.com/openbimrs/dt.git
 preflight_url packages/cde https://github.com/openbimrs/cde.git
 preflight_url packages/ifc https://github.com/openbimrs/ifc.git
 preflight_url packages/gaeb https://github.com/openbimrs/gaeb.git
@@ -112,7 +114,7 @@ preflight_url packages/bsdd https://github.com/openbimrs/bsdd.git
 preflight_url packages/epd https://github.com/openbimrs/epd.git
 
 # A tracked directory from an older revision must be converted by Git first.
-for path in packages/icdd packages/idm packages/loin; do
+for path in packages/icdd packages/idm packages/loin packages/dt; do
     read -r mode _ _ _ < <(git ls-files -s -- "$path")
     if [ "$mode" != "160000" ]; then
         printf '%s is not a gitlink; update the superproject revision before initializing submodules\n' \

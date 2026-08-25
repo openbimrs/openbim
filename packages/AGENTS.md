@@ -11,8 +11,9 @@ One directory per standard, mirroring the repositories under
 short name was still free on crates.io, its alias crate too.
 
 Extracted families are Git submodules whose canonical source is the matching
-`openbimrs/<family>` repository. `ids/`, `icdd/`, `idm/`, `loin/`, `cde/`, `ifc/`,
-`epd/`, `gaeb/`, `citygml/`, `openbimrl/`, and `bsdd/` are extracted. Make family changes in the child repository,
+`openbimrs/<family>` repository. `ids/`, `icdd/`, `idm/`, `loin/`, `dt/`, `cde/`,
+`ifc/`, `epd/`, `gaeb/`, `citygml/`, `openbimrl/`, and `bsdd/` are extracted.
+Make family changes in the child repository,
 pass its standalone gate, push the child commit, and only then update the
 superproject pin. The root integration gate must pass at the exact pin before
 it lands.

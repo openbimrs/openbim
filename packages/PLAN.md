@@ -30,6 +30,9 @@ each crate's own `PLAN.md`.
 - [x] `PKG-LOIN-SPLIT` - extract canonical and alias LOIN packages with history
       into `openbimrs/loin`, add independent documentation and verification,
       and pin the public standalone-verified child commit.
+- [x] `PKG-DT-SPLIT` - extract `openbim-dt` with history into `openbimrs/dt`,
+      publish the independently documented namespace scaffold, preserve local
+      restricted references, and pin its verified child commit.
 - [x] `PKG-CITYGML-RESERVE` - publish `openbim-citygml` and `citygml` as an
       honest reservation scaffold in `openbimrs/citygml`, then pin the verified
       child repository.

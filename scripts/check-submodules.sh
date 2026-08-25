@@ -154,6 +154,11 @@ check_submodule \
     Cargo.toml openbim-idm/Cargo.toml idmxml/Cargo.toml scripts/gate.sh
 
 check_submodule \
+    packages/dt \
+    https://github.com/openbimrs/dt.git \
+    Cargo.toml openbim-dt/Cargo.toml scripts/gate.sh
+
+check_submodule \
     packages/cde \
     https://github.com/openbimrs/cde.git \
     Cargo.toml openbim-cde/Cargo.toml scripts/gate.sh

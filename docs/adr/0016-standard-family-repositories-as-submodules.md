@@ -48,8 +48,8 @@ The rules are:
    superproject until it can be cloned anonymously.
 9. Preserve occupied local-only family paths during migration. The initialization
    helper must arm cleanup before each rename and signal-safely shelter and
-   restore restricted ICDD, IDM, or LOIN references rather than asking users to delete
-   or clean an occupied directory.
+   restore restricted ICDD, IDM, LOIN, or DT references rather than asking
+   users to delete or clean an occupied directory.
 
 IDS was the pilot. ICDD was the second extracted family and also preserves a
 pure short-name package alias. IFC was the third and largest extraction: its 19
