@@ -34,6 +34,9 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- Raised the integration workspace MSRV from Rust 1.85 to 1.88, the minimum
+  required by the currently locked geometry dependencies; CI now exercises
+  that exact toolchain.
 - **IDS now has a canonical standalone repository.** The `packages/ids`
   directory is a pinned submodule of `github.com/openbimrs/ids`, with preserved
   family history, explicit release metadata, versioned cross-repository
