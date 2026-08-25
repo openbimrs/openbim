@@ -131,6 +131,12 @@ for child in "${children[@]}"; do
     # Parent-local submodule URL overrides .gitmodules for future updates.
     snapshot_config . "$parent_config_key" "$parent_config_snapshot"
     parent_config_active=1
+    git config --unset-all "$parent_config_key"
+    must_reject "$child missing configured URL"
+    restore_config . "$parent_config_key" "$parent_config_snapshot"
+    parent_config_active=0
+
+    parent_config_active=1
     git config --replace-all "$parent_config_key" "https://example.invalid/${child}.git"
     must_reject "$child poisoned configured URL"
     restore_config . "$parent_config_key" "$parent_config_snapshot"
@@ -144,6 +150,12 @@ for child in "${children[@]}"; do
 
     # The declaration itself is the public recursive-clone contract.
     declared_active=1
+    git config -f .gitmodules --unset-all "$parent_config_key"
+    must_reject "$child missing declared URL"
+    cp "$modules_backup" .gitmodules
+    declared_active=0
+
+    declared_active=1
     git config -f .gitmodules "$parent_config_key" "https://example.invalid/${child}.git"
     must_reject "$child poisoned declared URL"
     cp "$modules_backup" .gitmodules
@@ -153,6 +165,12 @@ for child in "${children[@]}"; do
     git config -f .gitmodules --add "$parent_config_key" \
         "https://example.invalid/${child}-additional.git"
     must_reject "$child additional declared URL"
+    cp "$modules_backup" .gitmodules
+    declared_active=0
+
+    declared_active=1
+    git config -f .gitmodules --unset-all "submodule.${child}.path"
+    must_reject "$child missing declared path"
     cp "$modules_backup" .gitmodules
     declared_active=0
 
@@ -170,6 +188,12 @@ for child in "${children[@]}"; do
 
     # The initialized child's own origin must remain canonical.
     snapshot_config "$child" remote.origin.url "$origin_snapshot"
+    origin_active=1
+    git -C "$child" config --unset-all remote.origin.url
+    must_reject "$child missing child origin"
+    restore_config "$child" remote.origin.url "$origin_snapshot"
+    origin_active=0
+
     origin_active=1
     git -C "$child" config --replace-all remote.origin.url "https://example.invalid/${child}.git"
     must_reject "$child poisoned child origin"
