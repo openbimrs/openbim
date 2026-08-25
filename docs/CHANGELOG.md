@@ -76,6 +76,11 @@ section on release.
   The child has preserved family history, explicit release metadata, standalone
   CI/package gates, and an ignored local `references/` boundary for restricted
   standards material.
+- **LOIN now has a canonical standalone repository.** `packages/loin` pins
+  `github.com/openbimrs/loin`, containing the canonical `openbim-loin` package
+  and exact-version `loin` pure re-export. The child preserves family history,
+  documents the implemented namespace-only boundary, and runs standalone CI,
+  package verification, and semantic alias mutation gates.
 - Hardened the standard-family submodule gate to reject dirty child worktrees
   and poisoned or duplicated declared, configured, child-origin, or
   transport-rewritten URLs, with signal-safe, state-preserving mutation probes

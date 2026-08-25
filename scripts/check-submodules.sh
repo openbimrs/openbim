@@ -123,6 +123,11 @@ check_submodule \
     Cargo.toml openbim-icdd/Cargo.toml icdd/Cargo.toml scripts/gate.sh
 
 check_submodule \
+    packages/loin \
+    https://github.com/openbimrs/loin.git \
+    Cargo.toml openbim-loin/Cargo.toml loin/Cargo.toml scripts/gate.sh
+
+check_submodule \
     packages/cde \
     https://github.com/openbimrs/cde.git \
     Cargo.toml openbim-cde/Cargo.toml scripts/gate.sh

@@ -27,6 +27,9 @@ each crate's own `PLAN.md`.
 - [x] `PKG-ICDD-SPLIT` - extract canonical and alias ICDD packages with history
       into `openbimrs/icdd`, preserve local restricted references outside Git,
       and pin a standalone-verified child commit.
+- [x] `PKG-LOIN-SPLIT` - extract canonical and alias LOIN packages with history
+      into `openbimrs/loin`, add independent documentation and verification,
+      and pin the public standalone-verified child commit.
 - [x] `PKG-CITYGML-RESERVE` - publish `openbim-citygml` and `citygml` as an
       honest reservation scaffold in `openbimrs/citygml`, then pin the verified
       child repository.
@@ -68,6 +71,18 @@ each crate's own `PLAN.md`.
   cleanup preserves pre-existing worktree, URL, and branch state.
 - The 25-file local standards corpus is excluded by the child `references/`
   ignore boundary and was preserved against a SHA-256 manifest during migration.
+
+`PKG-LOIN-SPLIT` completed 2026-08-25:
+
+- `openbimrs/loin` exact commit `c2ff4f6f8bcbde197c4c6499c09c0de507041da7`
+  preserves the family path history and passes its standalone Rust 1.88 gate,
+  including build, tests, Clippy, rustdoc, and clean package verification.
+- The `loin` alias is checked through Cargo metadata and nine isolated mutation
+  probes covering target gates, features, version drift, owned source, alternate
+  targets, and loose dependency requirements.
+- The superproject resolves both LOIN packages through the exact gitlink and its
+  full integration gate passes; submodule mutations exercise LOIN alongside every
+  other extracted family.
 
 `PKG-CITYGML-RESERVE`, `PKG-OPENBIMRL-RESERVE`, and `PKG-BSDD-RESERVE`
 completed 2026-08-25:

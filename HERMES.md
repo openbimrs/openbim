@@ -11,6 +11,7 @@ Standard-family repositories are canonical sources and are pinned beneath
 
 - `packages/ids` → <https://github.com/openbimrs/ids>
 - `packages/icdd` → <https://github.com/openbimrs/icdd>
+- `packages/loin` → <https://github.com/openbimrs/loin>
 - `packages/cde` → <https://github.com/openbimrs/cde>
 - `packages/epd` → <https://github.com/openbimrs/epd>
 - `packages/gaeb` → <https://github.com/openbimrs/gaeb>

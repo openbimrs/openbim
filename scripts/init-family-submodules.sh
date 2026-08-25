@@ -92,6 +92,7 @@ preflight_url() {
 # Reject redirected or poisoned transport before Git fetches any child data.
 preflight_url packages/ids https://github.com/openbimrs/ids.git
 preflight_url packages/icdd https://github.com/openbimrs/icdd.git
+preflight_url packages/loin https://github.com/openbimrs/loin.git
 preflight_url packages/cde https://github.com/openbimrs/cde.git
 preflight_url packages/ifc https://github.com/openbimrs/ifc.git
 preflight_url packages/gaeb https://github.com/openbimrs/gaeb.git

@@ -25,3 +25,6 @@
 [submodule "packages/bsdd"]
 	path = packages/bsdd
 	url = https://github.com/openbimrs/bsdd.git
+[submodule "packages/loin"]
+	path = packages/loin
+	url = https://github.com/openbimrs/loin.git

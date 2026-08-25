@@ -60,6 +60,8 @@ canonical-child and exact-gitlink model.
 CityGML, openBIMRL, and bSDD establish the same repository and exact-pin
 boundaries before implementation work begins. Their initial releases reserve
 both canonical and short package names and make no parser or conformance claims.
+LOIN likewise pins its canonical and pure short-alias packages together while
+keeping its current namespace-only capability boundary explicit.
 
 ## Alternatives considered
 
@@ -100,6 +102,7 @@ both canonical and short package names and make no parser or conformance claims.
 
 - `packages/ids` — IDS pilot submodule.
 - `packages/icdd` — ICDD canonical and short-name packages, pinned together.
+- `packages/loin` — LOIN canonical and short-name packages, pinned together.
 - `packages/ifc` — IFC workspace and test fixtures, pinned at its canonical commit.
 - `packages/cde`, `packages/epd`, and `packages/gaeb` — independently gated
   canonical family repositories pinned at reviewed commits.
