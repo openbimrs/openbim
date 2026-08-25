@@ -4,71 +4,50 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-references="packages/icdd/references"
-shelter=""
-sheltered=0
-loin_references="packages/loin/references"
-loin_shelter=""
-loin_sheltered=0
+reference_paths=(
+    packages/icdd/references
+    packages/idm/references
+    packages/loin/references
+)
+sheltered_paths=()
+shelters=()
 
 restore_references() {
-    if [ "$sheltered" -ne 1 ]; then
-        return 0
-    fi
+    local status=0 index destination shelter
+    for ((index=${#shelters[@]} - 1; index >= 0; index--)); do
+        destination="${sheltered_paths[$index]}"
+        shelter="${shelters[$index]}"
 
-    # The flag is armed before `mv`, so interruption on either side of the
-    # atomic rename is recoverable. A missing shelter is safe only when the
-    # original path still exists.
-    if [ ! -e "$shelter" ] && [ ! -L "$shelter" ]; then
-        if [ -e "$references" ] || [ -L "$references" ]; then
-            sheltered=0
-            return 0
+        # Each cleanup entry is armed before mv. If interruption happens before
+        # the rename, the original is still authoritative and needs no action.
+        if [ ! -e "$shelter" ] && [ ! -L "$shelter" ]; then
+            if [ -e "$destination" ] || [ -L "$destination" ]; then
+                continue
+            fi
+            printf 'cannot restore local references: both %s and %s are missing\n' \
+                "$destination" "$shelter" >&2
+            status=1
+            continue
         fi
-        printf 'cannot restore local references: both %s and %s are missing\n' \
-            "$references" "$shelter" >&2
-        return 1
-    fi
 
-    mkdir -p packages/icdd
-    if [ -e "$references" ] || [ -L "$references" ]; then
-        printf 'cannot restore local references: %s already exists; preserved copy remains at %s\n' \
-            "$references" "$shelter" >&2
-        return 1
-    fi
-    mv -- "$shelter" "$references"
-    sheltered=0
-}
-
-restore_loin_references() {
-    if [ "$loin_sheltered" -ne 1 ]; then
-        return 0
-    fi
-
-    if [ ! -e "$loin_shelter" ] && [ ! -L "$loin_shelter" ]; then
-        if [ -e "$loin_references" ] || [ -L "$loin_references" ]; then
-            loin_sheltered=0
-            return 0
+        if [ -e "$destination" ] || [ -L "$destination" ]; then
+            printf 'cannot restore local references: %s already exists; preserved copy remains at %s\n' \
+                "$destination" "$shelter" >&2
+            status=1
+            continue
         fi
-        printf 'cannot restore local references: both %s and %s are missing\n' \
-            "$loin_references" "$loin_shelter" >&2
-        return 1
+        mkdir -p "${destination%/references}"
+        mv -- "$shelter" "$destination" || status=1
+    done
+    if [ "$status" -eq 0 ]; then
+        sheltered_paths=()
+        shelters=()
     fi
-
-    mkdir -p packages/loin
-    if [ -e "$loin_references" ] || [ -L "$loin_references" ]; then
-        printf 'cannot restore local references: %s already exists; preserved copy remains at %s\n' \
-            "$loin_references" "$loin_shelter" >&2
-        return 1
-    fi
-    mv -- "$loin_shelter" "$loin_references"
-    loin_sheltered=0
+    return "$status"
 }
 
 cleanup() {
-    local cleanup_status=0
-    restore_references || cleanup_status=1
-    restore_loin_references || cleanup_status=1
-    return "$cleanup_status"
+    restore_references
 }
 trap cleanup EXIT
 trap 'exit 130' HUP INT TERM
@@ -120,9 +99,9 @@ preflight_url() {
     fi
 }
 
-# Reject redirected or poisoned transport before Git fetches any child data.
 preflight_url packages/ids https://github.com/openbimrs/ids.git
 preflight_url packages/icdd https://github.com/openbimrs/icdd.git
+preflight_url packages/idm https://github.com/openbimrs/idm.git
 preflight_url packages/loin https://github.com/openbimrs/loin.git
 preflight_url packages/cde https://github.com/openbimrs/cde.git
 preflight_url packages/ifc https://github.com/openbimrs/ifc.git
@@ -133,7 +112,7 @@ preflight_url packages/bsdd https://github.com/openbimrs/bsdd.git
 preflight_url packages/epd https://github.com/openbimrs/epd.git
 
 # A tracked directory from an older revision must be converted by Git first.
-for path in packages/icdd packages/loin; do
+for path in packages/icdd packages/idm packages/loin; do
     read -r mode _ _ _ < <(git ls-files -s -- "$path")
     if [ "$mode" != "160000" ]; then
         printf '%s is not a gitlink; update the superproject revision before initializing submodules\n' \
@@ -142,46 +121,36 @@ for path in packages/icdd packages/loin; do
     fi
 done
 
-# Shelter the restricted/local corpus atomically on the same filesystem while
-# Git creates or checks out the child worktree. The EXIT trap restores it after
-# both success and ordinary failure.
-if [ -e "$references" ] || [ -L "$references" ]; then
-    shelter="packages/.icdd-references-migration.${BASHPID}.${RANDOM}"
-    if [ -e "$shelter" ] || [ -L "$shelter" ]; then
-        printf 'migration shelter already exists: %s\n' "$shelter" >&2
-        exit 1
+# Shelter each corpus atomically on the same filesystem while Git creates or
+# advances child worktrees. Arm cleanup before mv so signals on either side of
+# the rename remain recoverable.
+for references in "${reference_paths[@]}"; do
+    if [ -e "$references" ] || [ -L "$references" ]; then
+        family="${references#packages/}"
+        family="${family%/references}"
+        shelter="packages/.${family}-references-migration.${BASHPID}.${RANDOM}"
+        if [ -e "$shelter" ] || [ -L "$shelter" ]; then
+            printf 'migration shelter already exists: %s\n' "$shelter" >&2
+            exit 1
+        fi
+        sheltered_paths+=("$references")
+        shelters+=("$shelter")
+        mv -- "$references" "$shelter"
     fi
-    # Arm cleanup before the atomic rename. If a signal arrives before `mv`,
-    # restoration recognizes that the original path is still authoritative;
-    # if it arrives after, the shelter is moved back.
-    sheltered=1
-    mv -- "$references" "$shelter"
-fi
-
-if [ -e "$loin_references" ] || [ -L "$loin_references" ]; then
-    loin_shelter="packages/.loin-references-migration.${BASHPID}.${RANDOM}"
-    if [ -e "$loin_shelter" ] || [ -L "$loin_shelter" ]; then
-        printf 'migration shelter already exists: %s\n' "$loin_shelter" >&2
-        exit 1
-    fi
-    loin_sheltered=1
-    mv -- "$loin_references" "$loin_shelter"
-fi
+done
 
 git submodule sync --recursive
 git submodule update --init --recursive
 
 restore_references
-restore_loin_references
 trap - EXIT HUP INT TERM
 
-if [ -d "$references" ] && ! git -C packages/icdd check-ignore -q references; then
-    printf '%s\n' 'packages/icdd/references is not ignored by the child repository' >&2
-    exit 1
-fi
-if [ -d "$loin_references" ] && ! git -C packages/loin check-ignore -q references; then
-    printf '%s\n' 'packages/loin/references is not ignored by the child repository' >&2
-    exit 1
-fi
+for references in "${reference_paths[@]}"; do
+    family_root="${references%/references}"
+    if [ -d "$references" ] && ! git -C "$family_root" check-ignore -q references; then
+        printf '%s/references is not ignored by the child repository\n' "$family_root" >&2
+        exit 1
+    fi
+done
 
 scripts/check-submodules.sh

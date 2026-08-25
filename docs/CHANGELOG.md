@@ -94,12 +94,17 @@ section on release.
   and exact-version `loin` pure re-export. The child preserves family history,
   documents the implemented namespace-only boundary, and runs standalone CI,
   package verification, and semantic alias mutation gates.
+- **IDM now has a canonical standalone repository.** `packages/idm` pins
+  `github.com/openbimrs/idm`, containing the lossless ISO 29481-3 engine, CLI,
+  PyO3 package, generated semantic catalog, and exact-version `idmxml` pure
+  re-export. Standalone gates verify Rust/Python round trips, packaging, docs,
+  alias purity, superproject-safe metadata, and standards-material leakage.
 - Hardened the standard-family submodule gate to reject dirty child worktrees
   and poisoned or duplicated declared, configured, child-origin, or
   transport-rewritten URLs, with signal-safe, state-preserving mutation probes
   for each failure mode. Existing checkouts can run
   `scripts/init-family-submodules.sh` to signal-safely shelter and restore local
-  restricted `packages/{icdd,loin}/references/` corpora during initialization.
+  restricted `packages/{icdd,idm,loin}/references/` corpora during initialization.
 - Updated GitHub Actions checkout to `actions/checkout@v7`, removing the
   deprecated Node 20 runtime warning and using current fork-safety behavior.
 - Raised the integration workspace MSRV from Rust 1.85 to 1.88, the minimum

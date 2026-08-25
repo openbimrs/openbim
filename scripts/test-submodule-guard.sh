@@ -14,7 +14,7 @@ flock 9
 export OPENBIM_SUBMODULE_GUARD_LOCK_FD=9
 
 checker="scripts/check-submodules.sh"
-children=(packages/ids packages/icdd packages/loin packages/cde packages/ifc packages/gaeb packages/citygml packages/openbimrl packages/bsdd packages/epd)
+children=(packages/ids packages/icdd packages/idm packages/loin packages/cde packages/ifc packages/gaeb packages/citygml packages/openbimrl packages/bsdd packages/epd)
 
 # A descriptor opened independently on the correct inode is not the inherited
 # locked open-file description. Prove that an environment value cannot bypass

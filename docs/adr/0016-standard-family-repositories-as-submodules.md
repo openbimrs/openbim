@@ -48,7 +48,7 @@ The rules are:
    superproject until it can be cloned anonymously.
 9. Preserve occupied local-only family paths during migration. The initialization
    helper must arm cleanup before each rename and signal-safely shelter and
-   restore restricted ICDD or LOIN references rather than asking users to delete
+   restore restricted ICDD, IDM, or LOIN references rather than asking users to delete
    or clean an occupied directory.
 
 IDS was the pilot. ICDD was the second extracted family and also preserves a
@@ -62,6 +62,11 @@ boundaries before implementation work begins. Their initial releases reserve
 both canonical and short package names and make no parser or conformance claims.
 LOIN likewise pins its canonical and pure short-alias packages together while
 keeping its current namespace-only capability boundary explicit.
+
+IDM pins the extracted lossless ISO 29481-3 engine and its pure `idmxml` alias
+together. Public source and artifacts carry only generated semantic metadata;
+lawfully obtained standards and Annex B schemas remain in the ignored
+`references/` boundary.
 
 ## Alternatives considered
 
@@ -102,6 +107,7 @@ keeping its current namespace-only capability boundary explicit.
 
 - `packages/ids` — IDS pilot submodule.
 - `packages/icdd` — ICDD canonical and short-name packages, pinned together.
+- `packages/idm` — IDM canonical engine and `idmxml` alias, pinned together.
 - `packages/loin` — LOIN canonical and short-name packages, pinned together.
 - `packages/ifc` — IFC workspace and test fixtures, pinned at its canonical commit.
 - `packages/cde`, `packages/epd`, and `packages/gaeb` — independently gated

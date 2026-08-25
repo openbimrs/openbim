@@ -158,20 +158,26 @@ separately.
 
 ### Stage 5b — porting the existing codecs
 
-Working lossless codecs for ISO 29481-3 (idmXML, ~2.4k LOC) and ISO 7817-3
-(LOIN, ~2.1k LOC) already exist in the private `poing` repository, each with a
-CLI and pyo3 bindings.
+Working lossless codecs for ISO 29481-3 (idmXML) and ISO 7817-3
+(LOIN) originated in the private `poing` repository, each with a CLI and PyO3
+bindings.
 
-- [ ] `openbim-idm`: port from `poing`, onto `openbim-codec-xml`, edition 2021. Carry
-      over the recorded schema defects (optional root ER versus the normative
-      one-ER prose requirement; suspect identity-constraint XPaths) as
-      documented decisions rather than silent behaviour.
+- [x] `openbim-idm`: extracted into the standalone
+      [`openbimrs/idm`](https://github.com/openbimrs/idm) repository and pinned as
+      `packages/idm`. The canonical crate owns the lossless tree, CLI, generated
+      schema catalog, and PyO3 binding; `idmxml` is a pure re-export alias.
+      Recorded schema defects remain explicit semantic overlays.
+- [ ] Move the IDM engine's direct `quick-xml` use behind `openbim-codec-xml`
+      after that substrate exposes the required lossless event/tree contracts;
+      do not replace working behavior with a scaffold-only dependency.
 - [ ] `openbim-loin`: port from `poing`. Namespace migration is first-class —
       the LOIN namespace is not final.
 - [ ] `openbim-dt`: ISO 23387 data templates, which the LOIN schema imports.
-- [ ] Neither port may vendor an ISO/CEN schema.
-- [ ] Then: `poing` and `../vendor/solibri` consume these crates instead of
-      carrying their own copies.
+- [x] The IDM port vendors no ISO/CEN schemas or PDFs; local references are
+      ignored and package/Pages artifacts are leakage-gated.
+- [x] `poing` consumes the extracted IDM Python package instead of carrying its
+      own implementation. Rewiring Solibri and extracting LOIN remain separate
+      work.
 
 ## Stage 6 — 4D/5D and diff
 

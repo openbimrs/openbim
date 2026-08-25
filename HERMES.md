@@ -12,6 +12,7 @@ Standard-family repositories are canonical sources and are pinned beneath
 - `packages/ids` → <https://github.com/openbimrs/ids>
 - `packages/icdd` → <https://github.com/openbimrs/icdd>
 - `packages/loin` → <https://github.com/openbimrs/loin>
+- `packages/idm` → <https://github.com/openbimrs/idm>
 - `packages/cde` → <https://github.com/openbimrs/cde>
 - `packages/epd` → <https://github.com/openbimrs/epd>
 - `packages/gaeb` → <https://github.com/openbimrs/gaeb>
@@ -34,7 +35,7 @@ scripts/init-family-submodules.sh
 
 Use the helper rather than deleting an occupied submodule directory. It
 signal-safely shelters and restores existing local
-`packages/{icdd,loin}/references/` corpora while Git initializes or advances the
+`packages/{icdd,idm,loin}/references/` corpora while Git initializes or advances the
 children, then verifies every family pin and exactly one canonical URL at each
 configured transport boundary.
 

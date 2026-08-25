@@ -14,8 +14,8 @@ of a monolith.
 
 Standard-family repositories are progressively becoming canonical standalone
 repositories pinned here as Git submodules. IDS established the extraction
-pattern; IDS, IFC, ICDD, LOIN, CDE, EPD, GAEB, CityGML, openBIMRL, and bSDD
-are now independently pinned families.
+pattern; IDS, IFC, ICDD, IDM, LOIN, CDE, EPD, GAEB, CityGML, openBIMRL, and bSDD are now
+independently pinned families.
 
 ## Clone for development
 
@@ -28,8 +28,8 @@ scripts/gate.sh
 ```
 
 For an existing checkout, run `scripts/init-family-submodules.sh`. The helper
-preserves a local restricted `packages/icdd/references/` corpus while the child
-is initialized or advanced.
+preserves local restricted `packages/{icdd,idm,loin}/references/` corpora while the
+children are initialized or advanced.
 
 ## Crates
 
@@ -48,7 +48,7 @@ is initialized or advanced.
 | [`openbim-epd`](https://crates.io/crates/openbim-epd) | [docs.rs](https://docs.rs/openbim-epd) | [repository](https://github.com/openbimrs/epd) | ISO 22057 EPD data templates |
 | [`openbim-bcf`](https://crates.io/crates/openbim-bcf) | [docs.rs](https://docs.rs/openbim-bcf) | [src](packages/bcf/openbim-bcf) | BCF (BIM Collaboration Format) |
 | [`openbim-icdd`](https://crates.io/crates/openbim-icdd) | [docs.rs](https://docs.rs/openbim-icdd) | [src](packages/icdd/openbim-icdd) | ISO 21597 ICDD |
-| [`openbim-idm`](https://crates.io/crates/openbim-idm) | [docs.rs](https://docs.rs/openbim-idm) | [src](packages/idm/openbim-idm) | ISO 29481-3 idmXML |
+| [`openbim-idm`](https://crates.io/crates/openbim-idm) | [project docs](https://openbimrs.github.io/idm/) | [repository](https://github.com/openbimrs/idm) | ISO 29481-3 idmXML; lossless Rust/Python engine, publication blocked pending schema rights |
 | [`openbim-loin`](https://crates.io/crates/openbim-loin) | [docs.rs](https://docs.rs/openbim-loin) | [repository](https://github.com/openbimrs/loin) | ISO 7817-3 / EN 17412-3 LOIN |
 | [`openbim-dt`](https://crates.io/crates/openbim-dt) | [docs.rs](https://docs.rs/openbim-dt) | [src](packages/dt/openbim-dt) | ISO 23387 data templates |
 

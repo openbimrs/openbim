@@ -28,3 +28,6 @@
 [submodule "packages/loin"]
 	path = packages/loin
 	url = https://github.com/openbimrs/loin.git
+[submodule "packages/idm"]
+	path = packages/idm
+	url = https://github.com/openbimrs/idm.git
