@@ -34,6 +34,8 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- Hardened the standard-family submodule gate to reject dirty child worktrees
+  and poisoned effective URLs, with mutation probes for both failure modes.
 - Updated GitHub Actions checkout to `actions/checkout@v7`, removing the
   deprecated Node 20 runtime warning and using current fork-safety behavior.
 - Raised the integration workspace MSRV from Rust 1.85 to 1.88, the minimum

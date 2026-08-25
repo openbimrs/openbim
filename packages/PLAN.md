@@ -1,7 +1,7 @@
 # packages implementation plan
 
 Status: family directories established; standard crates are reserved scaffolds.
-Last updated: 2026-08-24
+Last updated: 2026-08-25
 
 This is task state, not ambient context. Follow `AGENTS.md`; claim one task ID,
 record blockers/decisions under it, and check it off only with evidence.
@@ -33,10 +33,10 @@ each crate's own `PLAN.md`.
 
 `PKG-IDS-SPLIT` completed 2026-08-25:
 
-- `openbimrs/ids` exact commit `25d2e6f84b3ac343de4aa059e03ee471d38dc333`:
+- `openbimrs/ids` exact commit `1d163a21474cba2d25f8227b8dc4e78e56bbd778`:
   `scripts/gate.sh` passed on its declared Rust 1.85 MSRV, including clean
   `cargo package` verification.
-- Superproject pin mutations for wrong commit and wrong URL both failed, then
-  the restored pin passed.
+- Superproject guard mutations for wrong commit, declared URL, effective URL,
+  and a dirty child worktree all failed, then the restored pin passed.
 - A fresh `git clone --recurse-submodules` initialized the public child at the
   exact pin and its complete `scripts/gate.sh` passed.

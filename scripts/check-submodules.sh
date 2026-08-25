@@ -20,5 +20,18 @@ case "$status" in
     *) printf 'unexpected packages/ids submodule status: %s\n' "$status" >&2; exit 1 ;;
 esac
 
+effective_url="$(git config --get submodule.packages/ids.url || true)"
+if [ "$effective_url" != "$expected_url" ]; then
+    printf 'packages/ids effective URL mismatch: expected %s, got %s\n' \
+        "$expected_url" "${effective_url:-<unset>}" >&2
+    exit 1
+fi
+
+dirty="$(git -C packages/ids status --porcelain=v1 --untracked-files=all)"
+if [ -n "$dirty" ]; then
+    printf 'packages/ids worktree is dirty:\n%s\n' "$dirty" >&2
+    exit 1
+fi
+
 test -f packages/ids/Cargo.toml
 test -f packages/ids/openbim-ids/Cargo.toml
