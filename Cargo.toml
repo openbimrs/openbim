@@ -59,28 +59,28 @@ axiolid-backend-gpu = { git = "https://github.com/axiolid/axiolid-kernel.git", r
 # axiolid-kernel's graph; the contract crate stays implementation-free.
 axiolid-boolmesh = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
 
-# --- packages/ifc: pure IFC. Only ifc-geometry may touch the geometry kernel. ---
-ifc-schema = { path = "packages/ifc/ifc-schema" }
-ifc-migrate = { path = "packages/ifc/ifc-migrate" }
-ifc-infer = { path = "packages/ifc/ifc-infer" }
-openbim-ifc = { path = "packages/ifc/openbim-ifc" }
-ifc-step = { path = "packages/ifc/ifc-step" }
-ifc-xml = { path = "packages/ifc/ifc-xml" }
-ifc-model = { path = "packages/ifc/ifc-model" }
-ifc-geometry = { path = "packages/ifc/ifc-geometry" }
-ifc-properties = { path = "packages/ifc/ifc-properties" }
-ifc-template-catalog = { path = "packages/ifc/ifc-template-catalog" }
-ifc-cost = { path = "packages/ifc/ifc-cost" }
-ifc-schedule = { path = "packages/ifc/ifc-schedule" }
-ifc-material = { path = "packages/ifc/ifc-material" }
-ifc-style = { path = "packages/ifc/ifc-style" }
-ifc-structural = { path = "packages/ifc/ifc-structural" }
-ifc-resource = { path = "packages/ifc/ifc-resource" }
-ifc-classification = { path = "packages/ifc/ifc-classification" }
-ifc-georef = { path = "packages/ifc/ifc-georef" }
-ifc-systems = { path = "packages/ifc/ifc-systems" }
-ifc-alignment = { path = "packages/ifc/ifc-alignment" }
-ifc-validate = { path = "packages/ifc/ifc-validate" }
+# --- packages/ifc: canonical IFC family pinned from openbimrs/ifc. ---
+# Versioned paths keep integration on the exact submodule sources while making
+# release metadata explicit across the repository boundary.
+ifc-schema = { path = "packages/ifc/ifc-schema", version = "0.1.0" }
+openbim-ifc = { path = "packages/ifc/openbim-ifc", version = "0.1.0" }
+ifc-step = { path = "packages/ifc/ifc-step", version = "0.1.0" }
+ifc-xml = { path = "packages/ifc/ifc-xml", version = "0.1.0" }
+ifc-model = { path = "packages/ifc/ifc-model", version = "0.1.0" }
+ifc-geometry = { path = "packages/ifc/ifc-geometry", version = "0.1.0" }
+ifc-properties = { path = "packages/ifc/ifc-properties", version = "0.1.0" }
+ifc-template-catalog = { path = "packages/ifc/ifc-template-catalog", version = "0.1.0" }
+ifc-cost = { path = "packages/ifc/ifc-cost", version = "0.1.0" }
+ifc-schedule = { path = "packages/ifc/ifc-schedule", version = "0.1.0" }
+ifc-material = { path = "packages/ifc/ifc-material", version = "0.1.0" }
+ifc-style = { path = "packages/ifc/ifc-style", version = "0.1.0" }
+ifc-structural = { path = "packages/ifc/ifc-structural", version = "0.1.0" }
+ifc-resource = { path = "packages/ifc/ifc-resource", version = "0.1.0" }
+ifc-classification = { path = "packages/ifc/ifc-classification", version = "0.1.0" }
+ifc-georef = { path = "packages/ifc/ifc-georef", version = "0.1.0" }
+ifc-systems = { path = "packages/ifc/ifc-systems", version = "0.1.0" }
+ifc-alignment = { path = "packages/ifc/ifc-alignment", version = "0.1.0" }
+ifc-validate = { path = "packages/ifc/ifc-validate", version = "0.1.0" }
 
 # --- packages/wire: encoding substrate. Below BOTH ifc/ and openbim/, so the
 # one-way rule (ifc must never depend on openbim) survives sharing XML/ZIP. ---

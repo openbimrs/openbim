@@ -34,6 +34,10 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- **IFC now has a canonical standalone repository.** `packages/ifc` is pinned
+  from `github.com/openbimrs/ifc` and contains all 19 IFC packages plus their
+  curated test fixtures. Relevant Git history, explicit package metadata, and
+  standalone/integration gates are preserved across the repository boundary.
 - **ICDD now has a canonical standalone repository.** `packages/icdd` is a
   pinned submodule of `github.com/openbimrs/icdd`, containing both the canonical
   `openbim-icdd` implementation and the exact-version `icdd` pure re-export.
@@ -233,7 +237,7 @@ section on release.
   declarations: 112 entities (23 abstract, 89 concrete), 13 selects, seven
   enums, three defined types, and 28 functions. Coverage and ownership gates are
   mutation-verified.
-- Costing fixture `test/fixtures/costing/costing_schedule.ifc` with cost
+- Costing fixture `packages/ifc/test/fixtures/costing/costing_schedule.ifc` with cost
   schedules, items, values, quantities, property sets, and an entity type from
   no IFC schema.
 
@@ -375,7 +379,7 @@ section on release.
   layout + backends as features).
 - Repo scaffold: `docs/` (roadmap, ADRs, this changelog), `references/`
   symlinks to IfcOpenShell + ifc-lite clones on `/mnt/backup/`,
-  `test/fixtures/` with 19 edge-case `.ifc` files pulled from those two repos,
+  `packages/ifc/test/fixtures/` with 19 edge-case `.ifc` files pulled from those two repos,
   `target` symlinked to `/mnt/backup/build-cache/` (sparse root disk),
   progressive `AGENTS.md` context files.
 

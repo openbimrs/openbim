@@ -7,3 +7,6 @@
 [submodule "packages/cde"]
 	path = packages/cde
 	url = https://github.com/openbimrs/cde.git
+[submodule "packages/ifc"]
+	path = packages/ifc
+	url = https://github.com/openbimrs/ifc.git

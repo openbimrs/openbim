@@ -4,7 +4,7 @@
 alternative to IfcOpenShell, without OpenCascade.
 
 Validation-gated stages. No stage is "done" on a claim. Every stage lands with
-(a) a cross-check against `test/fixtures/` (or a larger oracle corpus) and
+(a) a cross-check against `packages/ifc/test/fixtures/` (or a larger oracle corpus) and
 (b) a measured wall-clock. Performance claims are always backed by a benchmark
 number, never asserted.
 

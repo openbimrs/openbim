@@ -60,3 +60,8 @@ check_submodule \
     packages/icdd \
     https://github.com/openbimrs/icdd.git \
     Cargo.toml openbim-icdd/Cargo.toml icdd/Cargo.toml scripts/gate.sh
+
+check_submodule \
+    packages/ifc \
+    https://github.com/openbimrs/ifc.git \
+    Cargo.toml openbim-ifc/Cargo.toml ifc-model/Cargo.toml scripts/gate.sh

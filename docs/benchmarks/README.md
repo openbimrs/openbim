@@ -9,10 +9,10 @@ per-product volume, edge-manifoldness, and timing.
 
 ```sh
 # 1. Reference (needs `pip install ifcopenshell numpy`).
-python3 tools/differential/reference.py test/fixtures/ifclite-geometry/*.ifc > /tmp/ref.jsonl
+python3 tools/differential/reference.py packages/ifc/test/fixtures/ifclite-geometry/*.ifc > /tmp/ref.jsonl
 
 # 2. Ours.
-cargo run -q -p ifc-cli --release -- differential test/fixtures/ifclite-geometry/*.ifc > /tmp/ours.jsonl
+cargo run -q -p ifc-cli --release -- differential packages/ifc/test/fixtures/ifclite-geometry/*.ifc > /tmp/ours.jsonl
 
 # 3. Join.
 python3 tools/differential/compare.py /tmp/ours.jsonl /tmp/ref.jsonl > docs/benchmarks/differential-ifcopenshell.md
