@@ -107,6 +107,7 @@ preflight_url packages/loin https://github.com/openbimrs/loin.git
 preflight_url packages/dt https://github.com/openbimrs/dt.git
 preflight_url packages/cde https://github.com/openbimrs/cde.git
 preflight_url packages/ifc https://github.com/openbimrs/ifc.git
+preflight_url packages/step https://github.com/openbimrs/step.git
 preflight_url packages/gaeb https://github.com/openbimrs/gaeb.git
 preflight_url packages/citygml https://github.com/openbimrs/citygml.git
 preflight_url packages/openbimrl https://github.com/openbimrs/openbimrl.git

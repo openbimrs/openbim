@@ -169,6 +169,11 @@ check_submodule \
     Cargo.toml openbim-ifc/Cargo.toml ifc-model/Cargo.toml scripts/gate.sh
 
 check_submodule \
+    packages/step \
+    https://github.com/openbimrs/step.git \
+    Cargo.toml openbim-step/Cargo.toml scripts/gate.sh
+
+check_submodule \
     packages/gaeb \
     https://github.com/openbimrs/gaeb.git \
     Cargo.toml openbim-gaeb/Cargo.toml gaeb/Cargo.toml scripts/gate.sh

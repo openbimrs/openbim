@@ -69,6 +69,9 @@ together. Public source and artifacts carry only generated semantic metadata;
 lawfully obtained standards and Annex B schemas remain in the ignored
 `references/` boundary.
 
+The generic STEP/EXPRESS substrate follows the same canonical-child model
+with an implemented, independently gated parser/writer contract.
+
 ## Alternatives considered
 
 | Option | Why not |
@@ -77,7 +80,7 @@ lawfully obtained standards and Annex B schemas remain in the ignored
 | Editable mirrors via subtree automation | Creates ambiguous contribution and merge direction unless one side is declared read-only. |
 | Git dependencies without source pins in the tree | Reproducible, but makes whole-ecosystem browsing and coordinated local development less direct. |
 | Copy the current directory into an empty repository | Loses the family history and creates two editable copies. |
-| Private `codec` submodule in the public superproject | Anonymous recursive clones would fail. |
+| Private `step` submodule in the public superproject | Anonymous recursive clones would fail. |
 
 ## Consequences
 
@@ -101,7 +104,8 @@ lawfully obtained standards and Annex B schemas remain in the ignored
 
 - Validate every extraction with a fresh anonymous recursive clone.
 - Keep dependency changes ordered from lower-level repositories to consumers.
-- Keep `codec` in the superproject while `openbimrs/codec` is private.
+- Keep `openbimrs/step` public so anonymous recursive clones can resolve the
+  generic STEP/EXPRESS substrate.
 - Apply the hardened extraction workflow to the remaining standard families.
 
 ## Relation to existing code
@@ -117,6 +121,9 @@ lawfully obtained standards and Annex B schemas remain in the ignored
   canonical family repositories pinned at reviewed commits.
 - `packages/{citygml,openbimrl,bsdd}` — reservation workspaces with canonical
   and short-name packages.
+- `packages/step` — generic ISO 10303-11/21 substrate pinned from
+  `openbimrs/step`; XML and ZIP formats depend directly on maintained ecosystem
+  crates instead of public sniff-only wrappers.
 - `.gitmodules` — canonical child URLs.
 - `Cargo.toml` — workspace membership and local integration patches.
 - `packages/facade/openbim` — optional per-standard facade dependencies.

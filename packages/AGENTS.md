@@ -12,8 +12,8 @@ short name was still free on crates.io, its alias crate too.
 
 Extracted families are Git submodules whose canonical source is the matching
 `openbimrs/<family>` repository. `ids/`, `icdd/`, `idm/`, `loin/`, `dt/`, `cde/`,
-`ifc/`, `epd/`, `gaeb/`, `citygml/`, `openbimrl/`, and `bsdd/` are extracted.
-Make family changes in the child repository,
+`ifc/`, `epd/`, `gaeb/`, `citygml/`, `openbimrl/`, `bsdd/`, and `step/` are
+extracted. Make family changes in the child repository,
 pass its standalone gate, push the child commit, and only then update the
 superproject pin. The root integration gate must pass at the exact pin before
 it lands.
@@ -34,25 +34,29 @@ it lands.
 | `loin/` | `openbim-loin`, `loin` | ISO 7817-3 / EN 17412-3 |
 | `dt/` | `openbim-dt` | ISO 23387 data templates |
 | `core/` | `openbim-core` | shared vocabulary |
-| `codec/` | `openbim-codec-xml`, `openbim-codec-zip` | encoding substrate |
+| `step/` | `openbim-step` | ISO 10303-11 EXPRESS and ISO 10303-21 syntax substrate |
 | `facade/` | `openbim` | feature-gated facade |
 | `analysis/` | `clash`, `diff` | capabilities, NOT standards |
 
 ## The dependency rule
 
 ```
-codec/  ->  nothing        (encoding substrate)
+step/   ->  nothing        (generic STEP/EXPRESS substrate)
 core/   ->  nothing        (shared domain vocabulary)
-ifc/    ->  codec          NEVER a standard family
-<std>/  ->  core, codec, ifc
+ifc/    ->  step          NEVER a standard family
+<std>/  ->  core, step, ifc
 facade/ ->  the standards it re-exports
 analysis/ -> ifc, core, bcf
 ```
 
 `ifc/` must never depend on a standard family. If an IFC crate needs something
 from one, the abstraction is in the wrong place: move the shared piece down
-into `core/` or `codec/`, never the dependency up. That is what stops the IFC
+into `core/` or `step/`, never the dependency up. That is what stops the IFC
 core accreting every standard that happens to read IFC.
+
+Format families use maintained XML/ZIP ecosystem crates directly. `step/`
+does not wrap dependencies merely to centralize versions; it exists because
+STEP/EXPRESS provides a substantial reusable syntax and language contract.
 
 ## Directory is not the boundary
 

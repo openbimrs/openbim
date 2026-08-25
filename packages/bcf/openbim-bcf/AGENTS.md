@@ -7,7 +7,8 @@ roadmap work; keep progress, blockers, and evidence there.
 
 ## Boundary
 
-openbim-core plus openbim-codec-zip/xml. No IFC dependency for the format itself.
+`openbim-core`, `quick-xml`, and `zip` directly. BCF owns archive selection and
+safety policy locally. No IFC dependency for the format itself.
 
 ## Status
 

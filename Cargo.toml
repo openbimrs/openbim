@@ -24,8 +24,9 @@ members = [
 
 # `bindings/_deferred-wasm/` is intentionally NOT a member. WASM is deferred
 # (see bindings/AGENTS.md); the underscore prefix keeps it out of any future
-# `bindings/*` glob as well, so re-adding it is a deliberate act.
-exclude = ["bindings/_deferred-wasm"]
+# `bindings/*` glob as well, so re-adding it is a deliberate act. STEP keeps
+# its own workspace metadata while remaining available as an exact path patch.
+exclude = ["bindings/_deferred-wasm", "packages/step"]
 
 [workspace.package]
 version = "0.1.0"
@@ -86,10 +87,8 @@ ifc-systems = { path = "packages/ifc/ifc-systems", version = "0.1.0" }
 ifc-alignment = { path = "packages/ifc/ifc-alignment", version = "0.1.0" }
 ifc-validate = { path = "packages/ifc/ifc-validate", version = "0.1.0" }
 
-# --- packages/wire: encoding substrate. Below BOTH ifc/ and openbim/, so the
-# one-way rule (ifc must never depend on openbim) survives sharing XML/ZIP. ---
-openbim-codec-xml = { path = "packages/codec/openbim-codec-xml", version = "0.1.0" }
-openbim-codec-zip = { path = "packages/codec/openbim-codec-zip", version = "0.1.0" }
+# --- packages/step: generic ISO 10303 syntax below IFC and standards. ---
+openbim-step = { path = "packages/step/openbim-step", version = "0.2.0" }
 
 # --- packages/openbim: standards built ON the IFC layer, never inside it. ---
 # One crate per standard. Cargo features are additive across the whole graph,
@@ -130,7 +129,7 @@ quick-xml = "0.37"
 # guarantee one package identity and exercise the exact pinned family commits.
 [patch.crates-io]
 openbim-core = { path = "packages/core/openbim-core" }
-openbim-codec-xml = { path = "packages/codec/openbim-codec-xml" }
+openbim-step = { path = "packages/step/openbim-step" }
 
 [profile.release]
 opt-level = 3

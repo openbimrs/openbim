@@ -49,7 +49,6 @@ section on release.
   | --- | --- |
   | `openbim` | facade, one feature per standard |
   | `openbim-core` | shared vocabulary |
-  | `openbim-codec-xml`, `openbim-codec-zip` | encoding substrate |
   | `openbim-ids`, `openbim-bcf`, `openbim-icdd`, `openbim-idm`, `openbim-loin`, `openbim-dt` | standards |
   | `icdd`, `idmxml`, `loin` | alias crates, pure re-exports |
 
@@ -64,6 +63,13 @@ section on release.
 ### Changed
 - Advanced the DT family pin to connect its complete pre-standalone lineage and
   make the deployed Pages artifact match the validated documentation tree.
+- Retired the public sniff-only XML and ZIP wrapper packages. XML format
+  families use `quick-xml` directly; GAEB now pins the published
+  `openbim-gaeb`/`gaeb` `0.1.2` pair and owns BOM/content detection locally.
+  ZIP-based families will own their archive policy over the maintained `zip`
+  crate when implemented. `packages/step` is now the canonical
+  `openbimrs/step` submodule and contains `openbim-step 0.2.0`, the reusable
+  ISO 10303-11 EXPRESS and ISO 10303-21 syntax layer consumed by IFC adapters.
 - Advanced the EPD family pin to the independently gated documentation commit,
   publishing searchable project pages, generated Rust API documentation, and
   single-source changelog and roadmap pages without redistributing local
@@ -77,6 +83,7 @@ section on release.
   in the common Git directory. Recursive checks now require an inherited,
   inode-validated descriptor that demonstrably holds the exclusive flock, so a
   forged environment marker cannot bypass serialization.
+
 - Enforced facade feature isolation from actual `cargo tree` dependency closures;
   every isolated standard feature, including CityGML, openBIMRL, and bSDD, now
   fails the root gate if it pulls any other standard family. Permanent mutation

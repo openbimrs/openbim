@@ -14,7 +14,7 @@ of a monolith.
 
 Standard-family repositories are progressively becoming canonical standalone
 repositories pinned here as Git submodules. IDS established the extraction
-pattern; IDS, IFC, ICDD, IDM, LOIN, DT, CDE, EPD, GAEB, CityGML,
+pattern; IDS, IFC, ICDD, IDM, LOIN, DT, STEP, CDE, EPD, GAEB, CityGML,
 openBIMRL, and bSDD are now independently pinned families.
 
 ## Clone for development
@@ -39,6 +39,7 @@ while the children are initialized or advanced.
 | --- | --- | --- | --- |
 | [`openbim`](https://crates.io/crates/openbim) | [docs.rs](https://docs.rs/openbim) | [src](packages/facade/openbim) | Facade; one feature per standard |
 | [`openbim-core`](https://crates.io/crates/openbim-core) | [docs.rs](https://docs.rs/openbim-core) | [src](packages/core/openbim-core) | Vocabulary shared across standards |
+| [`openbim-step`](https://crates.io/crates/openbim-step) | [docs.rs](https://docs.rs/openbim-step) | [repository](https://github.com/openbimrs/step) | ISO 10303-21 STEP + ISO 10303-11 EXPRESS syntax |
 | [`openbim-ids`](https://crates.io/crates/openbim-ids) | [docs.rs](https://docs.rs/openbim-ids) | [repository](https://github.com/openbimrs/ids) | buildingSMART IDS |
 | [`openbim-gaeb`](https://crates.io/crates/openbim-gaeb) | [docs.rs](https://docs.rs/openbim-gaeb) | [repository](https://github.com/openbimrs/gaeb) | GAEB DA XML 3.1–3.4 beta |
 | [`openbim-citygml`](https://crates.io/crates/openbim-citygml) | [docs.rs](https://docs.rs/openbim-citygml) | [repository](https://github.com/openbimrs/citygml) | OGC CityGML; reserved scaffold |
@@ -69,19 +70,22 @@ pure re-exports, so the standard is reachable as practitioners name it:
 entity graph, `ifc-step` and `ifc-xml` are codecs, and the domain crates are
 borrowed projections over the model.
 
-### Substrate
+### STEP substrate
 
-`openbim-codec-xml` and `openbim-codec-zip` carry the encoding substrate. They
-sit below both layers, which is what lets the IFC layer and the standards share
-XML and ZIP handling without the IFC layer depending on a standard.
+`openbim-step` is the schema-independent ISO 10303-21/11 substrate beneath IFC.
+`ifc-step` converts its generic syntax model into the IFC graph and `ifc-schema`
+lowers its generic EXPRESS AST into IFC registries. XML and ZIP format families
+use the maintained `quick-xml` and `zip` crates directly and keep domain policy
+in their own adapters.
 
 ## Status
 
 The foundational crates remain published as reserved scaffolds; `openbim-epd`
-and `openbim-dt` are at `0.1.1`, while the remaining original release set stays
-at `0.1.0`. Their
-structure, boundaries, and gates are real, but they do not yet provide working
-IFC, IDS, or EPD readers. The new `openbim-cde` family is different: its
+and `openbim-dt` are at `0.1.1`, while the remaining original scaffold release
+set stays at `0.1.0`. Their structure, boundaries, and gates are real, but they
+do not yet provide working IFC, IDS, or EPD readers. `openbim-step 0.2.0` and
+`openbim-gaeb 0.1.2` are implemented libraries rather than namespace-only
+scaffolds. The new `openbim-cde` family is also different: its
 Foundation/Documents wire models are implemented and exercised, while
 HTTP/OAuth execution and full schema validation are explicitly not. GAEB is
 also implemented beyond scaffold: it recognizes DA XML 3.1–3.4 beta, resolves

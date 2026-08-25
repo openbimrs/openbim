@@ -10,6 +10,9 @@
 [submodule "packages/ifc"]
 	path = packages/ifc
 	url = https://github.com/openbimrs/ifc.git
+[submodule "packages/step"]
+	path = packages/step
+	url = https://github.com/openbimrs/step.git
 [submodule "packages/epd"]
 	path = packages/epd
 	url = https://github.com/openbimrs/epd.git

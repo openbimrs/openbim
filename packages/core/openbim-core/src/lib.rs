@@ -2,9 +2,9 @@
 //!
 //! # What belongs here
 //!
-//! **Domain** concepts used by more than one standard — not XML, not ZIP.
-//! Encoding substrate lives in `openbim-codec-xml` / `openbim-codec-zip`, one layer below, so
-//! that `packages/` can use it too without ever depending on `openbim/`.
+//! **Domain** concepts used by more than one standard — not XML, ZIP, STEP, or
+//! EXPRESS mechanics. Format families depend on maintained mechanics crates
+//! directly and own their domain policy locally.
 //!
 //! Three things earn their place:
 //!

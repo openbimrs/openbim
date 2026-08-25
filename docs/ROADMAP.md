@@ -167,9 +167,8 @@ bindings.
       `packages/idm`. The canonical crate owns the lossless tree, CLI, generated
       schema catalog, and PyO3 binding; `idmxml` is a pure re-export alias.
       Recorded schema defects remain explicit semantic overlays.
-- [ ] Move the IDM engine's direct `quick-xml` use behind `openbim-codec-xml`
-      after that substrate exposes the required lossless event/tree contracts;
-      do not replace working behavior with a scaffold-only dependency.
+- [x] Keep the IDM engine directly on `quick-xml`; XML policy is format-local.
+      Preserve its working lossless behavior and validate it in the IDM family gate.
 - [ ] `openbim-loin`: port from `poing`. Namespace migration is first-class —
       the LOIN namespace is not final.
 - [ ] `openbim-dt`: ISO 23387 data templates, which the LOIN schema imports.
@@ -187,7 +186,8 @@ bindings.
       (added/removed/moved/property-changed), not a text diff.
 - [ ] `openbim-icdd`: ISO 21597 container. RDF stays inside this crate until a
       second consumer justifies a `wire-rdf`.
-- [ ] `ifc-zip`: an IFCZIP decorator generic over `Codec`, reusing `openbim-codec-zip`.
+- [ ] `ifc-zip`: an IFCZIP decorator generic over `Codec`, using `zip` directly
+  with IFC-owned archive limits and deterministic entry policy.
       One implementation covers STEP, ifcXML and any future IFC-JSON.
 
 ## Stage 7 — Bindings

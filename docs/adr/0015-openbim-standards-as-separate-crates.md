@@ -3,7 +3,7 @@
 - **Status:** Accepted
 - **Date:** 2026-08-24
 - **Deciders:** Friedrich, nehirde
-- **Amended:** 2026-08-24 — flat `packages/`, `openbim-*` publish names, `openbim-codec-*` substrate
+- **Amended:** 2026-08-25 — canonical STEP substrate; direct XML/ZIP mechanics
 - **Supersedes:** —
 
 ## Context
@@ -16,12 +16,12 @@ are *capabilities*. Keeping them in a directory named for a standards family
 implies a status they do not have, and invites the same directory to accrete
 anything IFC-adjacent.
 
-**2. The remaining standards share a substrate that cannot live in `openbim/`.**
-BCF, IDS, IDM, LOIN and ICDD are all XML; BCF, ICDD and IFCZIP are all ZIP. But
-`packages/AGENTS.md` states the one-way rule: `packages/` must never
-depend on `packages/`. Since `ifc-xml` needs XML handling and a future
-IFCZIP needs ZIP handling, a shared substrate inside `openbim/` would force
-exactly the dependency the rule forbids.
+**2. The remaining standards share mechanics but not domain policy.** BCF, IDS,
+IDM, LOIN and ICDD are all XML; BCF, ICDD and IFCZIP are all ZIP. XML families
+use `quick-xml` directly and archive families use `zip` directly while retaining
+their safety, selection, and version policy locally. Generic STEP/EXPRESS syntax
+is substantial enough to form the independent `openbim-step` substrate below
+IFC.
 
 A third force appeared during design: several of these standards reuse a single
 XML namespace across incompatible versions. IDS is the extreme case — every
@@ -37,13 +37,13 @@ format, detecting containers by magic bytes rather than file extension.
 ## Decision
 
 We will structure openBIM support as **one crate per standard**, plus a thin
-facade, over a substrate layer that sits below both `ifc/` and `openbim/`.
+facade. STEP/EXPRESS syntax lives below IFC; XML and ZIP mechanics are direct
+third-party dependencies rather than public wrappers.
 
 ```
-packages/          encoding substrate, no domain knowledge
-  openbim-codec-xml/             XML recognition (BOM, sniffing)
-  openbim-codec-zip/             ZIP framing recognition
 packages/
+  step/openbim-step/  ISO 10303-11/21 syntax, no IFC dependency
+  ifc/                 IFC graph adapters, schema lowering, and policy
   openbim/              facade; features are pure re-exports
   openbim-core/         shared DOMAIN vocabulary (not XML, not ZIP)
   openbim-{dt,ids,bcf,icdd,idm,loin}/
@@ -63,8 +63,7 @@ Key points:
 - **`loin` implies `dt`**, because the ISO 7817-3 schema imports the ISO 23387
   namespace. That is a property of the standards, not a design choice.
 - **`openbim-core` holds domain vocabulary only** — `Outcome`, `ElementRef`,
-  `Detected`. If it ever holds only re-exports of `wire-*`, it should be
-  deleted; that would prove there was no shared domain.
+  `Detected`. Format mechanics and sniffing do not belong there.
 - **No ISO/CEN schema is vendored.** Types are written from the schemas, which
   are referenced out of tree — the same discipline `ifc-schema` applies to the
   EXPRESS schemas.
@@ -75,7 +74,7 @@ Key points:
 | --- | --- |
 | One `openbim` crate, one feature per standard | Feature unification is graph-wide: an `icdd` feature enabled by any dependency imposes RDF on every consumer. This is the decisive argument. |
 | Shared XML/ZIP inside `packages/` | Would force `packages/` to depend on `openbim/`, violating the one-way rule that keeps the IFC core from accreting every standard. |
-| Put RDF in `wire-rdf` alongside `openbim-codec-xml`/`openbim-codec-zip` | ICDD is the only RDF consumer. A `wire-rdf` crate created now would be a one-consumer abstraction; defer it until ICDD is implemented. |
+| Add a shared RDF wrapper beside XML/ZIP mechanics | ICDD is the only RDF consumer. A wrapper created now would be a one-consumer abstraction; defer it until another implementation justifies it. |
 | Keep `clash`/`diff` under `openbim/` | They are not openBIM standards. Misfiling them is how the directory loses its meaning. |
 | Delete `clash`/`diff` | Both are on the roadmap, and `clash` is the stress test for kernel-agnosticism. Moved, not deleted. |
 | Short crate names (`ids`, `bcf`, `dt`) | All taken on crates.io by unrelated projects. Verified 2026-08-24. |
@@ -86,7 +85,8 @@ Key points:
 
 - A consumer needing only IDS compiles only IDS. Provable with `cargo tree`,
   and gated in `scripts/gate.sh` rather than asserted in prose.
-- `packages/` can use `openbim-codec-xml` without any path to `openbim/`.
+- Each XML/ZIP family can use maintained mechanics crates without depending on
+  another standard family.
 - The version-detection trap is encoded once, in `openbim_core::Detected`,
   with an explicit `Conflict` variant instead of a silent guess.
 - Adding a standard is additive: a new leaf crate plus one facade feature.
@@ -109,7 +109,8 @@ Key points:
   and an earlier draft used a different one. Namespace migration must stay a
   first-class concern in `openbim-loin`.
 - `ifc-zip` (an `IFCZIP` decorator generic over `Codec`) is deferred; when it
-  lands it must reuse `openbim-codec-zip` rather than reimplementing framing.
+  lands it must use `zip` directly with IFC-owned limits and deterministic
+  entry policy.
 - Working ISO 29481-3 and ISO 7817-3 codecs exist in the private `poing`
   repository. Porting them here is Phase 2 and is deliberately not part of the
   first release.
@@ -147,8 +148,10 @@ is published as `openbim-ifc` but keeps `ifc` as its **lib target name**, so
 consumer code still reads `use ifc::…` — the ergonomic name survives even
 though the registry name could not.
 
-**`wire-*` became `openbim-codec-*`.** Same crates, same boundary, a name that
-says what they are. They remain below both the IFC layer and the standards.
+**Shared sniff-only wrappers were retired.** Their mechanics were too small to
+justify public package boundaries. Generic STEP/EXPRESS moved to the canonical
+`openbimrs/step` family because it provides a substantial reusable language and
+syntax model; XML/ZIP families depend directly on maintained ecosystem crates.
 
 ## Amendment, 2026-08-24 — one directory per standard family
 
@@ -160,7 +163,7 @@ later be extracted to its own repository as a directory move.
 ```
 packages/ifc/     ifc-* (18) + openbim-ifc      packages/dt/      openbim-dt
 packages/ids/     openbim-ids                   packages/core/    openbim-core
-packages/bcf/     openbim-bcf                   packages/codec/   openbim-codec-{xml,zip}
+packages/bcf/     openbim-bcf                   packages/step/    openbim-step
 packages/icdd/    openbim-icdd + icdd           packages/facade/  openbim
 packages/idm/     openbim-idm + idmxml          packages/analysis/ clash, diff
 packages/loin/    openbim-loin + loin
