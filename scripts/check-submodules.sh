@@ -4,6 +4,16 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+# Read parent/child Git config under a shared lock. The mutation suite holds the
+# same file exclusively and exports the marker below before invoking this
+# checker, avoiding recursive lock acquisition while preventing unrelated
+# checker runs from observing temporary poisoned URLs.
+if [[ "${OPENBIM_SUBMODULE_GUARD_LOCK_HELD:-0}" != "1" ]]; then
+    common_git_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
+    exec 8>"$common_git_dir/openbim-submodule-guard.lock"
+    flock -s 8
+fi
+
 check_submodule() {
     local path="$1"
     local expected_url="$2"

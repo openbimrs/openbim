@@ -60,6 +60,15 @@ section on release.
   publishing searchable project pages, generated Rust API documentation, and
   single-source changelog and roadmap pages without redistributing local
   standards references.
+- Hardened the GAEB, CityGML, openBIMRL, and bSDD alias release contracts to
+  reject conditional/default-feature-altered dependencies, extra dependencies,
+  features, targets, build scripts, source APIs, loose versions, and unexpected
+  package payloads. All four children now pin CI action inputs and kill 19
+  semantic mutations before clean canonical and alias package verification.
+- Serialized submodule-guard reads and mutations through shared/exclusive locks
+  in the common Git directory so parallel gates in linked worktrees cannot
+  observe, snapshot, or restore each other's temporary URL and child-origin
+  mutations.
 - Enforced facade feature isolation from actual `cargo tree` dependency closures;
   each isolated standard feature now fails the root gate if it pulls any other
   standard family (with LOIN's normative DT dependency as the explicit exception).

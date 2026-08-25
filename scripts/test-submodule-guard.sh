@@ -4,6 +4,14 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+# Parent-local submodule URLs and initialized child origins live in Git config
+# shared by linked worktrees. Serialize the mutation suite across those
+# worktrees so one run cannot snapshot and later restore another run's poison.
+common_git_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
+exec 9>"$common_git_dir/openbim-submodule-guard.lock"
+flock 9
+export OPENBIM_SUBMODULE_GUARD_LOCK_HELD=1
+
 checker="scripts/check-submodules.sh"
 children=(packages/ids packages/icdd packages/loin packages/cde packages/ifc packages/gaeb packages/citygml packages/openbimrl packages/bsdd packages/epd)
 

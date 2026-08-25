@@ -88,10 +88,13 @@ each crate's own `PLAN.md`.
 completed 2026-08-25:
 
 - `openbimrs/citygml` exact commit
-  `3cbcd79b8dc3f07a15dd520a2b1e08b5e1c6ea9a`.
+  `9beff1d715f6bf75cf3514617998e1e4baf38760`.
 - `openbimrs/openbimrl` exact commit
-  `744f44a56e5da7b7265745cf480425f13cedbc0c`.
+  `a006ecbeefa90b37ae5bc4fe3396eb8de5cf65fd`.
 - `openbimrs/bsdd` exact commit
-  `7f25b3f8c615953f11c59d7dd21f3a7c67579920`.
-- Each child passes Rust 1.85 build, test, Clippy, rustdoc, exact alias-purity,
-  two mutation probes, and full canonical plus alias package verification.
+  `ea5044d516ca6c7784dae51ff6fc717e75a76331`.
+- `openbimrs/gaeb` alias-release hardening is pinned at
+  `fb6c03feda5630cc582c9e41b3824fefcc303897`.
+- Each child passes Rust 1.85 and current-stable build, test, Clippy, rustdoc,
+  exact alias purity, 19 semantic mutation probes, exact package allowlists,
+  and full canonical plus alias package verification.
