@@ -40,6 +40,9 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- Updated the EPD family pin and workspace dependency to `openbim-epd 0.1.1`,
+  whose public examples use the corrected `InformationModuleGroup::group()` API
+  and are compile-tested as crate documentation.
 - **IFC now has a canonical standalone repository.** `packages/ifc` is pinned
   from `github.com/openbimrs/ifc` and contains all 19 IFC packages plus their
   curated test fixtures. Relevant Git history, explicit package metadata, and

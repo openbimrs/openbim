@@ -66,12 +66,13 @@ XML and ZIP handling without the IFC layer depending on a standard.
 
 ## Status
 
-Fourteen crates are published at `0.1.0` as reserved scaffolds, including
-`openbim-epd`. Their structure, boundaries, and gates are real, but they do not
-yet provide working IFC, IDS, or EPD readers. The new `openbim-cde` family is
-different: its Foundation/Documents wire models are implemented and exercised,
-while HTTP/OAuth execution and full schema validation are explicitly not. See
-each family README and `docs/ROADMAP.md` for the exact capability boundary.
+The foundational crates remain published as reserved scaffolds; `openbim-epd`
+is at `0.1.1`, while the original release set remains at `0.1.0`. Their
+structure, boundaries, and gates are real, but they do not yet provide working
+IFC, IDS, or EPD readers. The new `openbim-cde` family is different: its
+Foundation/Documents wire models are implemented and exercised, while
+HTTP/OAuth execution and full schema validation are explicitly not. See each
+family README and `docs/ROADMAP.md` for the exact capability boundary.
 
 The isolation is checkable rather than promised. Against the *published*
 crates:
