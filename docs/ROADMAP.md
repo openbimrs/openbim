@@ -121,8 +121,9 @@ geometry.
 
 The crate layout is settled (`docs/adr/0015`): one crate per standard under
 `packages/`, a substrate layer in `packages/`, and the `openbim`
-facade whose features are pure re-exports. All names are published as
-reservations; what follows is the implementation.
+facade whose features are pure re-exports. The original 13 package names are
+published as reservations; newer families document publication status
+separately.
 
 - [ ] `ifc-properties`: property sets, quantities, and **type→occurrence
       inheritance precedence** (occurrence wins). Unit resolution against
@@ -135,6 +136,10 @@ reservations; what follows is the implementation.
 - [ ] `openbim-bcf`: export findings so they leave this toolchain. The reader
       is tolerant by measurement, not by preference — see the corpus numbers in
       the crate docs.
+- [x] `openbim-cde`: transport-agnostic Serde wire models for all released
+      Foundation API 1.1 schemas and all named Documents API 1.0 components.
+      HTTP/OAuth execution and full schema-constraint validation remain out of
+      scope and are not claimed.
 - [ ] `clash` (now `packages/`): broad phase (BVH) + narrow phase on
       the injected kernel.
 - [ ] **Validation:** for IDS, every `pass-` case passes and every `fail-` case

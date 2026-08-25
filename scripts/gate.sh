@@ -66,7 +66,7 @@ done
 # Isolated builds prove each crate declares its own complete dependency set:
 # feature unification inside a workspace build can otherwise hide a missing
 # dependency that only shows up for an external consumer.
-for c in openbim-codec-xml openbim-codec-zip openbim-ifc openbim-core openbim-dt openbim-ids openbim-bcf \
+for c in openbim-codec-xml openbim-codec-zip openbim-ifc openbim-core openbim-dt openbim-ids openbim-cde openbim-bcf \
          openbim-icdd openbim-idm openbim-loin openbim clash diff \
          icdd idmxml loin; do
     step "isolated build -p $c" cargo build -p "$c"

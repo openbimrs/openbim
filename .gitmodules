@@ -4,3 +4,6 @@
 [submodule "packages/icdd"]
 	path = packages/icdd
 	url = https://github.com/openbimrs/icdd.git
+[submodule "packages/cde"]
+	path = packages/cde
+	url = https://github.com/openbimrs/cde.git
