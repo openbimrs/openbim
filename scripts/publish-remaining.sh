@@ -11,7 +11,15 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
-ORDER="openbim-icdd openbim-idm openbim-loin openbim-ifc openbim icdd loin"
+# Canonical crates first, then the facade, then the aliases -- an alias
+# `=`-pins its canonical crate, so that crate must already be on the registry.
+# All three aliases belong here: omitting one leaves a free name unclaimed.
+#
+# `openbim-ifc` is deliberately NOT in this list. It depends on the 18 `ifc-*`
+# crates, none of which are published, so it cannot be published until they
+# are. Publishing the IFC family is a separate decision from securing the
+# openBIM standard names.
+ORDER="openbim icdd idmxml loin"
 
 for c in $ORDER; do
     for attempt in 1 2 3 4 5 6 7 8 9 10; do
