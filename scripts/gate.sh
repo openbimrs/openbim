@@ -67,7 +67,7 @@ done
 # dependency that only shows up for an external consumer.
 for c in openbim-codec-xml openbim-codec-zip openbim-ifc openbim-core openbim-dt openbim-ids openbim-bcf \
          openbim-icdd openbim-idm openbim-loin openbim clash diff \
-         idmxml loin; do
+         icdd idmxml loin; do
     step "isolated build -p $c" cargo build -p "$c"
 done
 

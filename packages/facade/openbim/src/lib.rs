@@ -57,7 +57,7 @@ pub use openbim_ids as ids;
 pub use openbim_bcf as bcf;
 
 #[cfg(feature = "icdd")]
-pub use icdd;
+pub use openbim_icdd as icdd;
 
 #[cfg(feature = "idm")]
 pub use openbim_idm as idm;

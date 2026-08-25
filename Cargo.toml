@@ -6,8 +6,9 @@ members = [
     # `scripts/` inside standard-family submodules.
     "packages/*/openbim-*",
     "packages/facade/openbim",
-    # IFC leaf crates and the remaining short-name alias packages.
+    # IFC leaf crates and the short aliases that were available on crates.io.
     "packages/ifc/ifc-*",
+    "packages/icdd/icdd",
     "packages/idm/idmxml",
     "packages/loin/loin",
     # Analysis capabilities are neither standards nor `openbim-*` crates.

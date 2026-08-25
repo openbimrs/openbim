@@ -7,9 +7,8 @@ inside a family; deeper files add local rules and do not repeat this one.
 ## Layout
 
 One directory per standard, mirroring the repositories under
-`github.com/openbimrs`. A family holds its canonical package. A short Rust crate
-name should be a `[lib]` target on that package; a separate alias package exists
-only where both names intentionally need independent crates.io releases.
+`github.com/openbimrs`. A family holds its canonical crate, and where the
+short name was still free on crates.io, its alias crate too.
 
 Extracted families are Git submodules whose canonical source is the matching
 `openbimrs/<family>` repository. `ids/` is the pilot. Make family changes in the
@@ -22,7 +21,7 @@ exact pin before it lands.
 | `ifc/` | `ifc-*` (18) + `openbim-ifc` facade | ISO 16739 IFC |
 | `ids/` | `openbim-ids` | buildingSMART IDS |
 | `bcf/` | `openbim-bcf` | BCF |
-| `icdd/` | `openbim-icdd` (library target: `icdd`) | ISO 21597 |
+| `icdd/` | `openbim-icdd`, `icdd` | ISO 21597 |
 | `idm/` | `openbim-idm`, `idmxml` | ISO 29481-3 |
 | `loin/` | `openbim-loin`, `loin` | ISO 7817-3 / EN 17412-3 |
 | `dt/` | `openbim-dt` | ISO 23387 data templates |

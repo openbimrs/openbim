@@ -342,6 +342,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "icdd"
+version = "0.1.0"
+dependencies = [
+ "openbim-icdd",
+]
+
+[[package]]
 name = "idmxml"
 version = "0.1.0"
 dependencies = [
