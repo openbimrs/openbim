@@ -56,6 +56,10 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- Advanced the EPD family pin to the independently gated documentation commit,
+  publishing searchable project pages, generated Rust API documentation, and
+  single-source changelog and roadmap pages without redistributing local
+  standards references.
 - Enforced facade feature isolation from actual `cargo tree` dependency closures;
   each isolated standard feature now fails the root gate if it pulls any other
   standard family (with LOIN's normative DT dependency as the explicit exception).
