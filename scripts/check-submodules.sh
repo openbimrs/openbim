@@ -127,6 +127,21 @@ check_submodule \
     Cargo.toml openbim-gaeb/Cargo.toml gaeb/Cargo.toml scripts/gate.sh
 
 check_submodule \
+    packages/citygml \
+    https://github.com/openbimrs/citygml.git \
+    Cargo.toml openbim-citygml/Cargo.toml citygml/Cargo.toml scripts/gate.sh
+
+check_submodule \
+    packages/openbimrl \
+    https://github.com/openbimrs/openbimrl.git \
+    Cargo.toml openbim-openbimrl/Cargo.toml openbimrl/Cargo.toml scripts/gate.sh
+
+check_submodule \
+    packages/bsdd \
+    https://github.com/openbimrs/bsdd.git \
+    Cargo.toml openbim-bsdd/Cargo.toml bsdd/Cargo.toml scripts/gate.sh
+
+check_submodule \
     packages/epd \
     https://github.com/openbimrs/epd.git \
     Cargo.toml openbim-epd/Cargo.toml scripts/gate.sh
