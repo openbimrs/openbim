@@ -33,8 +33,9 @@ each crate's own `PLAN.md`.
 
 `PKG-IDS-SPLIT` completed 2026-08-25:
 
-- `openbimrs/ids` exact commit `35e0c3c84e56916f86cf2c3e2698f3654f1b4c2a`:
-  `scripts/gate.sh` passed, including clean `cargo package` verification.
+- `openbimrs/ids` exact commit `7cdeec6a0630eebefa4f814301752e76de29f082`:
+  `scripts/gate.sh` passed on its declared Rust 1.85 MSRV, including clean
+  `cargo package` verification.
 - Superproject pin mutations for wrong commit and wrong URL both failed, then
   the restored pin passed.
 - A fresh `git clone --recurse-submodules` initialized the public child at the
