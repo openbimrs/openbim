@@ -64,8 +64,21 @@ for child in packages/ids packages/icdd; do
     cp "$modules_backup" .gitmodules
 
     # The child worktree must resolve to the exact commit recorded by the parent.
-    previous_head="$(git -C "$child" rev-parse HEAD^)"
-    git -C "$child" checkout --detach --quiet "$previous_head"
+    # Build a local synthetic commit from the pinned tree instead of relying on
+    # `HEAD^`: Actions checks submodules out shallowly, so the pinned commit may
+    # be the only object with reachable history.
+    probe_head="$(
+        printf 'submodule guard wrong-pin probe\n' |
+            env \
+                GIT_AUTHOR_NAME='OpenBIM gate' \
+                GIT_AUTHOR_EMAIL='gate@openbim.invalid' \
+                GIT_AUTHOR_DATE='2000-01-01T00:00:00Z' \
+                GIT_COMMITTER_NAME='OpenBIM gate' \
+                GIT_COMMITTER_EMAIL='gate@openbim.invalid' \
+                GIT_COMMITTER_DATE='2000-01-01T00:00:00Z' \
+                git -C "$child" commit-tree "${original_head}^{tree}" -p "$original_head"
+    )"
+    git -C "$child" checkout --detach --quiet "$probe_head"
     must_reject "$child wrong commit"
     git -C "$child" checkout --detach --quiet "$original_head"
 
