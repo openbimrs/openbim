@@ -9,19 +9,23 @@ check_submodule() {
     local expected_url="$2"
     shift 2
 
-    local declared_path
-    declared_path="$(git config -f .gitmodules --get "submodule.${path}.path" || true)"
-    if [ "$declared_path" != "$path" ]; then
-        printf '%s path mismatch: expected %s, got %s\n' \
-            "$path" "$path" "${declared_path:-<unset>}" >&2
+    local -a declared_paths=()
+    mapfile -t declared_paths < <(
+        git config -f .gitmodules --get-all "submodule.${path}.path" || true
+    )
+    if [ "${#declared_paths[@]}" -ne 1 ] || [ "${declared_paths[0]:-}" != "$path" ]; then
+        printf '%s path mismatch: expected exactly %s, got %s value(s): %s\n' \
+            "$path" "$path" "${#declared_paths[@]}" "${declared_paths[*]:-<unset>}" >&2
         return 1
     fi
 
-    local declared_url
-    declared_url="$(git config -f .gitmodules --get "submodule.${path}.url" || true)"
-    if [ "$declared_url" != "$expected_url" ]; then
-        printf '%s declared URL mismatch: expected %s, got %s\n' \
-            "$path" "$expected_url" "${declared_url:-<unset>}" >&2
+    local -a declared_urls=()
+    mapfile -t declared_urls < <(
+        git config -f .gitmodules --get-all "submodule.${path}.url" || true
+    )
+    if [ "${#declared_urls[@]}" -ne 1 ] || [ "${declared_urls[0]:-}" != "$expected_url" ]; then
+        printf '%s declared URL mismatch: expected exactly %s, got %s value(s): %s\n' \
+            "$path" "$expected_url" "${#declared_urls[@]}" "${declared_urls[*]:-<unset>}" >&2
         return 1
     fi
 
@@ -35,13 +39,16 @@ check_submodule() {
         *) printf 'unexpected %s submodule status: %s\n' "$path" "$status" >&2; return 1 ;;
     esac
 
-    local configured_url
-    configured_url="$(git config --get "submodule.${path}.url" || true)"
-    if [ "$configured_url" != "$expected_url" ]; then
-        printf '%s configured URL mismatch: expected %s, got %s\n' \
-            "$path" "$expected_url" "${configured_url:-<unset>}" >&2
+    local -a configured_urls=()
+    mapfile -t configured_urls < <(
+        git config --get-all "submodule.${path}.url" || true
+    )
+    if [ "${#configured_urls[@]}" -ne 1 ] || [ "${configured_urls[0]:-}" != "$expected_url" ]; then
+        printf '%s configured URL mismatch: expected exactly %s, got %s value(s): %s\n' \
+            "$path" "$expected_url" "${#configured_urls[@]}" "${configured_urls[*]:-<unset>}" >&2
         return 1
     fi
+    local configured_url="${configured_urls[0]}"
 
     # `url.*.insteadOf` can redirect a canonical-looking URL at transport time.
     # Resolve a synthetic parent remote so local/global rewrite rules are applied.
@@ -56,19 +63,23 @@ check_submodule() {
         return 1
     fi
 
-    local child_origin_url
-    child_origin_url="$(git -C "$path" config --get remote.origin.url || true)"
-    if [ "$child_origin_url" != "$expected_url" ]; then
-        printf '%s child origin mismatch: expected %s, got %s\n' \
-            "$path" "$expected_url" "${child_origin_url:-<unset>}" >&2
+    local -a child_origin_urls=()
+    mapfile -t child_origin_urls < <(
+        git -C "$path" config --get-all remote.origin.url || true
+    )
+    if [ "${#child_origin_urls[@]}" -ne 1 ] || [ "${child_origin_urls[0]:-}" != "$expected_url" ]; then
+        printf '%s child origin mismatch: expected exactly %s, got %s value(s): %s\n' \
+            "$path" "$expected_url" "${#child_origin_urls[@]}" "${child_origin_urls[*]:-<unset>}" >&2
         return 1
     fi
 
-    local child_transport_url
-    child_transport_url="$(git -C "$path" remote get-url origin)"
-    if [ "$child_transport_url" != "$expected_url" ]; then
-        printf '%s child transport URL is rewritten: expected %s, got %s\n' \
-            "$path" "$expected_url" "$child_transport_url" >&2
+    local -a child_transport_urls=()
+    mapfile -t child_transport_urls < <(
+        git -C "$path" remote get-url --all origin || true
+    )
+    if [ "${#child_transport_urls[@]}" -ne 1 ] || [ "${child_transport_urls[0]:-}" != "$expected_url" ]; then
+        printf '%s child transport URL mismatch: expected exactly %s, got %s value(s): %s\n' \
+            "$path" "$expected_url" "${#child_transport_urls[@]}" "${child_transport_urls[*]:-<unset>}" >&2
         return 1
     fi
 

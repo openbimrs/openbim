@@ -41,14 +41,15 @@ The rules are:
    packages during integration, preventing duplicate package identities.
 6. Push and verify a child commit before updating the parent gitlink.
 7. Require recursive checkout and fail closed when a submodule is missing,
-   modified away from its pin, conflicted, or configured with a declared,
-   parent-local, child-origin, or transport-rewritten URL that differs from the
+   modified away from its pin, conflicted, or has zero or multiple declared,
+   parent-local, child-origin, or effective transport URLs instead of exactly one
    canonical public URL.
 8. Keep public superproject submodules public. A private child must remain in the
    superproject until it can be cloned anonymously.
 9. Preserve occupied local-only family paths during migration. The initialization
-   helper must shelter and restore restricted ICDD references rather than asking
-   users to delete or clean an occupied directory.
+   helper must arm cleanup before each rename and signal-safely shelter and
+   restore restricted ICDD references rather than asking users to delete or
+   clean an occupied directory.
 
 IDS was the pilot. ICDD was the second extracted family and also preserves a
 pure short-name package alias. IFC was the third and largest extraction: its 19

@@ -12,6 +12,20 @@ restore_references() {
     if [ "$sheltered" -ne 1 ]; then
         return 0
     fi
+
+    # The flag is armed before `mv`, so interruption on either side of the
+    # atomic rename is recoverable. A missing shelter is safe only when the
+    # original path still exists.
+    if [ ! -e "$shelter" ] && [ ! -L "$shelter" ]; then
+        if [ -e "$references" ] || [ -L "$references" ]; then
+            sheltered=0
+            return 0
+        fi
+        printf 'cannot restore local references: both %s and %s are missing\n' \
+            "$references" "$shelter" >&2
+        return 1
+    fi
+
     mkdir -p packages/icdd
     if [ -e "$references" ] || [ -L "$references" ]; then
         printf 'cannot restore local references: %s already exists; preserved copy remains at %s\n' \
@@ -32,38 +46,44 @@ preflight_url() {
     local path="$1"
     local expected_url="$2"
     local key="submodule.${path}"
-    local declared_path declared_url configured_url transport_url superproject
+    local superproject
+    local -a declared_paths=() declared_urls=() configured_urls=() transport_urls=()
 
-    declared_path="$(git config -f .gitmodules --get "${key}.path" || true)"
-    declared_url="$(git config -f .gitmodules --get "${key}.url" || true)"
-    if [ "$declared_path" != "$path" ] || [ "$declared_url" != "$expected_url" ]; then
-        printf '%s has a non-canonical .gitmodules path or URL\n' "$path" >&2
+    mapfile -t declared_paths < <(git config -f .gitmodules --get-all "${key}.path" || true)
+    mapfile -t declared_urls < <(git config -f .gitmodules --get-all "${key}.url" || true)
+    if [ "${#declared_paths[@]}" -ne 1 ] || [ "${declared_paths[0]:-}" != "$path" ] ||
+        [ "${#declared_urls[@]}" -ne 1 ] || [ "${declared_urls[0]:-}" != "$expected_url" ]; then
+        printf '%s must have exactly one canonical .gitmodules path and URL\n' "$path" >&2
         return 1
     fi
 
-    configured_url="$(git config --get "${key}.url" || true)"
-    if [ -n "$configured_url" ] && [ "$configured_url" != "$expected_url" ]; then
-        printf '%s has a non-canonical configured URL: %s\n' "$path" "$configured_url" >&2
+    mapfile -t configured_urls < <(git config --get-all "${key}.url" || true)
+    if [ "${#configured_urls[@]}" -gt 1 ] ||
+        { [ "${#configured_urls[@]}" -eq 1 ] && [ "${configured_urls[0]}" != "$expected_url" ]; }; then
+        printf '%s has non-canonical or multiple configured URLs: %s\n' \
+            "$path" "${configured_urls[*]:-<unset>}" >&2
         return 1
     fi
 
-    transport_url="$(
+    mapfile -t transport_urls < <(
         git -c "remote.openbim-submodule-init-guard.url=${expected_url}" \
             ls-remote --get-url openbim-submodule-init-guard
-    )"
-    if [ "$transport_url" != "$expected_url" ]; then
+    )
+    if [ "${#transport_urls[@]}" -ne 1 ] || [ "${transport_urls[0]:-}" != "$expected_url" ]; then
         printf '%s transport URL is rewritten before initialization: %s\n' \
-            "$path" "$transport_url" >&2
+            "$path" "${transport_urls[*]:-<unset>}" >&2
         return 1
     fi
 
     superproject="$(git -C "$path" rev-parse --show-superproject-working-tree 2>/dev/null || true)"
     if [ -n "$superproject" ]; then
-        local child_origin child_transport
-        child_origin="$(git -C "$path" config --get remote.origin.url || true)"
-        child_transport="$(git -C "$path" remote get-url origin 2>/dev/null || true)"
-        if [ "$child_origin" != "$expected_url" ] || [ "$child_transport" != "$expected_url" ]; then
-            printf '%s initialized child has a non-canonical origin or transport URL\n' "$path" >&2
+        local -a child_origins=() child_transports=()
+        mapfile -t child_origins < <(git -C "$path" config --get-all remote.origin.url || true)
+        mapfile -t child_transports < <(git -C "$path" remote get-url --all origin 2>/dev/null || true)
+        if [ "${#child_origins[@]}" -ne 1 ] || [ "${child_origins[0]:-}" != "$expected_url" ] ||
+            [ "${#child_transports[@]}" -ne 1 ] || [ "${child_transports[0]:-}" != "$expected_url" ]; then
+            printf '%s initialized child must have exactly one canonical origin and transport URL\n' \
+                "$path" >&2
             return 1
         fi
     fi
@@ -97,8 +117,11 @@ if [ -e "$references" ] || [ -L "$references" ]; then
         printf 'migration shelter already exists: %s\n' "$shelter" >&2
         exit 1
     fi
-    mv -- "$references" "$shelter"
+    # Arm cleanup before the atomic rename. If a signal arrives before `mv`,
+    # restoration recognizes that the original path is still authoritative;
+    # if it arrives after, the shelter is moved back.
     sheltered=1
+    mv -- "$references" "$shelter"
 fi
 
 git submodule sync --recursive

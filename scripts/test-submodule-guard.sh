@@ -122,54 +122,80 @@ for child in "${children[@]}"; do
         printf 'dirty probe path is unexpectedly ignored: %s\n' "$probe_file" >&2
         exit 1
     fi
-    printf 'submodule guard dirty probe\n' >"$probe_file"
     probe_file_active=1
+    printf 'submodule guard dirty probe\n' >"$probe_file"
     must_reject "$child dirty worktree"
     rm -f -- "$probe_file"
     probe_file_active=0
 
     # Parent-local submodule URL overrides .gitmodules for future updates.
     snapshot_config . "$parent_config_key" "$parent_config_snapshot"
-    git config --replace-all "$parent_config_key" "https://example.invalid/${child}.git"
     parent_config_active=1
+    git config --replace-all "$parent_config_key" "https://example.invalid/${child}.git"
     must_reject "$child poisoned configured URL"
     restore_config . "$parent_config_key" "$parent_config_snapshot"
     parent_config_active=0
 
+    parent_config_active=1
+    git config --add "$parent_config_key" "https://example.invalid/${child}-additional.git"
+    must_reject "$child additional configured URL"
+    restore_config . "$parent_config_key" "$parent_config_snapshot"
+    parent_config_active=0
+
     # The declaration itself is the public recursive-clone contract.
-    git config -f .gitmodules "$parent_config_key" "https://example.invalid/${child}.git"
     declared_active=1
+    git config -f .gitmodules "$parent_config_key" "https://example.invalid/${child}.git"
     must_reject "$child poisoned declared URL"
     cp "$modules_backup" .gitmodules
     declared_active=0
 
-    git config -f .gitmodules "submodule.${child}.path" "packages/invalid-${BASHPID}"
     declared_active=1
+    git config -f .gitmodules --add "$parent_config_key" \
+        "https://example.invalid/${child}-additional.git"
+    must_reject "$child additional declared URL"
+    cp "$modules_backup" .gitmodules
+    declared_active=0
+
+    declared_active=1
+    git config -f .gitmodules "submodule.${child}.path" "packages/invalid-${BASHPID}"
     must_reject "$child poisoned declared path"
+    cp "$modules_backup" .gitmodules
+    declared_active=0
+
+    declared_active=1
+    git config -f .gitmodules --add "submodule.${child}.path" "packages/invalid-${BASHPID}"
+    must_reject "$child additional declared path"
     cp "$modules_backup" .gitmodules
     declared_active=0
 
     # The initialized child's own origin must remain canonical.
     snapshot_config "$child" remote.origin.url "$origin_snapshot"
-    git -C "$child" config --replace-all remote.origin.url "https://example.invalid/${child}.git"
     origin_active=1
+    git -C "$child" config --replace-all remote.origin.url "https://example.invalid/${child}.git"
     must_reject "$child poisoned child origin"
+    restore_config "$child" remote.origin.url "$origin_snapshot"
+    origin_active=0
+
+    origin_active=1
+    git -C "$child" config --add remote.origin.url \
+        "https://example.invalid/${child}-additional.git"
+    must_reject "$child additional child origin"
     restore_config "$child" remote.origin.url "$origin_snapshot"
     origin_active=0
 
     # Detect transport rewriting in both the parent and initialized child config.
     parent_rewrite_key="url.https://example.invalid/openbim-parent-guard-${BASHPID}-${RANDOM}/.insteadOf"
     snapshot_config . "$parent_rewrite_key" "$parent_rewrite_snapshot"
-    git config --add "$parent_rewrite_key" "https://github.com/openbimrs/"
     parent_rewrite_active=1
+    git config --add "$parent_rewrite_key" "https://github.com/openbimrs/"
     must_reject "$child parent insteadOf rewrite"
     restore_config . "$parent_rewrite_key" "$parent_rewrite_snapshot"
     parent_rewrite_active=0
 
     child_rewrite_key="url.https://example.invalid/openbim-child-guard-${BASHPID}-${RANDOM}/.insteadOf"
     snapshot_config "$child" "$child_rewrite_key" "$child_rewrite_snapshot"
-    git -C "$child" config --add "$child_rewrite_key" "https://github.com/openbimrs/"
     child_rewrite_active=1
+    git -C "$child" config --add "$child_rewrite_key" "https://github.com/openbimrs/"
     must_reject "$child child insteadOf rewrite"
     restore_config "$child" "$child_rewrite_key" "$child_rewrite_snapshot"
     child_rewrite_active=0
@@ -187,8 +213,8 @@ for child in "${children[@]}"; do
                 GIT_COMMITTER_DATE='2000-01-01T00:00:00Z' \
                 git -C "$child" commit-tree "${original_head}^{tree}" -p "$original_head"
     )"
-    git -C "$child" checkout --detach --quiet "$probe_head"
     head_active=1
+    git -C "$child" checkout --detach --quiet "$probe_head"
     must_reject "$child wrong commit"
     restore_head
     head_active=0
