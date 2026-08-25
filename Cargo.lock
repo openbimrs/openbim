@@ -456,7 +456,7 @@ dependencies = [
 
 [[package]]
 name = "gaeb"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "openbim-gaeb",
 ]
@@ -710,6 +710,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "iri-string"
+version = "0.7.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1663ee7d8cf2900cc1414b1e1eec9f348d6eaa3bcab07579f4726a4b8499f447"
+
+[[package]]
 name = "is_terminal_polyfill"
 version = "1.70.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -856,8 +862,9 @@ version = "0.1.1"
 
 [[package]]
 name = "openbim-gaeb"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
+ "iri-string",
  "quick-xml 0.37.5",
  "thiserror",
 ]
