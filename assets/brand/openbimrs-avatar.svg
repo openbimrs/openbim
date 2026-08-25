@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">OpenBIM.rs organization mark</title>
+  <desc id="desc">Three open isometric facets form a building information model cube.</desc>
+
+  <!--
+    Original OpenBIM.rs mark.
+    The detached facets represent open exchange between independent BIM systems.
+    All geometry stays inside GitHub's circular avatar safe area.
+  -->
+  <rect width="512" height="512" rx="112" fill="#071827"/>
+  <rect x="12" y="12" width="488" height="488" rx="102" fill="none" stroke="#17394A" stroke-width="8"/>
+
+  <!-- Shared model / top facet -->
+  <path
+    d="M256 78 424 174 256 270 88 174Z"
+    fill="#5EEAD4"
+    stroke="#071827"
+    stroke-width="12"
+    stroke-linejoin="round"
+  />
+
+  <!-- Open implementation / left facet -->
+  <path
+    d="M102 202 238 280 238 434 102 356Z"
+    fill="#38BDF8"
+    stroke="#071827"
+    stroke-width="12"
+    stroke-linejoin="round"
+  />
+
+  <!-- Rust implementation / right facet -->
+  <path
+    d="M274 280 410 202 410 356 274 434Z"
+    fill="#F97316"
+    stroke="#071827"
+    stroke-width="12"
+    stroke-linejoin="round"
+  />
+</svg>
