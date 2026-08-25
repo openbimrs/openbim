@@ -68,7 +68,7 @@ section on release.
   `openbim-gaeb`/`gaeb` `0.1.2` pair and owns BOM/content detection locally.
   ZIP-based families will own their archive policy over the maintained `zip`
   crate when implemented. `packages/step` is now the canonical
-  `openbimrs/step` submodule and contains `openbim-step 0.2.0`, the reusable
+  `openbimrs/step` submodule and contains `openbim-step 0.2.1`, the reusable
   ISO 10303-11 EXPRESS and ISO 10303-21 syntax layer consumed by IFC adapters.
 - Advanced the EPD family pin to the independently gated documentation commit,
   publishing searchable project pages, generated Rust API documentation, and
