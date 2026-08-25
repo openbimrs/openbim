@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Initialize/update family submodules without risking local ICDD references.
+# Initialize/update family submodules without risking local standards references.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -7,6 +7,9 @@ cd "$(dirname "$0")/.."
 references="packages/icdd/references"
 shelter=""
 sheltered=0
+loin_references="packages/loin/references"
+loin_shelter=""
+loin_sheltered=0
 
 restore_references() {
     if [ "$sheltered" -ne 1 ]; then
@@ -36,8 +39,36 @@ restore_references() {
     sheltered=0
 }
 
+restore_loin_references() {
+    if [ "$loin_sheltered" -ne 1 ]; then
+        return 0
+    fi
+
+    if [ ! -e "$loin_shelter" ] && [ ! -L "$loin_shelter" ]; then
+        if [ -e "$loin_references" ] || [ -L "$loin_references" ]; then
+            loin_sheltered=0
+            return 0
+        fi
+        printf 'cannot restore local references: both %s and %s are missing\n' \
+            "$loin_references" "$loin_shelter" >&2
+        return 1
+    fi
+
+    mkdir -p packages/loin
+    if [ -e "$loin_references" ] || [ -L "$loin_references" ]; then
+        printf 'cannot restore local references: %s already exists; preserved copy remains at %s\n' \
+            "$loin_references" "$loin_shelter" >&2
+        return 1
+    fi
+    mv -- "$loin_shelter" "$loin_references"
+    loin_sheltered=0
+}
+
 cleanup() {
-    restore_references
+    local cleanup_status=0
+    restore_references || cleanup_status=1
+    restore_loin_references || cleanup_status=1
+    return "$cleanup_status"
 }
 trap cleanup EXIT
 trap 'exit 130' HUP INT TERM
@@ -102,12 +133,14 @@ preflight_url packages/bsdd https://github.com/openbimrs/bsdd.git
 preflight_url packages/epd https://github.com/openbimrs/epd.git
 
 # A tracked directory from an older revision must be converted by Git first.
-read -r mode _ _ _ < <(git ls-files -s -- packages/icdd)
-if [ "$mode" != "160000" ]; then
-    printf '%s\n' \
-        'packages/icdd is not a gitlink; update the superproject revision before initializing submodules' >&2
-    exit 1
-fi
+for path in packages/icdd packages/loin; do
+    read -r mode _ _ _ < <(git ls-files -s -- "$path")
+    if [ "$mode" != "160000" ]; then
+        printf '%s is not a gitlink; update the superproject revision before initializing submodules\n' \
+            "$path" >&2
+        exit 1
+    fi
+done
 
 # Shelter the restricted/local corpus atomically on the same filesystem while
 # Git creates or checks out the child worktree. The EXIT trap restores it after
@@ -125,14 +158,29 @@ if [ -e "$references" ] || [ -L "$references" ]; then
     mv -- "$references" "$shelter"
 fi
 
+if [ -e "$loin_references" ] || [ -L "$loin_references" ]; then
+    loin_shelter="packages/.loin-references-migration.${BASHPID}.${RANDOM}"
+    if [ -e "$loin_shelter" ] || [ -L "$loin_shelter" ]; then
+        printf 'migration shelter already exists: %s\n' "$loin_shelter" >&2
+        exit 1
+    fi
+    loin_sheltered=1
+    mv -- "$loin_references" "$loin_shelter"
+fi
+
 git submodule sync --recursive
 git submodule update --init --recursive
 
 restore_references
+restore_loin_references
 trap - EXIT HUP INT TERM
 
 if [ -d "$references" ] && ! git -C packages/icdd check-ignore -q references; then
     printf '%s\n' 'packages/icdd/references is not ignored by the child repository' >&2
+    exit 1
+fi
+if [ -d "$loin_references" ] && ! git -C packages/loin check-ignore -q references; then
+    printf '%s\n' 'packages/loin/references is not ignored by the child repository' >&2
     exit 1
 fi
 

@@ -85,8 +85,8 @@ section on release.
   and poisoned or duplicated declared, configured, child-origin, or
   transport-rewritten URLs, with signal-safe, state-preserving mutation probes
   for each failure mode. Existing checkouts can run
-  `scripts/init-family-submodules.sh` to signal-safely shelter and restore a
-  local restricted `packages/icdd/references/` corpus during initialization.
+  `scripts/init-family-submodules.sh` to signal-safely shelter and restore local
+  restricted `packages/{icdd,loin}/references/` corpora during initialization.
 - Updated GitHub Actions checkout to `actions/checkout@v7`, removing the
   deprecated Node 20 runtime warning and using current fork-safety behavior.
 - Raised the integration workspace MSRV from Rust 1.85 to 1.88, the minimum

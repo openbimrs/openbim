@@ -30,10 +30,10 @@ scripts/init-family-submodules.sh
 ```
 
 Use the helper rather than deleting an occupied submodule directory. It
-signal-safely shelters and restores an existing local
-`packages/icdd/references/` corpus while Git initializes or advances the child,
-then verifies every family pin and exactly one canonical URL at each configured
-transport boundary.
+signal-safely shelters and restores existing local
+`packages/{icdd,loin}/references/` corpora while Git initializes or advances the
+children, then verifies every family pin and exactly one canonical URL at each
+configured transport boundary.
 
 Change a family in its own repository first. Run its standalone gate, publish or
 push the child commit, then update and validate the superproject pin. Never make
