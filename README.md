@@ -83,8 +83,8 @@ in their own adapters.
 The foundational crates remain published as reserved scaffolds; `openbim-epd`
 and `openbim-dt` are at `0.1.1`, while the remaining original scaffold release
 set stays at `0.1.0`. Their structure, boundaries, and gates are real, but they
-do not yet provide working IFC, IDS, or EPD readers. `openbim-step 0.2.0` and
-`openbim-gaeb 0.1.2` are implemented libraries rather than namespace-only
+do not yet provide working IFC, IDS, or EPD readers. `openbim-step 0.2.1` and
+`openbim-gaeb 0.1.3` are implemented libraries rather than namespace-only
 scaffolds. The new `openbim-cde` family is also different: its
 Foundation/Documents wire models are implemented and exercised, while
 HTTP/OAuth execution and full schema validation are explicitly not. GAEB is

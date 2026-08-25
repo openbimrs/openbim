@@ -184,8 +184,12 @@ bindings.
       (`IfcCostItem`/`IfcCostSchedule`).
 - [ ] `diff` (now `packages/`): GUID-matched semantic diff
       (added/removed/moved/property-changed), not a text diff.
-- [ ] `openbim-icdd`: ISO 21597 container. RDF stays inside this crate until a
-      second consumer justifies a `wire-rdf`.
+- [x] `openbim-icdd`: the standalone ISO 21597 family now provides secure,
+      bounded container inspection and extraction, rooted typed Index/linkset
+      decoding, neutral RDF/XML round-tripping, deterministic writing, lazy
+      payload access, and the Poing/Solibri federation extension. Full
+      normative conformance coverage remains future work. RDF stays inside this
+      crate until a second consumer justifies a `wire-rdf`.
 - [ ] `ifc-zip`: an IFCZIP decorator generic over `Codec`, using `zip` directly
   with IFC-owned archive limits and deterministic entry policy.
       One implementation covers STEP, ifcXML and any future IFC-JSON.
