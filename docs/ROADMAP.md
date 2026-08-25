@@ -133,6 +133,11 @@ separately.
       carries `pass-`/`fail-` cases — an oracle we already have on disk.
       Version detection must return `Detected`, never a silent guess: all
       versions share one namespace.
+- [ ] `openbim-epd`: model ISO 22057 EPD data templates, then implement each
+      exchange format as an explicit, versioned adapter. ISO 22057 defines the
+      semantic template, not one universal XML namespace or XSD; do not make a
+      generic XML parser silently choose between ILCD+EPD, INIES, openEPD, or
+      another provider format.
 - [ ] `openbim-bcf`: export findings so they leave this toolchain. The reader
       is tolerant by measurement, not by preference — see the corpus numbers in
       the crate docs.

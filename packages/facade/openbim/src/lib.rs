@@ -24,6 +24,7 @@
 //! | --- | --- | --- |
 //! | `dt` | `openbim-dt` | ISO 23387 data templates |
 //! | `ids` | `openbim-ids` | buildingSMART IDS |
+//! | `epd` | `openbim-epd` | ISO 22057 EPD data templates |
 //! | `bcf` | `openbim-bcf` | BCF (BIM Collaboration Format) |
 //! | `icdd` | `openbim-icdd` | ISO 21597 ICDD |
 //! | `idm` | `openbim-idm` | ISO 29481-3 idmXML |
@@ -53,6 +54,9 @@ pub use openbim_dt as dt;
 #[cfg(feature = "ids")]
 pub use openbim_ids as ids;
 
+#[cfg(feature = "epd")]
+pub use openbim_epd as epd;
+
 #[cfg(feature = "bcf")]
 pub use openbim_bcf as bcf;
 
@@ -72,6 +76,17 @@ mod tests {
     fn core_is_always_available() {
         assert!(crate::core::Outcome::Failed.is_applicable());
         assert!(!crate::core::Outcome::NotApplicable.is_applicable());
+    }
+
+    /// The EPD feature re-exports the standalone ISO 22057 crate.
+    #[test]
+    #[cfg(feature = "epd")]
+    fn epd_feature_reexports_iso_22057_contracts() {
+        assert_eq!(
+            crate::epd::StandardEdition::CURRENT.designation(),
+            "ISO 22057:2022"
+        );
+        assert_eq!(crate::epd::InformationModule::ALL.len(), 18);
     }
 
     /// `loin` must imply `dt` — the LOIN schema imports ISO 23387, so a build

@@ -11,6 +11,12 @@ section on release.
 ## [Unreleased]
 
 ### Added
+- **ISO 22057 EPD family.** Added the independently gated `openbimrs/epd`
+  repository at `packages/epd`, the `openbim-epd` crate, and an isolated `epd`
+  facade feature. The scaffold models the standard edition and all 18
+  information-module codes (including aggregated `A1-A3`) without inventing
+  an XML namespace or parser; restricted local standards material remains
+  untracked.
 - **First crates.io release: 13 crates at `0.1.0`.** The openBIM standards ship
   as separate crates rather than features of one, so a consumer that wants IDS
   compiles IDS and nothing else. Verified against the published artifacts, not

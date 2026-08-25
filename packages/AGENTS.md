@@ -11,16 +11,17 @@ One directory per standard, mirroring the repositories under
 short name was still free on crates.io, its alias crate too.
 
 Extracted families are Git submodules whose canonical source is the matching
-`openbimrs/<family>` repository. `ids/`, `icdd/`, `cde/`, and `ifc/` are
-extracted. Make family changes in the child repository, pass its standalone
-gate, push the child commit, and only then update the superproject pin. The
-root integration gate must pass at the exact pin before it lands.
+`openbimrs/<family>` repository. `ids/`, `icdd/`, `cde/`, `ifc/`, and
+`epd/` are extracted. Make family changes in the child repository, pass its
+standalone gate, push the child commit, and only then update the superproject
+pin. The root integration gate must pass at the exact pin before it lands.
 
 | Directory | Crates | Standard |
 | --- | --- | --- |
 | `ifc/` | `ifc-*` (18) + `openbim-ifc` facade | ISO 16739 IFC |
 | `ids/` | `openbim-ids` | buildingSMART IDS |
 | `cde/` | `openbim-cde` | buildingSMART Foundation/Documents APIs |
+| `epd/` | `openbim-epd` | ISO 22057 EPD data templates |
 | `bcf/` | `openbim-bcf` | BCF |
 | `icdd/` | `openbim-icdd`, `icdd` | ISO 21597 |
 | `idm/` | `openbim-idm`, `idmxml` | ISO 29481-3 |

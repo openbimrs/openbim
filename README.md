@@ -14,7 +14,7 @@ of a monolith.
 
 Standard-family repositories are progressively becoming canonical standalone
 repositories pinned here as Git submodules. IDS established the extraction
-pattern; ICDD and CDE are now independently pinned families.
+pattern; ICDD, CDE, and EPD are now independently pinned families.
 
 ## Clone for development
 
@@ -38,6 +38,7 @@ For an existing checkout, run `git submodule update --init --recursive`.
 | [`openbim-core`](https://crates.io/crates/openbim-core) | [docs.rs](https://docs.rs/openbim-core) | [src](packages/core/openbim-core) | Vocabulary shared across standards |
 | [`openbim-ids`](https://crates.io/crates/openbim-ids) | [docs.rs](https://docs.rs/openbim-ids) | [repository](https://github.com/openbimrs/ids) | buildingSMART IDS |
 | [`openbim-cde`](https://github.com/openbimrs/cde) | API docs pending first release | [repository](https://github.com/openbimrs/cde) | buildingSMART Foundation API 1.1 + Documents API 1.0 |
+| [`openbim-epd`](https://crates.io/crates/openbim-epd) | [docs.rs](https://docs.rs/openbim-epd) | [repository](https://github.com/openbimrs/epd) | ISO 22057 EPD data templates |
 | [`openbim-bcf`](https://crates.io/crates/openbim-bcf) | [docs.rs](https://docs.rs/openbim-bcf) | [src](packages/bcf/openbim-bcf) | BCF (BIM Collaboration Format) |
 | [`openbim-icdd`](https://crates.io/crates/openbim-icdd) | [docs.rs](https://docs.rs/openbim-icdd) | [src](packages/icdd/openbim-icdd) | ISO 21597 ICDD |
 | [`openbim-idm`](https://crates.io/crates/openbim-idm) | [docs.rs](https://docs.rs/openbim-idm) | [src](packages/idm/openbim-idm) | ISO 29481-3 idmXML |
@@ -65,11 +66,12 @@ XML and ZIP handling without the IFC layer depending on a standard.
 
 ## Status
 
-The original 13 crates remain published at `0.1.0` as reserved scaffolds. The
-new `openbim-cde` family is different: its Foundation/Documents wire models are
-implemented and exercised, while HTTP/OAuth execution and full schema validation
-are explicitly not. See each family README and `docs/ROADMAP.md` for the exact
-capability boundary.
+Fourteen crates are published at `0.1.0` as reserved scaffolds, including
+`openbim-epd`. Their structure, boundaries, and gates are real, but they do not
+yet provide working IFC, IDS, or EPD readers. The new `openbim-cde` family is
+different: its Foundation/Documents wire models are implemented and exercised,
+while HTTP/OAuth execution and full schema validation are explicitly not. See
+each family README and `docs/ROADMAP.md` for the exact capability boundary.
 
 The isolation is checkable rather than promised. Against the *published*
 crates:

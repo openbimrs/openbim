@@ -605,6 +605,7 @@ dependencies = [
  "openbim-bcf",
  "openbim-core",
  "openbim-dt",
+ "openbim-epd",
  "openbim-icdd",
  "openbim-idm",
  "openbim-ids",
@@ -644,6 +645,10 @@ version = "0.1.0"
 dependencies = [
  "openbim-core",
 ]
+
+[[package]]
+name = "openbim-epd"
+version = "0.1.0"
 
 [[package]]
 name = "openbim-icdd"

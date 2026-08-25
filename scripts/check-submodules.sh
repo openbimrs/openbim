@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Verify that required family submodules are initialized at their pinned commits.
+# Verify that required family submodules are initialized, clean, and pinned.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -62,6 +62,16 @@ check_submodule \
     Cargo.toml openbim-icdd/Cargo.toml icdd/Cargo.toml scripts/gate.sh
 
 check_submodule \
+    packages/cde \
+    https://github.com/openbimrs/cde.git \
+    Cargo.toml openbim-cde/Cargo.toml scripts/gate.sh
+
+check_submodule \
     packages/ifc \
     https://github.com/openbimrs/ifc.git \
     Cargo.toml openbim-ifc/Cargo.toml ifc-model/Cargo.toml scripts/gate.sh
+
+check_submodule \
+    packages/epd \
+    https://github.com/openbimrs/epd.git \
+    Cargo.toml openbim-epd/Cargo.toml scripts/gate.sh

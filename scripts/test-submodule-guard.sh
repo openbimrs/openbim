@@ -40,7 +40,7 @@ must_reject() {
 
 # Probe every declared family. This catches a later checker edit that validates
 # one submodule correctly while accidentally omitting or weakening another.
-for child in packages/ids packages/icdd; do
+for child in packages/ids packages/icdd packages/cde packages/ifc packages/epd; do
     probe_file="$child/README.md"
     config_key="submodule.${child}.url"
     expected_url="$(git config -f .gitmodules --get "$config_key")"
