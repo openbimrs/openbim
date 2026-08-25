@@ -48,10 +48,9 @@ is initialized or advanced.
 | [`openbim-loin`](https://crates.io/crates/openbim-loin) | [docs.rs](https://docs.rs/openbim-loin) | [src](packages/loin/openbim-loin) | ISO 7817-3 / EN 17412-3 LOIN |
 | [`openbim-dt`](https://crates.io/crates/openbim-dt) | [docs.rs](https://docs.rs/openbim-dt) | [src](packages/dt/openbim-dt) | ISO 23387 data templates |
 
-Four standards also have pure short-name alias crates, so the standard is
-reachable as practitioners name it. `icdd`, `idmxml`, and `loin` are published;
-`gaeb` is present in its canonical repository and awaits its first release:
-[`gaeb`](https://github.com/openbimrs/gaeb),
+Four standards also have published pure short-name alias crates, so each
+standard is reachable as practitioners name it:
+[`gaeb`](https://crates.io/crates/gaeb),
 [`icdd`](https://crates.io/crates/icdd),
 [`idmxml`](https://crates.io/crates/idmxml) and
 [`loin`](https://crates.io/crates/loin).
