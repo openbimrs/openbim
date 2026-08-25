@@ -72,6 +72,11 @@ check_submodule \
     Cargo.toml openbim-ifc/Cargo.toml ifc-model/Cargo.toml scripts/gate.sh
 
 check_submodule \
+    packages/gaeb \
+    https://github.com/openbimrs/gaeb.git \
+    Cargo.toml openbim-gaeb/Cargo.toml gaeb/Cargo.toml scripts/gate.sh
+
+check_submodule \
     packages/epd \
     https://github.com/openbimrs/epd.git \
     Cargo.toml openbim-epd/Cargo.toml scripts/gate.sh

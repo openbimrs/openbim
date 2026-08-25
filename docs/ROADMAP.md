@@ -145,6 +145,10 @@ separately.
       Foundation API 1.1 schemas and all named Documents API 1.0 components.
       HTTP/OAuth execution and full schema-constraint validation remain out of
       scope and are not claimed.
+- [x] `openbim-gaeb`: content-based DA XML 3.1–3.4 beta detection, evidence-aware
+      version/phase diagnostics, lossless unchanged-byte round trips, common BoQ
+      item views, and atomic quantity edits. Full XSD validation and generated
+      bindings remain explicit future work.
 - [ ] `clash` (now `packages/`): broad phase (BVH) + narrow phase on
       the injected kernel.
 - [ ] **Validation:** for IDS, every `pass-` case passes and every `fail-` case

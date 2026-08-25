@@ -17,6 +17,12 @@ section on release.
   information-module codes (including aggregated `A1-A3`) without inventing
   an XML namespace or parser; restricted local standards material remains
   untracked.
+- **GAEB DA XML family.** Added the independently gated `openbimrs/gaeb`
+  repository at `packages/gaeb`, canonical `openbim-gaeb` crate, exact-version
+  `gaeb` alias, and isolated facade feature. It performs content-based 3.1–3.4
+  beta detection, evidence-aware diagnostics, lossless unchanged-byte round
+  trips, common BoQ item extraction, and atomic quantity edits. Full XSD
+  validation and complete generated bindings remain explicitly out of scope.
 - **First crates.io release: 13 crates at `0.1.0`.** The openBIM standards ship
   as separate crates rather than features of one, so a consumer that wants IDS
   compiles IDS and nothing else. Verified against the published artifacts, not

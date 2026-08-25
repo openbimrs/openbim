@@ -309,6 +309,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "252afb9ae5eaa683babdc6a068b3f5726eb19e05070c731f9b2a23a7c3e8ed34"
 
 [[package]]
+name = "gaeb"
+version = "0.1.0"
+dependencies = [
+ "openbim-gaeb",
+]
+
+[[package]]
 name = "getrandom"
 version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -606,6 +613,7 @@ dependencies = [
  "openbim-core",
  "openbim-dt",
  "openbim-epd",
+ "openbim-gaeb",
  "openbim-icdd",
  "openbim-idm",
  "openbim-ids",
@@ -649,6 +657,15 @@ dependencies = [
 [[package]]
 name = "openbim-epd"
 version = "0.1.1"
+
+[[package]]
+name = "openbim-gaeb"
+version = "0.1.0"
+dependencies = [
+ "openbim-codec-xml",
+ "quick-xml",
+ "thiserror",
+]
 
 [[package]]
 name = "openbim-icdd"

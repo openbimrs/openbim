@@ -13,3 +13,6 @@
 [submodule "packages/epd"]
 	path = packages/epd
 	url = https://github.com/openbimrs/epd.git
+[submodule "packages/gaeb"]
+	path = packages/gaeb
+	url = https://github.com/openbimrs/gaeb.git
