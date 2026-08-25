@@ -13,7 +13,11 @@ section on release.
 ### Added
 - **ISO 23387 DT family.** Extracted the preserved `packages/dt` history into
   the independently documented and gated `openbimrs/dt` repository, pinned its
-  exact public revision at `packages/dt`, a...[truncated] Added independently
+  exact public revision at `packages/dt`, and published `openbim-dt 0.1.1` with
+  corrected repository metadata. The release remains a namespace-only scaffold;
+  no model, codec, schema validation, or conformance behavior is claimed, and
+  local ISO/DIN/CEN references remain untracked.
+- **CityGML, openBIMRL, and bSDD family reservations.** Added independently
   gated canonical repositories, exact-version short aliases, exact superproject
   pins, and isolated facade features for `openbim-citygml`/`citygml`,
   `openbim-openbimrl`/`openbimrl`, and `openbim-bsdd`/`bsdd`. These `0.1.0`
@@ -58,6 +62,8 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- Advanced the DT family pin to connect its complete pre-standalone lineage and
+  make the deployed Pages artifact match the validated documentation tree.
 - Advanced the EPD family pin to the independently gated documentation commit,
   publishing searchable project pages, generated Rust API documentation, and
   single-source changelog and roadmap pages without redistributing local

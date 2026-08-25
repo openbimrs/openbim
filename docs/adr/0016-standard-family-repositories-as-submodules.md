@@ -57,9 +57,10 @@ packages retain their relevant history and run the same architecture gates both
 standalone and under this superproject. CDE, EPD, and GAEB now follow the same
 canonical-child and exact-gitlink model.
 
-CityGML, openBIMRL, and bSDD establish the same repository and exact-pin
+CityGML, openBIMRL, bSDD, and DT establish the same repository and exact-pin
 boundaries before implementation work begins. Their initial releases reserve
-both canonical and short package names and make no parser or conformance claims.
+canonical package ownership and make no parser or conformance claims. DT remains
+a lower-level ISO 23387 family consumed by LOIN rather than being owned by it.
 LOIN likewise pins its canonical and pure short-alias packages together while
 keeping its current namespace-only capability boundary explicit.
 
@@ -109,6 +110,8 @@ lawfully obtained standards and Annex B schemas remain in the ignored
 - `packages/icdd` — ICDD canonical and short-name packages, pinned together.
 - `packages/idm` — IDM canonical engine and `idmxml` alias, pinned together.
 - `packages/loin` — LOIN canonical and short-name packages, pinned together.
+- `packages/dt` — ISO 23387 data-template contracts, independently pinned below
+  LOIN and other consumers.
 - `packages/ifc` — IFC workspace and test fixtures, pinned at its canonical commit.
 - `packages/cde`, `packages/epd`, and `packages/gaeb` — independently gated
   canonical family repositories pinned at reviewed commits.
