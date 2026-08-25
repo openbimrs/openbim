@@ -104,7 +104,7 @@ openbim-openbimrl = { path = "packages/openbimrl/openbim-openbimrl", version = "
 openbim-bsdd = { path = "packages/bsdd/openbim-bsdd", version = "0.1.0" }
 openbim-epd = { path = "packages/epd/openbim-epd", version = "0.1.1" }
 openbim-bcf = { path = "packages/bcf/openbim-bcf", version = "0.1.0" }
-openbim-icdd = { path = "packages/icdd/openbim-icdd", version = "0.1.0" }
+openbim-icdd = { path = "packages/icdd/openbim-icdd", version = "0.2.0" }
 openbim-idm = { path = "packages/idm/openbim-idm", version = "0.1.0" }
 openbim-loin = { path = "packages/loin/openbim-loin", version = "0.1.0" }
 
