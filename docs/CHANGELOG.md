@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to **nehirde** are documented here.
+All notable changes to **openbim** are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -9,6 +9,54 @@ One entry per change under `## [Unreleased]` as you land work; cut a version
 section on release.
 
 ## [Unreleased]
+
+### Added
+- **First crates.io release: 13 crates at `0.1.0`.** The openBIM standards ship
+  as separate crates rather than features of one, so a consumer that wants IDS
+  compiles IDS and nothing else. Verified against the published artifacts, not
+  the workspace: `openbim` with `default-features = false` resolves to
+  `openbim-core` alone, and `--features ids` adds exactly `openbim-ids`.
+
+  | Published | |
+  | --- | --- |
+  | `openbim` | facade, one feature per standard |
+  | `openbim-core` | shared vocabulary |
+  | `openbim-codec-xml`, `openbim-codec-zip` | encoding substrate |
+  | `openbim-ids`, `openbim-bcf`, `openbim-icdd`, `openbim-idm`, `openbim-loin`, `openbim-dt` | standards |
+  | `icdd`, `idmxml`, `loin` | alias crates, pure re-exports |
+
+  These are **reserved scaffolds**: the names, boundaries, and dependency
+  isolation are real and gated; the codecs are not implemented yet.
+
+- **`scripts/publish-remaining.sh`** — crates.io rate-limits new crate names to
+  roughly one per 10 minutes, so publishing a family in one pass fails partway
+  with HTTP 429. Retries on 429, walks crates in dependency order, and skips
+  anything already on the registry, so it is safe to re-run.
+
+### Changed
+- **Repository is now `openbim`** (`github.com/openbimrs/openbim`), freeing the
+  name `nehirde` for the application built on top of these crates.
+- **`packages/` groups one directory per standard family**, mirroring the
+  repositories under `github.com/openbimrs`, so extracting a family to its own
+  repository later is a directory move. `ifc/` keeps its 18 crates plus the
+  `openbim-ifc` facade grouped, sitting beside `ids/`, `bcf/`, `icdd/`, `idm/`,
+  `loin/` and `dt/`.
+- **Published names are `openbim-*`.** `ifc`, `bcf`, `ids`, `idm`, `dt` and
+  `codec` are all taken on crates.io by unrelated crates. Only `icdd`, `loin`
+  and `idmxml` were free, and those ship as alias crates. The IFC facade keeps
+  `ifc` as its **lib target name**, so consumers still write `use ifc::…`.
+
+### Fixed
+- **Architecture tests no longer pass vacuously after a layout change.** Four
+  tests selected crates by parent directory; restructuring made each match zero
+  crates, so they reported success while proving nothing. Every architecture
+  test now selects by crate name as well as directory and asserts a minimum
+  crate count, and each was re-verified by mutation — introduce the violation,
+  watch the gate fail, restore, watch it pass.
+- **Published path dependencies carry a version requirement.** `cargo publish`
+  strips the path and resolves by version, so a path-only dependency cannot be
+  published. Not caught by the gate: `--dry-run` on a leaf crate passes, because
+  a leaf has no path dependency of its own.
 
 ### Added
 - **Geometry-kernel capability audit and implementation recommendation.**
