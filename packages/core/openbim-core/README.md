@@ -16,12 +16,14 @@ Three things, each shared by more than one standard:
   silently produces a different document. `resolved()` returns `None` on a
   conflict rather than picking one.
 
-This crate holds **domain** concepts only. XML and ZIP substrate live one layer
-below, so that IFC codecs can share them without depending on openBIM.
+This crate holds **domain** concepts only. Format families depend on maintained
+XML and ZIP ecosystem crates directly and keep format-specific policy in their
+canonical family crate.
 
 ## Status
 
-**Scaffold.** These types are real and tested. No standard is implemented yet.
+**Scaffold.** These shared types are real and tested. This core crate does not
+implement any standard's parser, writer, or conformance behavior.
 
 ## Part of nehirde
 
