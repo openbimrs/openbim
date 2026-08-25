@@ -26,7 +26,9 @@ cd openbim
 scripts/gate.sh
 ```
 
-For an existing checkout, run `git submodule update --init --recursive`.
+For an existing checkout, run `scripts/init-family-submodules.sh`. The helper
+preserves a local restricted `packages/icdd/references/` corpus while the child
+is initialized or advanced.
 
 ## Crates
 

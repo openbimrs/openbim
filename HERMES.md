@@ -25,8 +25,13 @@ git clone --recurse-submodules https://github.com/openbimrs/openbim.git
 If an existing checkout is missing a family:
 
 ```bash
-git submodule update --init --recursive
+scripts/init-family-submodules.sh
 ```
+
+Use the helper rather than deleting an occupied submodule directory. It
+atomically shelters and restores an existing local
+`packages/icdd/references/` corpus while Git initializes or advances the child,
+then verifies every family pin and URL.
 
 Change a family in its own repository first. Run its standalone gate, publish or
 push the child commit, then update and validate the superproject pin. Never make
@@ -53,7 +58,7 @@ choose execution providers.
 ## Commands
 
 ```bash
-git submodule update --init --recursive
+scripts/init-family-submodules.sh
 cargo build --workspace
 cargo test --workspace
 scripts/gate.sh

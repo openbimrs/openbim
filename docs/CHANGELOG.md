@@ -60,7 +60,10 @@ section on release.
   CI/package gates, and an ignored local `references/` boundary for restricted
   standards material.
 - Hardened the standard-family submodule gate to reject dirty child worktrees
-  and poisoned effective URLs, with mutation probes for both failure modes.
+  and poisoned declared, configured, child-origin, or transport-rewritten URLs,
+  with state-preserving mutation probes for every failure mode. Existing
+  checkouts can run `scripts/init-family-submodules.sh` to shelter and restore a
+  local restricted `packages/icdd/references/` corpus during initialization.
 - Updated GitHub Actions checkout to `actions/checkout@v7`, removing the
   deprecated Node 20 runtime warning and using current fork-safety behavior.
 - Raised the integration workspace MSRV from Rust 1.85 to 1.88, the minimum

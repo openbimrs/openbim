@@ -41,9 +41,14 @@ The rules are:
    packages during integration, preventing duplicate package identities.
 6. Push and verify a child commit before updating the parent gitlink.
 7. Require recursive checkout and fail closed when a submodule is missing,
-   modified away from its pin, conflicted, or configured with the wrong URL.
+   modified away from its pin, conflicted, or configured with a declared,
+   parent-local, child-origin, or transport-rewritten URL that differs from the
+   canonical public URL.
 8. Keep public superproject submodules public. A private child must remain in the
    superproject until it can be cloned anonymously.
+9. Preserve occupied local-only family paths during migration. The initialization
+   helper must shelter and restore restricted ICDD references rather than asking
+   users to delete or clean an occupied directory.
 
 IDS was the pilot. ICDD was the second extracted family and also preserves a
 pure short-name package alias. IFC is the third and largest extraction: its 19
@@ -93,5 +98,7 @@ standalone and under this superproject.
 - `.gitmodules` — canonical child URLs.
 - `Cargo.toml` — local integration patches.
 - `scripts/check-submodules.sh` — fail-closed pin and initialization gate.
+- `scripts/init-family-submodules.sh` — safe initialization and local-reference
+  migration helper.
 - `.github/workflows/ci.yml` — recursive checkout.
 - `packages/AGENTS.md` — family ownership and dependency direction.
