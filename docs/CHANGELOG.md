@@ -34,6 +34,12 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+- **ICDD now has a canonical standalone repository.** `packages/icdd` is a
+  pinned submodule of `github.com/openbimrs/icdd`, containing both the canonical
+  `openbim-icdd` implementation and the exact-version `icdd` pure re-export.
+  The child has preserved family history, explicit release metadata, standalone
+  CI/package gates, and an ignored local `references/` boundary for restricted
+  standards material.
 - Hardened the standard-family submodule gate to reject dirty child worktrees
   and poisoned effective URLs, with mutation probes for both failure modes.
 - Updated GitHub Actions checkout to `actions/checkout@v7`, removing the

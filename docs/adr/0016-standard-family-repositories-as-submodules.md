@@ -45,8 +45,9 @@ The rules are:
 8. Keep public superproject submodules public. A private child must remain in the
    superproject until it can be cloned anonymously.
 
-IDS is the pilot. Other families migrate only after standalone, integrated, and
-fresh recursive-clone gates pass for this extraction.
+IDS was the pilot. ICDD is the second extracted family and applies the same
+standalone, integrated, and fresh recursive-clone gates while also preserving a
+pure short-name package alias.
 
 ## Alternatives considered
 
@@ -81,11 +82,12 @@ fresh recursive-clone gates pass for this extraction.
 - Validate every extraction with a fresh anonymous recursive clone.
 - Keep dependency changes ordered from lower-level repositories to consumers.
 - Keep `codec` in the superproject while `openbimrs/codec` is private.
-- Pilot subsequent extraction with a small family before migrating IFC.
+- Keep using small standard families to harden extraction before migrating IFC.
 
 ## Relation to existing code
 
 - `packages/ids` — IDS pilot submodule.
+- `packages/icdd` — ICDD canonical and short-name packages, pinned together.
 - `.gitmodules` — canonical child URLs.
 - `Cargo.toml` — local integration patches.
 - `scripts/check-submodules.sh` — fail-closed pin and initialization gate.

@@ -7,8 +7,10 @@ format-agnostic geometry kernel is developed separately at
 ## Repository model
 
 Standard-family repositories are canonical sources and are pinned beneath
-`packages/` as Git submodules. IDS is the pilot at `packages/ids`; its canonical
-repository is <https://github.com/openbimrs/ids>.
+`packages/` as Git submodules. The extracted families are:
+
+- `packages/ids` → <https://github.com/openbimrs/ids>
+- `packages/icdd` → <https://github.com/openbimrs/icdd>
 
 Clone with submodules:
 

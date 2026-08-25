@@ -1,3 +1,6 @@
 [submodule "packages/ids"]
 	path = packages/ids
 	url = https://github.com/openbimrs/ids.git
+[submodule "packages/icdd"]
+	path = packages/icdd
+	url = https://github.com/openbimrs/icdd.git

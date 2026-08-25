@@ -24,6 +24,9 @@ each crate's own `PLAN.md`.
 - [x] `PKG-IDS-SPLIT` - extract the IDS family with history into
       `openbimrs/ids`, make it independently buildable, and pin its verified
       commit as the first standard-family submodule.
+- [x] `PKG-ICDD-SPLIT` - extract canonical and alias ICDD packages with history
+      into `openbimrs/icdd`, preserve local restricted references outside Git,
+      and pin a standalone-verified child commit.
 - [ ] `PKG-PORT` - port the working idmXML and LOIN codecs out of the private
       poing repository into `idm/` and `loin/`, without vendoring ISO schemas
 - [ ] `PKG-CONSUME` - make poing and vendor/solibri depend on these crates
@@ -40,3 +43,15 @@ each crate's own `PLAN.md`.
   and a dirty child worktree all failed, then the restored pin passed.
 - A fresh `git clone --recurse-submodules` initialized the public child at the
   exact pin and its complete `scripts/gate.sh` passed.
+
+`PKG-ICDD-SPLIT` completed 2026-08-25:
+
+- `openbimrs/icdd` exact commit `96d92623506053bb8b32119a2cf2ff6d23240b74`
+  preserves the filtered family history and passes its standalone gate,
+  including clean package verification for both `openbim-icdd` and `icdd`.
+- The short package is mutation-verified as an exact-version pure re-export.
+- The superproject resolves both packages through the child gitlink and its full
+  integration gate, including wrong-commit, declared/effective-URL, and dirty
+  child mutation probes, passes at the exact pin.
+- The 25-file local standards corpus is excluded by the child `references/`
+  ignore boundary and was preserved against a SHA-256 manifest during migration.
