@@ -99,7 +99,7 @@ openbim = { path = "packages/facade/openbim", default-features = false }
 openbim-core = { path = "packages/core/openbim-core", version = "0.1.0" }
 openbim-dt = { path = "packages/dt/openbim-dt", version = "0.1.1" }
 openbim-ids = { path = "packages/ids/openbim-ids", version = "0.1.0" }
-openbim-gaeb = { path = "packages/gaeb/openbim-gaeb", version = "0.1.0" }
+openbim-gaeb = { path = "packages/gaeb/openbim-gaeb", version = "0.1.2" }
 openbim-citygml = { path = "packages/citygml/openbim-citygml", version = "0.1.0" }
 openbim-openbimrl = { path = "packages/openbimrl/openbim-openbimrl", version = "0.1.0" }
 openbim-bsdd = { path = "packages/bsdd/openbim-bsdd", version = "0.1.0" }

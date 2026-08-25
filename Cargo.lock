@@ -478,7 +478,7 @@ dependencies = [
 
 [[package]]
 name = "gaeb"
-version = "0.1.0"
+version = "0.1.2"
 dependencies = [
  "openbim-gaeb",
 ]
@@ -885,9 +885,8 @@ version = "0.1.1"
 
 [[package]]
 name = "openbim-gaeb"
-version = "0.1.0"
+version = "0.1.2"
 dependencies = [
- "openbim-codec-xml",
  "quick-xml 0.37.5",
  "thiserror",
 ]
