@@ -28,7 +28,7 @@ it lands.
 | `bsdd/` | `openbim-bsdd`, `bsdd` | buildingSMART Data Dictionary |
 | `cde/` | `openbim-cde` | buildingSMART Foundation/Documents APIs |
 | `epd/` | `openbim-epd` | ISO 22057 EPD data templates |
-| `bcf/` | `openbim-bcf` | BCF |
+| `bcf/` | `openbim-bcf` | buildingSMART BCF-XML (S1005) |
 | `icdd/` | `openbim-icdd`, `icdd` | ISO 21597 |
 | `idm/` | `openbim-idm`, `idmxml` | ISO 29481-3 |
 | `loin/` | `openbim-loin`, `loin` | ISO 7817-3 / EN 17412-3 |

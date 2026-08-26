@@ -37,3 +37,6 @@
 [submodule "packages/dt"]
 	path = packages/dt
 	url = https://github.com/openbimrs/dt.git
+[submodule "packages/bcf"]
+	path = packages/bcf
+	url = https://github.com/openbimrs/bcf.git

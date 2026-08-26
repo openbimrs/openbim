@@ -47,7 +47,7 @@ while the children are initialized or advanced.
 | [`openbim-bsdd`](https://crates.io/crates/openbim-bsdd) | [docs.rs](https://docs.rs/openbim-bsdd) | [repository](https://github.com/openbimrs/bsdd) | buildingSMART Data Dictionary; reserved scaffold |
 | [`openbim-cde`](https://github.com/openbimrs/cde) | API docs pending first release | [repository](https://github.com/openbimrs/cde) | buildingSMART Foundation API 1.1 + Documents API 1.0 |
 | [`openbim-epd`](https://crates.io/crates/openbim-epd) | [docs.rs](https://docs.rs/openbim-epd) | [repository](https://github.com/openbimrs/epd) | ISO 22057 EPD data templates |
-| [`openbim-bcf`](https://crates.io/crates/openbim-bcf) | [docs.rs](https://docs.rs/openbim-bcf) | [src](packages/bcf/openbim-bcf) | BCF (BIM Collaboration Format) |
+| [`openbim-bcf`](https://crates.io/crates/openbim-bcf) | [docs.rs](https://docs.rs/openbim-bcf) | [repository](https://github.com/openbimrs/bcf) | buildingSMART BCF-XML 2.0/2.1/3.0; corpus-verified reader, writing not implemented |
 | [`openbim-icdd`](https://crates.io/crates/openbim-icdd) | [docs.rs](https://docs.rs/openbim-icdd) | [src](packages/icdd/openbim-icdd) | ISO 21597 ICDD |
 | [`openbim-idm`](https://crates.io/crates/openbim-idm) | [project docs](https://openbimrs.github.io/idm/) | [repository](https://github.com/openbimrs/idm) | ISO 29481-3 idmXML; lossless Rust/Python engine, publication blocked pending schema rights |
 | [`openbim-loin`](https://crates.io/crates/openbim-loin) | [docs.rs](https://docs.rs/openbim-loin) | [repository](https://github.com/openbimrs/loin) | ISO 7817-3 / EN 17412-3 LOIN |

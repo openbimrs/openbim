@@ -138,9 +138,13 @@ separately.
       semantic template, not one universal XML namespace or XSD; do not make a
       generic XML parser silently choose between ILCD+EPD, INIES, openEPD, or
       another provider format.
-- [ ] `openbim-bcf`: export findings so they leave this toolchain. The reader
-      is tolerant by measurement, not by preference — see the corpus numbers in
-      the crate docs.
+- [ ] `openbim-bcf`: **reader implemented** for BCF-XML 2.0/2.1/3.0 — evidence-
+      reporting version detection, verbatim status/type strings, tolerated
+      deviations surfaced as diagnostics, and untrusted-archive limits. Verified
+      against 71 official buildingSMART test archives (all agree with their
+      declared version) and 44 third-party archives. **Writing is not
+      implemented**; export of findings is the next step. The reader is tolerant
+      by measurement, not by preference — see `packages/bcf/docs/corpus-evidence.md`.
 - [x] `openbim-cde`: transport-agnostic Serde wire models for all released
       Foundation API 1.1 schemas and all named Documents API 1.0 components.
       HTTP/OAuth execution and full schema-constraint validation remain out of
