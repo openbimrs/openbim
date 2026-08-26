@@ -28,6 +28,7 @@ FAMILY_PACKAGES = (
     "openbim-icdd",
     "openbim-idm",
     "openbim-loin",
+    "openbim-mvd",
 )
 
 
@@ -66,7 +67,7 @@ def main() -> int:
     test_features = {name: expected for name, expected in features.items() if name != "default"}
     if set(test_features) != {
         "dt", "ids", "gaeb", "citygml", "openbimrl", "bsdd",
-        "epd", "bcf", "icdd", "idm", "loin",
+        "epd", "bcf", "icdd", "idm", "loin", "mvd",
     }:
         print(f"unexpected facade isolation feature set: {sorted(test_features)}", file=sys.stderr)
         return 1

@@ -107,6 +107,7 @@ openbim-bcf = { path = "packages/bcf/openbim-bcf", version = "0.2.0" }
 openbim-icdd = { path = "packages/icdd/openbim-icdd", version = "0.2.0" }
 openbim-idm = { path = "packages/idm/openbim-idm", version = "0.1.0" }
 openbim-loin = { path = "packages/loin/openbim-loin", version = "0.2.0" }
+openbim-mvd = { path = "packages/mvd/openbim-mvd", version = "0.1.0" }
 
 # --- packages/analysis: capabilities, NOT openBIM standards. They consume the
 # IFC layer and emit findings that openbim-bcf can export. ---

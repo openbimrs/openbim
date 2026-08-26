@@ -64,6 +64,7 @@ for f in "--no-default-features" \
          "--no-default-features --features icdd" \
          "--no-default-features --features idm" \
          "--no-default-features --features loin" \
+         "--no-default-features --features mvd" \
          "--no-default-features --features full"; do
     # shellcheck disable=SC2086
     step "openbim build $f"  cargo build -p openbim $f
@@ -75,7 +76,7 @@ done
 # feature unification inside a workspace build can otherwise hide a missing
 # dependency that only shows up for an external consumer.
 for c in openbim-step openbim-ifc openbim-core openbim-dt openbim-ids openbim-gaeb openbim-citygml openbim-openbimrl openbim-bsdd openbim-cde openbim-epd openbim-bcf \
-         openbim-icdd openbim-idm openbim-loin openbim clash diff \
+         openbim-icdd openbim-idm openbim-loin openbim-mvd openbim clash diff \
          gaeb citygml openbimrl bsdd icdd idmxml loin; do
     step "isolated build -p $c" cargo build -p "$c"
 done

@@ -25,6 +25,7 @@ FEATURES: dict[str, frozenset[str]] = {
     "icdd": frozenset({"openbim-icdd"}),
     "idm": frozenset({"openbim-idm"}),
     "loin": frozenset({"openbim-loin", "openbim-dt"}),
+    "mvd": frozenset({"openbim-mvd"}),
 }
 STANDARD_PACKAGES = frozenset().union(*FEATURES.values()) | frozenset(
     {

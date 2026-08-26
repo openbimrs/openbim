@@ -149,6 +149,11 @@ check_submodule \
     Cargo.toml openbim-loin/Cargo.toml loin/Cargo.toml scripts/gate.sh
 
 check_submodule \
+    packages/mvd \
+    https://github.com/openbimrs/mvd.git \
+    Cargo.toml openbim-mvd/Cargo.toml scripts/gate.sh
+
+check_submodule \
     packages/idm \
     https://github.com/openbimrs/idm.git \
     Cargo.toml openbim-idm/Cargo.toml idmxml/Cargo.toml scripts/gate.sh

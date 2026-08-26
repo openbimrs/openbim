@@ -33,6 +33,7 @@
 //! | `icdd` | `openbim-icdd` | ISO 21597 ICDD |
 //! | `idm` | `openbim-idm` | ISO 29481-3 idmXML |
 //! | `loin` | `openbim-loin` | ISO 7817-3 / EN 17412-3 LOIN |
+//! | `mvd` | `openbim-mvd` | buildingSMART mvdXML 1.1 |
 //! | `full` | all of the above | |
 //!
 //! `loin` implies `dt`, because the LOIN schema imports ISO 23387.
@@ -64,6 +65,9 @@ pub use openbim_gaeb as gaeb;
 
 #[cfg(feature = "citygml")]
 pub use openbim_citygml as citygml;
+
+#[cfg(feature = "mvd")]
+pub use openbim_mvd as mvd;
 
 #[cfg(feature = "openbimrl")]
 pub use openbim_openbimrl as openbimrl;
@@ -118,6 +122,17 @@ mod tests {
             "ISO 22057:2022"
         );
         assert_eq!(crate::epd::InformationModule::ALL.len(), 18);
+    }
+
+    /// The MVD feature re-exports the standalone mvdXML 1.1 toolkit.
+    #[test]
+    #[cfg(feature = "mvd")]
+    fn mvd_feature_reexports_document_contract() {
+        let document = crate::mvd::MvdXml::from_xml(
+            r#"<mvdXML xmlns="http://buildingsmart-tech.org/mvd/XML/1.1" uuid="00000000-0000-4000-8000-000000000001" name="facade"/>"#,
+        )
+        .unwrap();
+        assert!(document.is_valid());
     }
 
     /// `loin` must imply `dt` — the LOIN schema imports ISO 23387, so a build
