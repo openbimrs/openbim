@@ -96,7 +96,7 @@ openbim-step = { path = "packages/step/openbim-step", version = "0.2.1" }
 # build; separate packages can. See docs/adr/0015.
 openbim = { path = "packages/facade/openbim", default-features = false }
 openbim-core = { path = "packages/core/openbim-core", version = "0.1.0" }
-openbim-dt = { path = "packages/dt/openbim-dt", version = "0.1.1" }
+openbim-dt = { path = "packages/dt/openbim-dt", version = "0.2.0" }
 openbim-ids = { path = "packages/ids/openbim-ids", version = "0.1.0" }
 openbim-gaeb = { path = "packages/gaeb/openbim-gaeb", version = "0.1.3" }
 openbim-citygml = { path = "packages/citygml/openbim-citygml", version = "0.1.0" }
@@ -106,7 +106,7 @@ openbim-epd = { path = "packages/epd/openbim-epd", version = "0.1.1" }
 openbim-bcf = { path = "packages/bcf/openbim-bcf", version = "0.1.0" }
 openbim-icdd = { path = "packages/icdd/openbim-icdd", version = "0.2.0" }
 openbim-idm = { path = "packages/idm/openbim-idm", version = "0.1.0" }
-openbim-loin = { path = "packages/loin/openbim-loin", version = "0.1.0" }
+openbim-loin = { path = "packages/loin/openbim-loin", version = "0.2.0" }
 
 # --- packages/analysis: capabilities, NOT openBIM standards. They consume the
 # IFC layer and emit findings that openbim-bcf can export. ---
@@ -130,6 +130,7 @@ quick-xml = "0.37"
 [patch.crates-io]
 openbim-core = { path = "packages/core/openbim-core" }
 openbim-step = { path = "packages/step/openbim-step" }
+openbim-dt = { path = "packages/dt/openbim-dt" }
 
 [profile.release]
 opt-level = 3
