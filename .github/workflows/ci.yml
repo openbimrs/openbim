@@ -21,4 +21,8 @@ jobs:
         with:
           components: clippy, rustfmt
       - name: Run integration gate
+        env:
+          # Child CI verifies the exact pinned external corpus. The parent facade
+          # gate is synthetic-only and must not fetch untracked conformance data.
+          OPENCDE_CORPUS_OPTIONAL: "1"
         run: scripts/gate.sh
