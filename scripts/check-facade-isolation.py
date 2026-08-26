@@ -20,7 +20,7 @@ FEATURES: dict[str, frozenset[str]] = {
     "citygml": frozenset({"openbim-citygml"}),
     "openbimrl": frozenset({"openbim-openbimrl"}),
     "bsdd": frozenset({"openbim-bsdd"}),
-    "epd": frozenset({"openbim-epd"}),
+    "epd": frozenset({"openbim-epd", "openbim-dt"}),
     "bcf": frozenset({"openbim-bcf"}),
     "icdd": frozenset({"openbim-icdd"}),
     "idm": frozenset({"openbim-idm"}),

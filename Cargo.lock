@@ -948,6 +948,9 @@ dependencies = [
 [[package]]
 name = "openbim-epd"
 version = "0.1.1"
+dependencies = [
+ "openbim-dt",
+]
 
 [[package]]
 name = "openbim-gaeb"
@@ -1015,6 +1018,14 @@ dependencies = [
  "ifc-template-catalog",
  "ifc-validate",
  "ifc-xml",
+]
+
+[[package]]
+name = "openbim-ilcd-epd"
+version = "0.1.0"
+dependencies = [
+ "openbim-epd",
+ "roxmltree",
 ]
 
 [[package]]
