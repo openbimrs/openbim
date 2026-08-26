@@ -9,6 +9,9 @@
 # Never parse counts to decide pass/fail. Check the exit code.
 set -uo pipefail
 export PATH="$HOME/.cargo/bin:$PATH"
+# This parent facade has no vendored OpenCDE conformance corpus. The standalone
+# CDE repository verifies the exact pinned external corpus in its own CI.
+export OPENCDE_CORPUS_OPTIONAL="${OPENCDE_CORPUS_OPTIONAL:-1}"
 cd "$(dirname "$0")/.."
 
 gate_out="$(mktemp "${TMPDIR:-/tmp}/openbim-gate.XXXXXX")" || exit 1
