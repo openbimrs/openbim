@@ -90,7 +90,7 @@ ifc-author = { path = "packages/ifc/ifc-author", version = "0.1.0" }
 ifc-spatial = { path = "packages/ifc/ifc-spatial", version = "0.1.0" }
 
 # --- packages/step: generic ISO 10303 syntax below IFC and standards. ---
-openbim-step = { path = "packages/step/openbim-step", version = "0.3.1" }
+openbim-step = { path = "packages/step/openbim-step", version = "0.3.2" }
 
 # --- packages/openbim: standards built ON the IFC layer, never inside it. ---
 # One crate per standard. Cargo features are additive across the whole graph,
