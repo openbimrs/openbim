@@ -43,3 +43,6 @@
 [submodule "packages/mvd"]
 	path = packages/mvd
 	url = https://github.com/openbimrs/mvd.git
+[submodule "packages/mmc"]
+	path = packages/mmc
+	url = https://github.com/openbimrs/mmc.git
