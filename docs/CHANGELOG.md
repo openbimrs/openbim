@@ -11,6 +11,14 @@ section on release.
 ## [Unreleased]
 
 ### Added
+- **`ifc-schema::ifc4()` bundled schema.** `packages/ifc` now ships the IFC4
+  ADD2 TC1 schema (776 entities, 397 types) as a compiled build-time artifact
+  decoded once through a `OnceLock`, so a consumer no longer sources
+  `IFC4.exp` itself, hits the Latin-1 decode trap, or reparses 372 KB of
+  EXPRESS on every process start. The `ifc4` feature is on by default; the
+  normative EXPRESS source is never vendored into the crate or its published
+  archive -- the artifact stores only parsed structural facts. Closes
+  openbimrs/ifc#4.
 - **ISO 23387 DT family.** Extracted the preserved `packages/dt` history into
   the independently documented and gated `openbimrs/dt` repository, pinned its
   exact public revision at `packages/dt`, and published `openbim-dt 0.1.1` with
