@@ -185,7 +185,7 @@ pub fn compile_products(model: &Model) -> Vec<Product> {
                 .boolean_provider()
                 .subtract_many(&subject, &tools, &options)
             {
-                Ok(mesh) => mesh,
+                Ok(outcome) => outcome.mesh,
                 // A failed cut must not silently yield the uncut solid: report
                 // zero voids applied so the caller can tell the difference.
                 Err(_) => {

@@ -220,7 +220,10 @@ fn every_produced_solid_is_manifold_and_outward() {
     }
     // One mesh per PRODUCT, not per item: a product merges its representation
     // items, so this counts placed objects rather than raw solids.
-    assert_eq!(checked, 30, "closed solids in the corpus");
+    // 30 -> 41: five solids from the IFC gitlink fixtures (bath CSG and
+    // indexed-colour mappings), plus six from compiler repairs (half-space,
+    // surface sweeps, scaled instances, and the composite crankbar).
+    assert_eq!(checked, 41, "closed solids in the corpus");
     // Pin the split so a future change cannot quietly reclassify closed solids
     // as open surfaces to dodge the manifold assertions above.
     assert_eq!(

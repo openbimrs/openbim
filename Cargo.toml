@@ -38,31 +38,31 @@ authors = ["point-grey"]
 [workspace.dependencies]
 # --- ../axiolid: format-agnostic geometry. Knows nothing about IFC. ---
 # `axiolid` is the opt-in facade. Leaf crates remain independently consumable.
-axiolid = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079", default-features = false }
-axiolid-core = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-mesh = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-model = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-primitive = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-heal = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-profile = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-curve = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-surface = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-sweep = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-topology = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-tessellate = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-spatial = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-measure = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
+axiolid = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22", default-features = false }
+axiolid-core = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-mesh = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-model = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-primitive = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-heal = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-profile = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-curve = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-surface = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-sweep = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-topology = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-tessellate = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-spatial = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-measure = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
 # The scalar reference implementation and correctness oracle (ADR 0012).
-axiolid-scalar = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
-axiolid-compile = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
+axiolid-scalar = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
+axiolid-compile = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
 # Contract and implementations are separate crates so feature unification can
 # never pull a concrete backend into a format adapter.
-axiolid-kernel = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079", default-features = false }
-axiolid-backend-cpu = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079", default-features = false }
-axiolid-backend-gpu = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079", default-features = false }
+axiolid-kernel = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22", default-features = false }
+axiolid-backend-cpu = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22", default-features = false }
+axiolid-backend-gpu = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22", default-features = false }
 # boolmesh-backed provider (ADR 0014). Isolated so `boolmesh` never enters
 # axiolid-kernel's graph; the contract crate stays implementation-free.
-axiolid-boolmesh = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "9e76a1452907f8c5e81901f94abed31d90393079" }
+axiolid-boolmesh = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "8fbb6fba4686de4c0bd2e1e5ef55261fe3c19c22" }
 
 # --- packages/ifc: canonical IFC family pinned from openbimrs/ifc. ---
 # Versioned paths keep integration on the exact submodule sources while making
