@@ -1390,6 +1390,7 @@ name = "ifc-cost"
 version = "0.1.0"
 dependencies = [
  "ifc-model",
+ "ifc-step",
  "thiserror 2.0.20",
 ]
 
@@ -1463,6 +1464,7 @@ name = "ifc-schedule"
 version = "0.1.0"
 dependencies = [
  "ifc-model",
+ "ifc-step",
 ]
 
 [[package]]
@@ -1536,6 +1538,7 @@ version = "0.1.0"
 dependencies = [
  "ifc-model",
  "ifc-schema",
+ "ifc-step",
 ]
 
 [[package]]
@@ -2165,7 +2168,7 @@ version = "0.1.0"
 
 [[package]]
 name = "openbim-step"
-version = "0.3.2"
+version = "0.4.0"
 dependencies = [
  "encoding_rs",
 ]
