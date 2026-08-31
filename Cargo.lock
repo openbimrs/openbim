@@ -1365,6 +1365,7 @@ version = "0.1.0"
 dependencies = [
  "ifc-model",
  "ifc-schema",
+ "thiserror 2.0.20",
 ]
 
 [[package]]
