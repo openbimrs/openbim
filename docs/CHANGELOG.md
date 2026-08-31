@@ -69,6 +69,8 @@ section on release.
   anything already on the registry, so it is safe to re-run.
 
 ### Changed
+
+- Relicensed repository-authored work from MIT to `AGPL-3.0-or-later`; historical releases remain under their published MIT terms, and third-party material retains its own terms.
 - Advanced ICDD to `openbim-icdd`/`icdd` `0.2.0`, making the standalone
   `openbimrs/icdd` repository the sole ISO 21597 implementation boundary. The
   canonical crate now owns bounded ZIP/RDF reading, typed index and linkset
@@ -257,7 +259,7 @@ section on release.
   flyaway on a millimetre-scale halfspace clip with a 2e-9 off-axis normal.
   Transitive dependency graph is `glam` alone; zero `unsafe`; f64 by default.
   Adopted as an unmodified dependency, never vendored, so MPL-2.0 file-level
-  copyleft imposes nothing on the MIT workspace.
+  MPL-2.0 remains compatible with the AGPL-3.0-or-later workspace.
 - **`axiolid-scalar`: the scalar reference implementation begins (ADR 0012).**
   Error-free transformations (`two_sum`, `two_diff`, `two_product`) and a
   certified `orient2d` that filters in f64 and escalates to exact expansion

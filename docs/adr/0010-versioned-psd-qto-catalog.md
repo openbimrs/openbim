@@ -51,7 +51,7 @@ We will implement external PSD/QTO data in a separate `ifc-template-catalog` cra
 **Follow-ups / risks to watch**
 
 - Measure generated-code compile time, binary size, load time, and lookup latency.
-- Keep copied descriptive text out of MIT artifacts until redistribution terms are resolved.
+- Keep copied descriptive text out of AGPL-3.0-or-later artifacts until redistribution terms are resolved.
 - Add IFC2X3 and IFC4X3 only from pinned, checksummed release inputs.
 
 ## Relation to existing code

@@ -9,10 +9,13 @@ format-agnostic geometry kernel is developed separately at
 Standard-family repositories are canonical sources and are pinned beneath
 `packages/` as Git submodules. The extracted families are:
 
+- `packages/bcf` → <https://github.com/openbimrs/bcf>
 - `packages/ids` → <https://github.com/openbimrs/ids>
 - `packages/icdd` → <https://github.com/openbimrs/icdd>
 - `packages/loin` → <https://github.com/openbimrs/loin>
 - `packages/idm` → <https://github.com/openbimrs/idm>
+- `packages/mmc` → <https://github.com/openbimrs/mmc>
+- `packages/mvd` → <https://github.com/openbimrs/mvd>
 - `packages/dt` → <https://github.com/openbimrs/dt>
 - `packages/cde` → <https://github.com/openbimrs/cde>
 - `packages/epd` → <https://github.com/openbimrs/epd>
@@ -21,6 +24,7 @@ Standard-family repositories are canonical sources and are pinned beneath
 - `packages/openbimrl` → <https://github.com/openbimrs/openbimrl>
 - `packages/bsdd` → <https://github.com/openbimrs/bsdd>
 - `packages/ifc` → <https://github.com/openbimrs/ifc>
+- `packages/step` → <https://github.com/openbimrs/step>
 
 Clone with submodules:
 

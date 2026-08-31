@@ -61,4 +61,4 @@ Design rationale: `docs/adr/0015`.
 
 ## License
 
-MIT
+AGPL-3.0-or-later
