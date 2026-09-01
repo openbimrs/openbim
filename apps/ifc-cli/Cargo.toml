@@ -20,7 +20,7 @@ doc = false
 ifc-schema.workspace = true
 ifc-step.workspace = true
 ifc-model.workspace = true
-ifc-geometry.workspace = true
+ifc-geometry = { workspace = true, features = ["lowering"] }
 ifc-properties.workspace = true
 # Applications may select execution contexts and concrete operation providers.
 # The current CLI exposes CPU runtime detection only; it claims no geometry

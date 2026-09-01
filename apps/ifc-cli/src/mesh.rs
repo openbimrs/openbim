@@ -10,7 +10,7 @@ use axiolid_kernel::{ExecutionOptions, GeometryCompiler, MeshBoolean};
 use axiolid_mesh::TriMesh;
 use ifc_geometry::lower::lower_representation;
 use ifc_geometry::lower::{
-    geometric_products, lower_product_items, product_world_transform, LoweringSession, Tolerance,
+    geometric_products, lower_product_items, product_world_transform, LoweringSession,
 };
 use ifc_geometry::Slots;
 use ifc_geometry::{units, Transform};
@@ -52,13 +52,12 @@ pub struct Summary {
 /// know what was actually produced.
 pub fn compile_model(model: &Model, verbose: bool) -> Summary {
     let scale = units::resolve(model);
-    let tolerance = Tolerance::building_scale();
     let compiler = ScalarCompiler::new(BoolmeshBoolean::new());
     let options = ExecutionOptions::new(GeomTolerance::MILLIMETRE);
     let mut summary = Summary::default();
 
     for id in geometric_products(model) {
-        match compile_product(model, &scale, tolerance, &compiler, &options, id) {
+        match compile_product(model, &scale, &compiler, &options, id) {
             Outcome::Meshed(mesh) => {
                 summary.meshed += 1;
                 summary.triangles += mesh.triangle_count();
@@ -88,12 +87,11 @@ pub fn compile_model(model: &Model, verbose: bool) -> Summary {
 fn compile_product(
     model: &Model,
     scale: &units::UnitScale,
-    tolerance: Tolerance,
     compiler: &ScalarCompiler<BoolmeshBoolean>,
     options: &ExecutionOptions,
     id: EntityId,
 ) -> Outcome {
-    let mut session = LoweringSession::new(model, scale, tolerance);
+    let mut session = LoweringSession::new(model, scale);
     let root = match lower_product_items(&mut session, id) {
         Ok(Some(root)) => root,
         Ok(None) => return Outcome::NotLowered("product has no lowerable items".to_string()),
@@ -129,7 +127,6 @@ pub struct Product {
 /// free of relationship semantics.
 pub fn compile_products(model: &Model) -> Vec<Product> {
     let scale = units::resolve(model);
-    let tolerance = Tolerance::building_scale();
     let compiler = ScalarCompiler::new(BoolmeshBoolean::new());
     let options = ExecutionOptions::new(GeomTolerance::MILLIMETRE);
 
@@ -169,13 +166,12 @@ pub fn compile_products(model: &Model) -> Vec<Product> {
     let mut out = Vec::new();
     for building in subjects {
         let openings = voids.get(&building).unwrap_or(&no_openings);
-        let Some(subject) = product_mesh(model, &scale, tolerance, &compiler, &options, building)
-        else {
+        let Some(subject) = product_mesh(model, &scale, &compiler, &options, building) else {
             continue;
         };
         let tools: Vec<TriMesh> = openings
             .iter()
-            .filter_map(|&o| product_mesh(model, &scale, tolerance, &compiler, &options, o))
+            .filter_map(|&o| product_mesh(model, &scale, &compiler, &options, o))
             .collect();
         let applied = tools.len();
         let mesh = if tools.is_empty() {
@@ -223,7 +219,6 @@ fn type_name_of(model: &Model, id: EntityId) -> String {
 fn product_mesh(
     model: &Model,
     scale: &units::UnitScale,
-    tolerance: Tolerance,
     compiler: &ScalarCompiler<BoolmeshBoolean>,
     options: &ExecutionOptions,
     id: EntityId,
@@ -249,7 +244,7 @@ fn product_mesh(
 
     let mut combined: Option<TriMesh> = None;
     for representation in representations {
-        let mut session = LoweringSession::new(model, scale, tolerance);
+        let mut session = LoweringSession::new(model, scale);
         let Ok(root) = lower_representation(&mut session, representation) else {
             continue;
         };

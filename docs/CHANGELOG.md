@@ -70,6 +70,11 @@ section on release.
 
 ### Changed
 
+- Advanced the IFC family to executable IFC4 representation coverage, exact
+  mapped half-space normal handling, and geometry-only material usage views.
+  The reference CLI now uses the policy-free lowering session, while Axiolid
+  compiles already-authored triangle faces without retriangulating n-gons or
+  faces with holes.
 - Relicensed repository-authored work from MIT to `AGPL-3.0-or-later`; historical releases remain under their published MIT terms, and third-party material retains its own terms.
 - Advanced ICDD to `openbim-icdd`/`icdd` `0.2.0`, making the standalone
   `openbimrs/icdd` repository the sole ISO 21597 implementation boundary. The

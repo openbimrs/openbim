@@ -151,6 +151,7 @@ fn every_produced_solid_is_manifold_and_outward() {
 
     let mut checked = 0usize;
     let mut open_surfaces = 0usize;
+    let mut open_meshes = Vec::new();
     for path in fixtures() {
         let Ok(model) = ifc_step::StepCodec.read_path(&path) else {
             continue;
@@ -193,6 +194,7 @@ fn every_produced_solid_is_manifold_and_outward() {
                     );
                 }
                 open_surfaces += 1;
+                open_meshes.push(format!("{name}[{index}]"));
                 continue;
             }
 
@@ -220,15 +222,20 @@ fn every_produced_solid_is_manifold_and_outward() {
     }
     // One mesh per PRODUCT, not per item: a product merges its representation
     // items, so this counts placed objects rather than raw solids.
-    // 30 -> 41: five solids from the IFC gitlink fixtures (bath CSG and
-    // indexed-colour mappings), plus six from compiler repairs (half-space,
-    // surface sweeps, scaled instances, and the composite crankbar).
-    assert_eq!(checked, 41, "closed solids in the corpus");
+    // 30 -> 39: three closed products from the IFC gitlink fixtures (bath CSG),
+    // plus six from compiler repairs (half-space, surface sweeps, scaled
+    // instances, and the composite crankbar). The two indexed-colour mapped
+    // products each preserve a closed tetrahedron plus an authored open
+    // polygonal triangle, so their merged product meshes are intentionally open.
+    assert_eq!(
+        checked, 39,
+        "closed solids in the corpus; open={open_meshes:?}"
+    );
     // Pin the split so a future change cannot quietly reclassify closed solids
     // as open surfaces to dodge the manifold assertions above.
     assert_eq!(
-        open_surfaces, 12,
-        "expected exactly the synthetic open-shell fixture bodies"
+        open_surfaces, 14,
+        "expected synthetic open shells plus two exact mapped polygon faces; open={open_meshes:?}"
     );
 }
 
