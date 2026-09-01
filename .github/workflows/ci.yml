@@ -12,10 +12,8 @@ jobs:
     name: Integration gate
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository and family pins
+      - name: Check out integration repository
         uses: actions/checkout@v7
-        with:
-          submodules: recursive
       - name: Install Rust 1.88
         uses: dtolnay/rust-toolchain@1.88.0
         with:

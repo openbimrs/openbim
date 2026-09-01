@@ -23,7 +23,7 @@ We will implement external PSD/QTO data in a separate `ifc-template-catalog` cra
 - `Official` preserves normalized upstream semantics. `Corrected` applies an ordered, auditable patch ledger. Custom overlays are explicit and conflict checked.
 - Applicability retains the raw source and exposes structured entity/predefined-type selectors. Subtype matching is supplied by schema metadata rather than hard-coded into catalog data.
 - Standard builds do not read `references/`, parse XML, or access the network.
-- EPD lifecycle-module semantics belong in a later `packages/epd` package, not in this generic catalog.
+- EPD lifecycle-module semantics belong in the independent [`openbimrs/epd`](https://github.com/openbimrs/epd) family, not in this generic catalog.
 
 ## Alternatives considered
 
@@ -56,7 +56,10 @@ We will implement external PSD/QTO data in a separate `ifc-template-catalog` cra
 
 ## Relation to existing code
 
-- `packages/ifc-template-catalog/`
-- `packages/ifc-properties/`
-- `packages/ifc/`
-- `packages/ifc-model/tests/package_architecture.rs`
+The implementation now belongs to the independent [`openbimrs/ifc`](https://github.com/openbimrs/ifc) repository:
+
+- `ifc-template-catalog/`
+- `ifc-properties/`
+- `ifc-model/tests/package_architecture.rs`
+
+The integration repository consumes released crates and does not mount those paths.

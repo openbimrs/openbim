@@ -1,7 +1,11 @@
 # packages implementation plan
 
-Status: family directories established; standard crates are reserved scaffolds.
-Last updated: 2026-08-25
+> Historical extraction record. ADR 0017 retired the submodule pins on
+> 2026-09-01; canonical family work now lives only in each independent
+> `openbimrs/<family>` repository.
+
+Status: superseded by independent family repositories.
+Last updated: 2026-09-01
 
 This is task state, not ambient context. Follow `AGENTS.md`; claim one task ID,
 record blockers/decisions under it, and check it off only with evidence.

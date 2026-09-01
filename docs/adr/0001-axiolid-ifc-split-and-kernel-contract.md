@@ -91,8 +91,11 @@ into `ifc-shape`. Neither the IFC layer nor the kernel contract names a backend.
 
 ## Relation to existing code
 
-- `../axiolid/crates/axiolid-kernel/src/lib.rs` — the contract and its rationale.
-- `packages/ifc-geometry/src/lib.rs` — the seam; generic over `K: MeshBoolean`.
-- `packages/ifc-geometry/tests/no_backend_dependency.rs` — **enforces** this ADR by reading
-  the `ifc/*` manifests and failing the build if a backend dependency appears.
-  Verified to fail when violated, not merely to pass today.
+The implementation and executable architecture gate moved to independent owners:
+
+- [`openbimrs/axiolid`](https://github.com/openbimrs/axiolid) owns the kernel contract.
+- [`openbimrs/ifc`](https://github.com/openbimrs/ifc) owns the `ifc-geometry`
+  seam and `no_backend_dependency` gate.
+
+The integration repository consumes those released or immutable Git dependencies;
+it does not mount either implementation tree.

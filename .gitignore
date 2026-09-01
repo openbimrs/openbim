@@ -21,5 +21,25 @@ references/*
 # Agent plan/scratch — not part of the repo history
 .hermes/
 
+# Canonical package repositories are independent nested checkouts, not
+# submodules or parent-workspace members. Keep local clones in these paths.
+/packages/bcf/
+/packages/bsdd/
+/packages/cde/
+/packages/citygml/
+/packages/dt/
+/packages/epd/
+/packages/gaeb/
+/packages/icdd/
+/packages/idm/
+/packages/ids/
+/packages/ifc/
+/packages/loin/
+/packages/mmc/
+/packages/mvd/
+/packages/openbimrl/
+/packages/pkl/
+/packages/step/
+
 # Generated API docs (cargo doc output), regenerate via `cargo doc --workspace --no-deps`
 /docs/api/target-doc/

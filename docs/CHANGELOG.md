@@ -10,6 +10,12 @@ section on release.
 
 ## [Unreleased]
 
+### Changed
+- **Independent family repositories.** Removed all standard-family Git
+  submodules and their initialization/guard machinery. The integration workspace
+  now consumes exact Git revisions, while optional local clones under
+  `packages/<family>/` remain untracked.
+
 ### Added
 - **`ifc-schema::ifc4()` bundled schema.** `packages/ifc` now ships the IFC4
   ADD2 TC1 schema (776 entities, 397 types) as a compiled build-time artifact

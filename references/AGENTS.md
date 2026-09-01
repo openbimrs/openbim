@@ -11,7 +11,7 @@ not `git add` anything under here except this file, `README.md`, and
 |---|---|---|---|---|
 | `ifcopenshell` | `/mnt/backup/references/ifcopenshell` | github.com/IfcOpenShell/IfcOpenShell | LGPL-3.0-or-later | Reference C++/Python IFC toolkit + geometry engine. Design evidence for schema handling, validation semantics, geometry edge cases. |
 | `ifc-spec` | `/mnt/backup/references/ifc-spec` | standards.buildingsmart.org | CC BY-ND 4.0 | **The official EXPRESS schemas** for IFC2x3 TC1, IFC4 ADD2 TC1 and IFC4x3 ADD2, plus 737 property-set XMLs and the IFC4 HTML documentation. The authority for every schema question — read `AGENTS-ifc-spec.md` before using it. |
-| `ifclite` | `/mnt/backup/references/ifclite` | github.com/LTplus-AG/ifc-lite | MPL-2.0 | Reference Rust IFC processing/geometry crates. Closest prior-art in the same language; its `rust/geometry/tests/fixtures` and `rust/processing/tests/fixtures` are curated edge-case `.ifc` files (mapped items, swept-disk solids, CSG, halfspace flyaway, void-order invariance, etc.) — see `packages/ifc/test/fixtures/AGENTS.md` for the subset copied into this repo.
+| `ifclite` | `/mnt/backup/references/ifclite` | github.com/LTplus-AG/ifc-lite | MPL-2.0 | Reference Rust IFC processing/geometry crates. Closest prior-art in the same language; its `rust/geometry/tests/fixtures` and `rust/processing/tests/fixtures` are curated edge-case `.ifc` files (mapped items, swept-disk solids, CSG, halfspace flyaway, void-order invariance, etc.) — see `apps/ifc-cli/tests/fixtures/README.md` for the subset copied into this repo.
 
 Both were `git clone --depth 1`'d on 2026-08-18; re-clone (don't `pull`, upstream
 history isn't needed) if you need a newer snapshot:
@@ -34,7 +34,7 @@ rm -rf ifclite      && git clone --depth 1 https://github.com/LTplus-AG/ifc-lite
    copying source into a differently-licensed crate. When in doubt, re-derive
    from the IFC/STEP spec instead of the reference implementation.
 3. **`.ifc` sample/test files found here are fair game to copy** into
-   `packages/ifc/test/fixtures/` (they're data, not source, and typically minimal repro
+   `apps/ifc-cli/tests/fixtures/` for root integration tests (they're data, not source, and typically minimal repro
    cases the upstream projects themselves ship for testing) — but check the
    specific file's header/license note first; don't copy anything that looks
    like a real client project export.

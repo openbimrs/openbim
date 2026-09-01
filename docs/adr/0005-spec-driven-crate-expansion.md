@@ -109,7 +109,8 @@ have to compile.
 
 ## Relation to existing code
 
-`../axiolid/*`, `packages/*`, workspace `Cargo.toml` members and
-`[workspace.dependencies]`, and the architecture gate in
-`packages/ifc-geometry/tests/no_backend_dependency.rs`, which now checks
-every crate in both groups.
+The kernel crates and their gates now live in
+[`openbimrs/axiolid`](https://github.com/openbimrs/axiolid); IFC format lowering
+and its backend-dependency gate live in
+[`openbimrs/ifc`](https://github.com/openbimrs/ifc). The integration repository
+no longer mounts either source tree.

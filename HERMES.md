@@ -1,52 +1,31 @@
 # HERMES.md — openbim
 
-OpenBIM.rs is the pure-Rust IFC and openBIM integration superproject. The
-format-agnostic geometry kernel is developed separately at
+OpenBIM.rs is the pure-Rust IFC and openBIM **integration repository**. Standard
+families are developed in independent `github.com/openbimrs/<family>`
+repositories. The format-agnostic geometry kernel is developed at
 <https://github.com/axiolid/axiolid-kernel>.
 
 ## Repository model
 
-Standard-family repositories are canonical sources and are pinned beneath
-`packages/` as Git submodules. The extracted families are:
+This repository does not own, mirror, or mount standard-family source.
+Integration manifests consume exact canonical Git revisions so a clean clone is
+reproducible without recursive Git operations.
 
-- `packages/bcf` → <https://github.com/openbimrs/bcf>
-- `packages/ids` → <https://github.com/openbimrs/ids>
-- `packages/icdd` → <https://github.com/openbimrs/icdd>
-- `packages/loin` → <https://github.com/openbimrs/loin>
-- `packages/idm` → <https://github.com/openbimrs/idm>
-- `packages/mmc` → <https://github.com/openbimrs/mmc>
-- `packages/mvd` → <https://github.com/openbimrs/mvd>
-- `packages/dt` → <https://github.com/openbimrs/dt>
-- `packages/cde` → <https://github.com/openbimrs/cde>
-- `packages/epd` → <https://github.com/openbimrs/epd>
-- `packages/gaeb` → <https://github.com/openbimrs/gaeb>
-- `packages/citygml` → <https://github.com/openbimrs/citygml>
-- `packages/openbimrl` → <https://github.com/openbimrs/openbimrl>
-- `packages/bsdd` → <https://github.com/openbimrs/bsdd>
-- `packages/ifc` → <https://github.com/openbimrs/ifc>
-- `packages/step` → <https://github.com/openbimrs/step>
-
-Clone with submodules:
+Optional local clones belong below `packages/<family>/` only as a filesystem
+convention. These paths are ignored by the parent repository. For example:
 
 ```bash
-git clone --recurse-submodules https://github.com/openbimrs/openbim.git
+git clone https://github.com/openbimrs/loin.git packages/loin
+git clone https://github.com/openbimrs/pkl.git packages/pkl
 ```
 
-If an existing checkout is missing a family:
+Commit, gate, push, and release a family from its own repository. Then advance
+any affected integration dependency in this repository. Never copy family source
+into the parent repository.
 
-```bash
-scripts/init-family-submodules.sh
-```
-
-Use the helper rather than deleting an occupied submodule directory. It
-signal-safely shelters and restores existing local
-`packages/{icdd,idm,loin,dt}/references/` corpora while Git initializes or advances the
-children, then verifies every family pin and exactly one canonical URL at each
-configured transport boundary.
-
-Change a family in its own repository first. Run its standalone gate, publish or
-push the child commit, then update and validate the superproject pin. Never make
-an unpushed submodule commit the parent dependency.
+The canonical family repositories include `ids`, `icdd`, `loin`, `idm`, `dt`,
+`cde`, `epd`, `gaeb`, `citygml`, `openbimrl`, `bsdd`, `ifc`, `step`, `bcf`,
+`mvd`, `mmc`, and `pkl`.
 
 ## Dependency direction
 
@@ -56,12 +35,7 @@ Axiolid   -> explicit IFC geometry bridges only
 IFC       -X-> IDS or another standard family
 ```
 
-Standalone families use versioned registry dependencies. The root
-`[patch.crates-io]` table substitutes local integration packages so one build
-cannot accidentally contain registry and local identities for the same shared
-type crate.
-
-Only the explicit IFC bridge crates (`ifc-geometry`, `ifc-georef`,
+Only explicit IFC bridge crates (`ifc-geometry`, `ifc-georef`, and
 `ifc-alignment`) may depend on Axiolid representation crates. No IFC crate may
 depend on Axiolid algorithms, kernel contracts, or backends; applications
 choose execution providers.
@@ -69,17 +43,16 @@ choose execution providers.
 ## Commands
 
 ```bash
-scripts/init-family-submodules.sh
 cargo build --workspace
 cargo test --workspace
 scripts/gate.sh
 ```
 
-Run a standard family's own `scripts/gate.sh` inside its submodule before
-updating the parent pin. Run Axiolid's kernel-specific feature, layering, and
+Run a standard family's own gate in its repository before advancing an
+integration dependency. Run Axiolid's kernel-specific feature, layering, and
 mutation gates in the Axiolid repository.
 
 ## Git
 
-`master` is shared and hot. Stage narrowly, re-read HEAD, and use a
+`master` is shared and hot. Stage narrowly, re-read `HEAD`, and use a
 compare-and-swap update when landing a detached-worktree commit.

@@ -1,225 +1,66 @@
 # Roadmap
 
-**Mission:** the best IFC library in Rust — a lightweight, high-performance
-alternative to IfcOpenShell, without OpenCascade.
+**Mission:** keep the independently released OpenBIM.rs standard families interoperable without re-centralizing their source development.
 
-Validation-gated stages. No stage is "done" on a claim. Every stage lands with
-(a) a cross-check against `packages/ifc/test/fixtures/` (or a larger oracle corpus) and
-(b) a measured wall-clock. Performance claims are always backed by a benchmark
-number, never asserted.
+This repository owns integration evidence, the thin `openbim` facade, cross-family applications, and release compatibility. Family-specific parser, codec, schema, geometry, and format roadmaps belong in their canonical repositories under [`openbimrs`](https://github.com/openbimrs).
 
-Hardware on the dev box: Intel Xeon w7-3565X, 20 vCPU, AVX-512
-(f/dq/bw/vl/vbmi/ifma/cd) + AMX (tile/int8/bf16), 62 GB RAM; NVIDIA RTX
-4000 Ada Generation, compute capability 8.9, 20 GB VRAM. These are benchmark
-targets, never the portable compile baseline.
+Every completed item requires executable evidence. Performance claims require a reproducible benchmark and recorded environment.
 
-## Stage 0 - Architecture scaffold DONE
+## 1. Independent family releases
 
-- [x] Downward-only geometry graph: core, representation, algorithm/contract,
-      backend, facade, then external format adapters.
-- [x] `axiolid-model` immutable typed-handle DAG for exact values, mapped instances,
-      CSG, sweeps, B-rep, and tessellated geometry; forward references rejected.
-- [x] `axiolid-kernel` contains opt-in operation contracts only.
-      `axiolid-backend-cpu` is a runtime execution context and
-      `axiolid-backend-gpu` holds operation-specific adapters.
-- [x] `axiolid` facade exposes lean `mesh`/`cpu` defaults plus additive
-      `discrete`, `parametric`, `advanced`, `parallel`, `simd`, `gpu`, and
-      `full` bundles; every important combination is built in isolation.
-- [x] Runtime x86/AArch64 feature detection, optional local Rayon pool, no
-      compile-time host lock-in. GPU APIs plug in through operation-specific
-      seams such as `GpuGraphExecutor`.
-- [x] `ifc-geometry` resolves units/placements into neutral profile and DAG
-      values; it owns no duplicate primitive/kernel vocabulary and imports no
-      concrete backend.
-- [x] Authoritative IFC4 geometry-resource manifest: 112 entities + 23 types +
-      28 functions = 163 declarations. Every declaration has explicit bridge
-      and neutral ownership; scaffold status remains distinct from executable
-      implementation status.
-- [x] Progressive `AGENTS.md` plus non-ambient `PLAN.md` at every geometry crate.
-- [x] ADRs 0001-0009.
-- [x] Architecture, source-vocabulary, orphan-module, standard-trait, feature,
-      and declaration gates. The dependency, source-vocabulary, and declaration
-      gates were each mutation-verified to fail on a real injected violation.
+- [x] Develop standard families in independent `github.com/openbimrs/<family>` repositories.
+- [x] Consume families through published crate versions or immutable Git revisions; do not mount their source trees into this repository.
+- [x] Keep `packages/` available as an ignored local-clone area only.
+- [ ] Publish every facade dependency on crates.io and remove temporary Git revisions once equivalent releases exist.
+- [ ] Automate a release-health report covering registry availability, license metadata, minimum supported Rust version, and family gate status.
 
-## Stage 1 — Parser & schema
+## 2. Facade compatibility
 
-- [ ] EXPRESS `.exp` → schema table (entity, supertype chain, attribute names)
-      for IFC2x3 TC1, IFC4 ADD2 TC1 **and** IFC4x3 ADD2, as data rather than
-      generated code. Inputs are already local: `references/ifc-spec/`.
-      Generator reads `/mnt/backup`, commits its output, so a clean checkout
-      still builds.
-- [ ] Handle the cross-version rename problem explicitly: `IfcBuildingElement`
-      (2x3/4) vs `IfcBuiltElement` (4x3), and the 16 entities 4x3 drops.
-- [ ] mmap + **record-aligned** partitioning (resync to `#<digits>=`; see the
-      pitfall in `packages/AGENTS.md`) + rayon parallel scan.
-- [ ] Value scanner: refs, lists, typed values, enums, strings, reals.
-- [ ] `\X\`, `\X2\`, `\X4\` unicode escape decoding — not latin-1 only.
-- [ ] **Validation:** entity count equals an independent raw `#<id>=` scan;
-      1-partition vs N-partition totals identical; every type name in the corpus
-      resolves in the schema.
-- [ ] **Measure:** MiB/s and scaling p1→p20 on the largest available model.
+- [x] Keep facade features additive and opt-in.
+- [x] Keep the default facade dependency surface minimal.
+- [ ] Gate each feature independently against the exact dependency versions in `Cargo.lock`.
+- [ ] Add a public compatibility matrix for facade release versus family release.
+- [ ] Add semver checks for the facade's public re-export surface.
 
-## Stage 2 — Mesh boolean (the decisive stage)
+## 3. Cross-family integration
 
-This is what determines whether the OpenCascade-free premise holds.
+- [x] Build the root workspace without family source checkouts.
+- [x] Preserve the `ifc-cli` geometry corpus as explicit root-owned integration fixtures under `apps/ifc-cli/tests/fixtures/`.
+- [ ] Add cross-family workflows only where a behavior genuinely spans standards, such as IFC object selection combined with IDS auditing or LOIN requirements.
+- [ ] Make unsupported combinations fail explicitly rather than silently dropping data.
+- [ ] Keep fixture provenance and exact upstream revision recorded beside every copied integration corpus.
 
-- [ ] Port/adopt the proven 2D coplanar profile subtraction seam first; keep
-      validation area-based rather than tied to one triangulation.
-- [ ] Evaluate `boolmesh` (MPL-2.0, pure Rust, glam-only) and pure-Rust
-      alternatives against the CSG fixtures (`bath_csg_solid`,
-      `issue_1155_halfspace_flyaway`,
-      `issue_2019_wall_two_overlapping_openings`). Adopting beats building if a
-      candidate passes license, robustness, and dependency-weight gates.
-- [ ] Implement a portable CPU `MeshBoolean` provider that composes the CPU
-      execution context, retains scalar behavior as oracle, and accepts many
-      opening tools in one call.
-- [ ] **Validation:** manifold-in -> manifold-out on every fixture; volume of
-      `a \ b` plus volume of `a intersection b` equals volume of `a` within
-      tolerance (a triangulation-invariant check, not an index-buffer match).
-- [ ] **Measure:** wall-minus-N-openings throughput vs IfcOpenShell on the same
-      input. Publish the number, whichever way it falls.
+## 4. Application surfaces
 
-## Stage 3 - Exact shape lowering and evaluation
+- [x] Keep application code separate from family parser/model implementations.
+- [ ] Stabilize `ifc-cli` commands around released `openbim-ifc` and Axiolid APIs.
+- [ ] Publish deterministic differential benchmark inputs and outputs for the root integration CLI.
+- [ ] Add Python and WebAssembly consumers only after their upstream family bindings have stable ownership.
 
-- [ ] Close the 163-declaration ledger by implementation status, not just owner:
-      point/placement -> curves -> profiles/sweeps -> surfaces -> topology/B-rep
-      -> CSG/half-space -> tessellated sets -> derived/validation functions.
-- [ ] Implement curve families: line/conics, polyline/indexed polycurve,
-      composite/trim/offset, polynomial and rational B-spline.
-- [ ] Implement analytic and B-spline surfaces, bounded/trimmed/swept/offset
-      surface relationships, and shared-edge discretization.
-- [ ] Implement swept solids (extrusion, revolution, directrix and fixed-reference
-      sweep, swept disk, tapered and sectioned solids), B-rep, mapped instances,
-      half-space clipping, and CSG DAG compilation.
-- [ ] `IfcRelVoidsElement` opening cuts end to end through neutral DAG lowering
-      and a selected backend, without `ifc-geometry` importing that backend.
-- [ ] **Validation:** differential oracle fixtures from IfcOpenShell, schema
-      function unit tests, invariant mesh checks, and cross-process determinism.
-      Every unsupported declaration must return structured `Unsupported` rather
-      than approximate or panic.
+## 5. Documentation and governance
 
-## Stage 4 - Measured hardware acceleration
+- [x] Record the source-mount retirement in ADR 0017.
+- [ ] Link each family to its canonical documentation site and capability matrix.
+- [ ] Distinguish implemented, tested, published, and planned capabilities throughout the docs.
+- [ ] Archive or relocate family-local implementation plans when a canonical family repository owns them.
 
-- [ ] Portable CPU implementations first; then AVX2/AVX-512 paths for wide,
-      regular passes: vertex transforms, per-triangle AABBs, broad phase, and
-      batched triangle tests. Keep branchy topology scalar.
-- [ ] Add AArch64 NEON implementations under the same operation contracts and
-      exercise them in cross-target CI plus real ARM hardware when available.
-- [ ] Add one concrete GPU operation executor only for measured batch-friendly
-      workloads (broad phase, ray batches, voxelization, large
-      transforms/tessellation). Validate requested precision in that operation;
-      fall back explicitly when the device cannot satisfy it.
-- [ ] **Validation:** differential tests against portable CPU plus cross-process
-      determinism. No differential test means the optimized path is disabled.
-- [ ] **Measure:** startup/transfer threshold, per-pass speedup, memory, and end
-      to end latency. Report regressions as well as wins.
+## Family roadmaps
 
-## Stage 5 — Properties, and the openBIM layer
+Use the canonical repository for implementation work:
 
-Properties come first: most real IFC work is property work, and it needs no
-geometry.
-
-The crate layout is settled (`docs/adr/0015`): one crate per standard under
-`packages/`, a substrate layer in `packages/`, and the `openbim`
-facade whose features are pure re-exports. The original 13 package names are
-published as reservations; newer families document publication status
-separately.
-
-- [ ] `ifc-properties`: property sets, quantities, and **type→occurrence
-      inheritance precedence** (occurrence wins). Unit resolution against
-      `IfcUnitAssignment`, including prefixed and derived units.
-- [ ] `openbim-ids`: parse buildingSMART IDS and audit a model. Validate against
-      the IDS corpus in `references/ifclite/packages/ids/src/__corpus__/`, which
-      carries `pass-`/`fail-` cases — an oracle we already have on disk.
-      Version detection must return `Detected`, never a silent guess: all
-      versions share one namespace.
-- [ ] `openbim-epd`: model ISO 22057 EPD data templates, then implement each
-      exchange format as an explicit, versioned adapter. ISO 22057 defines the
-      semantic template, not one universal XML namespace or XSD; do not make a
-      generic XML parser silently choose between ILCD+EPD, INIES, openEPD, or
-      another provider format.
-- [ ] `openbim-bcf`: **reader implemented** for BCF-XML 2.0/2.1/3.0 — evidence-
-      reporting version detection, verbatim status/type strings, tolerated
-      deviations surfaced as diagnostics, and untrusted-archive limits. Verified
-      against 71 official buildingSMART test archives (all agree with their
-      declared version) and 44 third-party archives. **Writing is not
-      implemented**; export of findings is the next step. The reader is tolerant
-      by measurement, not by preference — see `packages/bcf/docs/corpus-evidence.md`.
-- [x] `openbim-cde`: transport-agnostic Serde wire models for all released
-      Foundation API 1.1 schemas and all named Documents API 1.0 components.
-      HTTP/OAuth execution and full schema-constraint validation remain out of
-      scope and are not claimed.
-- [x] `openbim-gaeb`: content-based DA XML 3.1–3.4 beta detection,
-      namespace-resolved version/phase diagnostics, lossless unchanged-byte round
-      trips, common BoQ item views, and fail-closed quantity edits for one complete
-      safely replaceable value range. Full XSD validation and generated bindings
-      remain explicit future work.
-- [ ] `clash` (now `packages/`): broad phase (BVH) + narrow phase on
-      the injected kernel.
-- [ ] **Validation:** for IDS, every `pass-` case passes and every `fail-` case
-      fails, with *not applicable* distinguished from *passed* — the distinction
-      that makes an audit trustworthy.
-
-### Stage 5b — porting the existing codecs
-
-Working lossless codecs for ISO 29481-3 (idmXML) and ISO 7817-3
-(LOIN) originated in the private `poing` repository, each with a CLI and PyO3
-bindings.
-
-- [x] `openbim-idm`: extracted into the standalone
-      [`openbimrs/idm`](https://github.com/openbimrs/idm) repository and pinned as
-      `packages/idm`. The canonical crate owns the lossless tree, CLI, generated
-      schema catalog, and PyO3 binding; `idmxml` is a pure re-export alias.
-      Recorded schema defects remain explicit semantic overlays.
-- [x] Keep the IDM engine directly on `quick-xml`; XML policy is format-local.
-      Preserve its working lossless behavior and validate it in the IDM family gate.
-- [ ] `openbim-loin`: port from `poing`. Namespace migration is first-class —
-      the LOIN namespace is not final.
-- [ ] `openbim-dt`: ISO 23387 data templates, which the LOIN schema imports.
-- [x] The IDM port vendors no ISO/CEN schemas or PDFs; local references are
-      ignored and package/Pages artifacts are leakage-gated.
-- [x] `poing` consumes the extracted IDM Python package instead of carrying its
-      own implementation. Rewiring Solibri and extracting LOIN remain separate
-      work.
-
-## Stage 6 — 4D/5D and diff
-
-- [ ] `ifc-schedule` (`IfcTask`/`IfcWorkSchedule`), `ifc-cost`
-      (`IfcCostItem`/`IfcCostSchedule`).
-- [ ] `diff` (now `packages/`): GUID-matched semantic diff
-      (added/removed/moved/property-changed), not a text diff.
-- [x] `openbim-icdd`: the standalone ISO 21597 family now provides secure,
-      bounded container inspection and extraction, rooted typed Index/linkset
-      decoding, neutral RDF/XML round-tripping, deterministic writing, lazy
-      payload access, and the Poing/Solibri federation extension. Full
-      normative conformance coverage remains future work. RDF stays inside this
-      crate until a second consumer justifies a `wire-rdf`.
-- [ ] `ifc-zip`: an IFCZIP decorator generic over `Codec`, using `zip` directly
-  with IFC-owned archive limits and deterministic entry policy.
-      One implementation covers STEP, ifcXML and any future IFC-JSON.
-
-## Stage 7 — Bindings
-
-- [ ] `bindings/python`: pyo3 + maturin, abi3 wheels. **Release the GIL around
-      parse and geometry** — the structural win over `ifcopenshell-python`,
-      since the Rust side is already parallel.
-- [ ] `bindings/wasm`: wasm-bindgen. Requires `ifc-step` to accept `&[u8]`
-      (no mmap in the browser) and no mandatory native backend.
-- [ ] **Validation:** wasm bundle size published; a browser round-trip parsing a
-      real model.
-
-## Stage 8 — Publishable library
-
-- [ ] Remove/gate `-C target-cpu=native` (see HERMES.md pitfalls) — a published
-      binary must not SIGILL on older CPUs.
-- [ ] `cargo doc` API reference published; `#![warn(missing_docs)]` enforced.
-- [ ] Public API review: what does an application actually need?
-- [ ] Benchmark suite vs IfcOpenShell on a shared corpus.
-
-## Explicitly not planned
-
-- **GPU mesh boolean.** Branchy, topological, precision-sensitive, and per-element
-  work too small to amortize a PCIe transfer. GPU stays for large regular
-  batches (broad-phase, ray casts, voxelization) behind the off-by-default
-  feature. See `docs/adr/0002`.
-- **Any C++ geometry dependency.** See `docs/adr/0003`.
+- [BCF](https://github.com/openbimrs/bcf)
+- [buildingSMART Data Dictionary](https://github.com/openbimrs/bsdd)
+- [CDE APIs](https://github.com/openbimrs/cde)
+- [CityGML](https://github.com/openbimrs/citygml)
+- [Data Templates / ISO 23387](https://github.com/openbimrs/dt)
+- [EPD](https://github.com/openbimrs/epd)
+- [GAEB](https://github.com/openbimrs/gaeb)
+- [ICDD](https://github.com/openbimrs/icdd)
+- [IDM](https://github.com/openbimrs/idm)
+- [IDS](https://github.com/openbimrs/ids)
+- [IFC](https://github.com/openbimrs/ifc)
+- [LOIN](https://github.com/openbimrs/loin)
+- [MMC](https://github.com/openbimrs/mmc)
+- [MVD](https://github.com/openbimrs/mvd)
+- [OpenBIMRL](https://github.com/openbimrs/openbimrl)
+- [STEP](https://github.com/openbimrs/step)

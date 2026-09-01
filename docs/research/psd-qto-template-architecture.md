@@ -1,6 +1,8 @@
 # PSD/QTO template catalog architecture
 
-Status: research basis for accepted ADR 0010; implementation lives in `packages/ifc-template-catalog`.
+Status: historical research basis for accepted ADR 0010. Current implementation
+ownership is [`openbimrs/ifc`](https://github.com/openbimrs/ifc); `packages/…`
+paths below describe the pre-extraction workspace.
 
 ## Executive result
 

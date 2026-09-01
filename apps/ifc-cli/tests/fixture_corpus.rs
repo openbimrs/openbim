@@ -18,7 +18,7 @@ mod ifc_cli_support {
     pub fn fixtures() -> Vec<PathBuf> {
         let root = PathBuf::from(concat!(
             env!("CARGO_MANIFEST_DIR"),
-            "/../../packages/ifc/test/fixtures/ifclite-geometry"
+            "/tests/fixtures/ifclite-geometry"
         ));
         let mut files: Vec<_> = std::fs::read_dir(&root)
             .expect("fixture directory")

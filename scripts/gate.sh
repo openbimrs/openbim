@@ -30,9 +30,7 @@ step() {
     fi
 }
 
-echo "=== openbim gate ==="
-step "submodule pins"         scripts/check-submodules.sh
-step "submodule guard mutations" scripts/test-submodule-guard.sh
+echo "=== openbim integration gate ==="
 step "mechanics retirement"    scripts/check-mechanics-retirement.sh
 step "facade dependency isolation" scripts/check-facade-isolation.py
 step "facade isolation mutations" scripts/test-facade-isolation.py
@@ -43,14 +41,6 @@ step "test --all-features"    cargo test --workspace --all-features
 step "clippy"                 cargo clippy --workspace --all-targets -- -D warnings
 step "clippy --all-features"  cargo clippy --workspace --all-targets --all-features -- -D warnings
 step "doc"                    env RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps
-
-# The openbim-ifc facade must build and lint under each feature combination.
-for f in "--no-default-features" "--features step" "--features ifcxml" "--all-features"; do
-    # shellcheck disable=SC2086
-    step "openbim-ifc build $f"  cargo build -p openbim-ifc $f
-    # shellcheck disable=SC2086
-    step "openbim-ifc clippy $f" cargo clippy -p openbim-ifc $f --all-targets -- -D warnings
-done
 
 # The openbim facade must build and lint under each standard in isolation.
 # This is the executable form of ADR 0015's central claim: enabling one
@@ -75,19 +65,7 @@ for f in "--no-default-features" \
     step "openbim clippy $f" cargo clippy -p openbim $f --all-targets -- -D warnings
 done
 
-# Isolated builds prove each crate declares its own complete dependency set:
-# feature unification inside a workspace build can otherwise hide a missing
-# dependency that only shows up for an external consumer.
-for c in openbim-step openbim-ifc openbim-core openbim-dt openbim-ids openbim-gaeb openbim-citygml openbim-openbimrl openbim-bsdd openbim-cde openbim-epd openbim-bcf \
-         openbim-icdd openbim-idm openbim-loin openbim-mvd openbim clash diff \
-         gaeb citygml openbimrl bsdd icdd idmxml loin; do
-    step "isolated build -p $c" cargo build -p "$c"
-done
-
-# Alias crates must stay pure re-exports. A type defined in an alias would be
-# distinct from -- and non-unifiable with -- the canonical crate's type, so a
-# graph holding both would not compile. Guard the invariant structurally.
-step "alias crates define no types" scripts/check-alias-purity.sh
+# Standalone family gates run in their canonical repositories.
 
 # Geometry-kernel feature and layering gates live in the separate Axiolid repository.
 

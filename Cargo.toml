@@ -1,32 +1,18 @@
 [workspace]
 resolver = "2"
 members = [
-    # Canonical openBIM crates. The crate-name-constrained glob deliberately
-    # ignores repository control directories such as `.github/`, `docs/`, and
-    # `scripts/` inside standard-family submodules.
-    "packages/*/openbim-*",
     "packages/facade/openbim",
-    # IFC leaf crates and the short aliases that were available on crates.io.
-    "packages/ifc/ifc-*",
-    "packages/gaeb/gaeb",
-    "packages/citygml/citygml",
-    "packages/openbimrl/openbimrl",
-    "packages/bsdd/bsdd",
-    "packages/icdd/icdd",
-    "packages/idm/idmxml",
-    "packages/loin/loin",
-    # Analysis capabilities are neither standards nor `openbim-*` crates.
+    "packages/core/openbim-core",
     "packages/analysis/clash",
     "packages/analysis/diff",
     "bindings/python",
     "apps/*",
 ]
 
-# `bindings/_deferred-wasm/` is intentionally NOT a member. WASM is deferred
-# (see bindings/AGENTS.md); the underscore prefix keeps it out of any future
-# `bindings/*` glob as well, so re-adding it is a deliberate act. STEP keeps
-# its own workspace metadata while remaining available as an exact path patch.
-exclude = ["bindings/_deferred-wasm", "packages/step"]
+# Canonical standard-family repositories are developed independently and are
+# consumed below as exact Git dependencies. Local clones under packages/ are
+# intentionally ignored by this parent workspace.
+exclude = ["bindings/_deferred-wasm"]
 
 [workspace.package]
 version = "0.1.0"
@@ -63,57 +49,52 @@ axiolid-backend-gpu = { git = "https://github.com/axiolid/axiolid-kernel.git", r
 # axiolid-kernel's graph; the contract crate stays implementation-free.
 axiolid-boolmesh = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
 
-# --- packages/ifc: canonical IFC family pinned from openbimrs/ifc. ---
-# Versioned paths keep integration on the exact submodule sources while making
-# release metadata explicit across the repository boundary.
-ifc-schema = { path = "packages/ifc/ifc-schema", version = "0.1.0" }
-openbim-ifc = { path = "packages/ifc/openbim-ifc", version = "0.1.0" }
-ifc-step = { path = "packages/ifc/ifc-step", version = "0.1.0" }
-ifc-xml = { path = "packages/ifc/ifc-xml", version = "0.1.0" }
-ifc-model = { path = "packages/ifc/ifc-model", version = "0.1.0" }
-ifc-geometry = { path = "packages/ifc/ifc-geometry", version = "0.1.0", default-features = false }
-ifc-properties = { path = "packages/ifc/ifc-properties", version = "0.1.0" }
-ifc-template-catalog = { path = "packages/ifc/ifc-template-catalog", version = "0.1.0" }
-ifc-cost = { path = "packages/ifc/ifc-cost", version = "0.1.0" }
-ifc-schedule = { path = "packages/ifc/ifc-schedule", version = "0.1.0" }
-ifc-material = { path = "packages/ifc/ifc-material", version = "0.1.0" }
-ifc-style = { path = "packages/ifc/ifc-style", version = "0.1.0" }
-ifc-structural = { path = "packages/ifc/ifc-structural", version = "0.1.0" }
-ifc-resource = { path = "packages/ifc/ifc-resource", version = "0.1.0" }
-ifc-classification = { path = "packages/ifc/ifc-classification", version = "0.1.0" }
-ifc-georef = { path = "packages/ifc/ifc-georef", version = "0.1.0" }
-ifc-systems = { path = "packages/ifc/ifc-systems", version = "0.1.0" }
-ifc-alignment = { path = "packages/ifc/ifc-alignment", version = "0.1.0" }
-ifc-validate = { path = "packages/ifc/ifc-validate", version = "0.1.0" }
-ifc-author = { path = "packages/ifc/ifc-author", version = "0.1.0" }
-ifc-spatial = { path = "packages/ifc/ifc-spatial", version = "0.1.0" }
+# --- Canonical standard-family repositories. ---
+# Source is developed in independent repositories. Exact revisions keep this
+# integration workspace reproducible without mounting those repositories as
+# submodules. The version assertion catches a pin whose package metadata drifted.
+ifc-schema = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+openbim-ifc = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-step = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-xml = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-model = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-geometry = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0", default-features = false }
+ifc-properties = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-template-catalog = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-cost = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-schedule = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-material = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-style = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-structural = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-resource = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-classification = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-georef = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-systems = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-alignment = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-validate = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-author = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
+ifc-spatial = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
 
-# --- packages/step: generic ISO 10303 syntax below IFC and standards. ---
-# IFC pins the released 0.4.0 parser/schema graph; keep the parent contract
-# exact so its patched local source cannot resolve an incompatible STEP API.
-openbim-step = { path = "packages/step/openbim-step", version = "0.4.0" }
+openbim-step = { git = "https://github.com/openbimrs/step.git", rev = "629278f8d1fd85b080b78535dcb4fb498d347816", version = "0.4.0" }
 
-# --- packages/openbim: standards built ON the IFC layer, never inside it. ---
-# One crate per standard. Cargo features are additive across the whole graph,
-# so features of a single crate could not keep an RDF stack out of an IDS-only
-# build; separate packages can. See docs/adr/0015.
+# The facade itself and shared vocabulary remain in this integration repository
+# until they receive standalone canonical repositories.
 openbim = { path = "packages/facade/openbim", default-features = false }
 openbim-core = { path = "packages/core/openbim-core", version = "0.1.0" }
-openbim-dt = { path = "packages/dt/openbim-dt", version = "0.2.0" }
-openbim-ids = { path = "packages/ids/openbim-ids", version = "0.1.0" }
-openbim-gaeb = { path = "packages/gaeb/openbim-gaeb", version = "0.1.3" }
-openbim-citygml = { path = "packages/citygml/openbim-citygml", version = "0.1.0" }
-openbim-openbimrl = { path = "packages/openbimrl/openbim-openbimrl", version = "0.1.0" }
-openbim-bsdd = { path = "packages/bsdd/openbim-bsdd", version = "0.1.0" }
-openbim-epd = { path = "packages/epd/openbim-epd", version = "0.1.1" }
-openbim-bcf = { path = "packages/bcf/openbim-bcf", version = "0.2.0" }
-openbim-icdd = { path = "packages/icdd/openbim-icdd", version = "0.2.0" }
-openbim-idm = { path = "packages/idm/openbim-idm", version = "0.1.0" }
-openbim-loin = { path = "packages/loin/openbim-loin", version = "0.3.0" }
-openbim-mvd = { path = "packages/mvd/openbim-mvd", version = "0.1.0" }
+openbim-dt = { git = "https://github.com/openbimrs/dt.git", rev = "15e38f9ec6dd5c657cea9265456994abe87544ab", version = "0.2.0" }
+openbim-ids = { git = "https://github.com/openbimrs/ids.git", rev = "b3627e7321aeb16e11a05fa602391d4cd6be1d14", version = "0.1.0" }
+openbim-gaeb = { git = "https://github.com/openbimrs/gaeb.git", rev = "1873d5188b5905c608eb293884acf9c00f102a87", version = "0.1.3" }
+openbim-citygml = { git = "https://github.com/openbimrs/citygml.git", rev = "21c27b79e621e5f113a12c1b2ffcb98c3f087b7b", version = "0.1.0" }
+openbim-openbimrl = { git = "https://github.com/openbimrs/openbimrl.git", rev = "2d69e31891209d26560ab90da072357adac70e69", version = "0.1.0" }
+openbim-bsdd = { git = "https://github.com/openbimrs/bsdd.git", rev = "8d91299adf9938986cf0be57bfc9a7e072a95755", version = "0.1.0" }
+openbim-epd = { git = "https://github.com/openbimrs/epd.git", rev = "7fcd98c340e8f0536646c8983184ddd2439d4891", version = "0.1.1" }
+openbim-bcf = { git = "https://github.com/openbimrs/bcf.git", rev = "a7d64d63e0cca77a328218640b6191f1839a6410", version = "0.2.0" }
+openbim-icdd = { git = "https://github.com/openbimrs/icdd.git", rev = "93a0f3d65d291795e86b166b453247c0dcb27fd3", version = "0.2.0" }
+openbim-idm = { git = "https://github.com/openbimrs/idm.git", rev = "7824a2722abf3c3c753d83c0994e37ea10e78cab", version = "0.1.0" }
+openbim-loin = { git = "https://github.com/openbimrs/loin.git", rev = "07e486aae96346caa7eb796c2238479d1ca6cd2f", version = "0.3.0" }
+openbim-mvd = { git = "https://github.com/openbimrs/mvd.git", rev = "069bddb70b4753f0b4ad1a677b0a277d139abefe", version = "0.1.0" }
 
-# --- packages/analysis: capabilities, NOT openBIM standards. They consume the
-# IFC layer and emit findings that openbim-bcf can export. ---
+# Analysis capabilities are local integration consumers, not standards.
 clash = { path = "packages/analysis/clash" }
 diff = { path = "packages/analysis/diff" }
 
@@ -128,13 +109,10 @@ memmap2 = "0.9"
 criterion = { version = "0.5", features = ["html_reports"] }
 quick-xml = "0.37"
 
-# Standalone family repositories use registry dependencies so each can build
-# outside this superproject. Integration builds substitute the local source to
-# guarantee one package identity and exercise the exact pinned family commits.
+# Independent family repositories consume the published shared vocabulary.
+# Substitute the local integration copy so the graph has one type identity.
 [patch.crates-io]
 openbim-core = { path = "packages/core/openbim-core" }
-openbim-step = { path = "packages/step/openbim-step" }
-openbim-dt = { path = "packages/dt/openbim-dt" }
 
 [profile.release]
 opt-level = 3

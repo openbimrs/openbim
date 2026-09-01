@@ -186,7 +186,19 @@ loudly. Both invariants are now enforced by:
 - `ifc-model/tests/module_reachability.rs` — reachability, `>= 18` crates
 - `ifc-model/tests/progressive_context.rs` — per-crate AGENTS.md + PLAN.md
 - `ifc-geometry/tests/no_backend_dependency.rs` — geometry allowlist
-- `scripts/check-alias-purity.sh` — aliases stay pure re-exports
+- family-local alias-purity gates — aliases stay pure re-exports
 
 Each was re-verified by mutation after the move: introduce the violation, watch
 the gate fail, restore, watch it pass.
+
+## Amendment, 2026-09-01 — independent family repositories
+
+The family directories described above were extracted into independent
+`github.com/openbimrs/<family>` repositories and the root Gitlinks were retired
+by ADR 0017. The historical layouts remain in this ADR to explain the
+transition; they are no longer paths in this integration repository.
+
+The crate-per-standard and dependency-boundary decisions remain in force. Their
+architecture gates, alias-purity checks, plans, and implementation docs now live
+with the owning family. The root facade consumes released crates (or explicit
+immutable Git revisions for bounded integration work) rather than source paths.

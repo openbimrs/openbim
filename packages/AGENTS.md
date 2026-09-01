@@ -1,68 +1,77 @@
 # packages/ instructions
 
-Applies to `packages/**`. Each subdirectory is one **standard family** and
-holds the crates that implement it. Read the deeper `AGENTS.md` before editing
-inside a family; deeper files add local rules and do not repeat this one.
+Applies to `packages/**`. Read a deeper `AGENTS.md` before editing a tracked
+package or an independent repository checked out here.
 
-## Layout
+## Local checkout convention
 
-One directory per standard, mirroring the repositories under
-`github.com/openbimrs`. A family holds its canonical crate, and where the
-short name was still free on crates.io, its alias crate too.
+Each standard family is canonical in `github.com/openbimrs/<family>` and is
+developed, tested, versioned, and released there. The parent `openbim`
+repository does not track family directories as files or Git submodules.
 
-Extracted families are Git submodules whose canonical source is the matching
-`openbimrs/<family>` repository. `ids/`, `icdd/`, `idm/`, `loin/`, `dt/`, `cde/`,
-`ifc/`, `epd/`, `gaeb/`, `citygml/`, `openbimrl/`, `bsdd/`, and `step/` are
-extracted. Make family changes in the child repository,
-pass its standalone gate, push the child commit, and only then update the
-superproject pin. The root integration gate must pass at the exact pin before
-it lands.
+For convenience, clone independent repositories into their conventional local
+paths:
 
-| Directory | Crates | Standard |
-| --- | --- | --- |
-| `ifc/` | `ifc-*` (18) + `openbim-ifc` facade | ISO 16739 IFC |
-| `ids/` | `openbim-ids` | buildingSMART IDS |
-| `gaeb/` | `openbim-gaeb`, `gaeb` | GAEB DA XML |
-| `citygml/` | `openbim-citygml`, `citygml` | OGC CityGML |
-| `openbimrl/` | `openbim-openbimrl`, `openbimrl` | reserved OpenBIM.rs namespace |
-| `bsdd/` | `openbim-bsdd`, `bsdd` | buildingSMART Data Dictionary |
-| `cde/` | `openbim-cde` | buildingSMART Foundation/Documents APIs |
-| `epd/` | `openbim-epd` | ISO 22057 EPD data templates |
-| `bcf/` | `openbim-bcf` | buildingSMART BCF-XML (S1005) |
-| `icdd/` | `openbim-icdd`, `icdd` | ISO 21597 |
-| `idm/` | `openbim-idm`, `idmxml` | ISO 29481-3 |
-| `loin/` | `openbim-loin`, `loin` | ISO 7817-3 / EN 17412-3 |
-| `dt/` | `openbim-dt` | ISO 23387 data templates |
-| `core/` | `openbim-core` | shared vocabulary |
-| `step/` | `openbim-step` | ISO 10303-11 EXPRESS and ISO 10303-21 syntax substrate |
-| `facade/` | `openbim` | feature-gated facade |
-| `analysis/` | `clash`, `diff` | capabilities, NOT standards |
-
-## The dependency rule
-
+```bash
+git clone https://github.com/openbimrs/loin.git packages/loin
+git clone https://github.com/openbimrs/pkl.git packages/pkl
 ```
+
+Those paths are ignored by the parent. Run Git commands from the child
+repository and never stage child content in `openbim`.
+
+The integration manifest uses canonical Git revisions rather than local path
+dependencies. A local checkout therefore cannot silently change integration
+results.
+
+## Tracked integration packages
+
+The remaining parent-owned directories are integration-level packages, not
+standard-family source:
+
+| Directory | Role |
+| --- | --- |
+| `core/` | Shared integration vocabulary pending an independent boundary |
+| `facade/` | Feature-gated `openbim` facade |
+| `analysis/` | Cross-family capabilities such as clash and diff |
+
+## Canonical family repositories
+
+| Repository | Standard or role |
+| --- | --- |
+| `openbimrs/ifc` | ISO 16739 IFC |
+| `openbimrs/step` | ISO 10303-11 EXPRESS and ISO 10303-21 syntax substrate |
+| `openbimrs/ids` | buildingSMART IDS |
+| `openbimrs/gaeb` | GAEB DA XML |
+| `openbimrs/citygml` | OGC CityGML |
+| `openbimrs/openbimrl` | OpenBIM.rs namespace |
+| `openbimrs/bsdd` | buildingSMART Data Dictionary |
+| `openbimrs/cde` | buildingSMART Foundation/Documents APIs |
+| `openbimrs/epd` | ISO 22057 EPD data templates |
+| `openbimrs/bcf` | buildingSMART BCF-XML |
+| `openbimrs/icdd` | ISO 21597 |
+| `openbimrs/idm` | ISO 29481-3 |
+| `openbimrs/loin` | ISO 7817-3 / EN 17412-3 |
+| `openbimrs/dt` | ISO 23387 data templates |
+| `openbimrs/mvd` | buildingSMART mvdXML |
+| `openbimrs/mmc` | Multi-model containers |
+| `openbimrs/pkl` | Apple Pkl schemas for developed OpenBIM.rs families |
+
+## Dependency rule
+
+```text
 step/   ->  nothing        (generic STEP/EXPRESS substrate)
 core/   ->  nothing        (shared domain vocabulary)
-ifc/    ->  step          NEVER a standard family
+ifc/    ->  step           NEVER a standard family
 <std>/  ->  core, step, ifc
 facade/ ->  the standards it re-exports
 analysis/ -> ifc, core, bcf
 ```
 
-`ifc/` must never depend on a standard family. If an IFC crate needs something
-from one, the abstraction is in the wrong place: move the shared piece down
-into `core/` or `step/`, never the dependency up. That is what stops the IFC
-core accreting every standard that happens to read IFC.
+`ifc` must never depend on another standard family. If an IFC crate needs
+something from one, move the shared abstraction down into `core` or `step`,
+never the dependency up.
 
-Format families use maintained XML/ZIP ecosystem crates directly. `step/`
-does not wrap dependencies merely to centralize versions; it exists because
-STEP/EXPRESS provides a substantial reusable syntax and language contract.
-
-## Directory is not the boundary
-
-The architecture tests select crates by **name** (`ifc-*`, `openbim-*`) as well
-as by directory. That redundancy is deliberate: a directory-only filter silently
-matches nothing after a layout change, and a test that matches nothing PASSES.
-Both restructures in this repo's history broke exactly that way. Any new
-architecture test must assert a minimum crate count so it fails loudly instead
-of passing vacuously.
+Architecture tests must select crates by name as well as location and assert a
+minimum match count. A directory-only filter can silently match nothing after a
+layout change and falsely pass.

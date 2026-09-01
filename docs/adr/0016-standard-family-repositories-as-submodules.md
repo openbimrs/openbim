@@ -1,6 +1,6 @@
 # 0016 — Standard-family repositories pinned as submodules
 
-- **Status:** Accepted
+- **Status:** Superseded by [ADR 0017](0017-independent-family-repositories.md)
 - **Date:** 2026-08-25
 - **Deciders:** Friedrich Schrödter
 - **Supersedes:** —

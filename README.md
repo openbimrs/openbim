@@ -7,29 +7,37 @@
 
 Pure-Rust IFC and openBIM infrastructure. No C++ in the dependency graph.
 
-One integration workspace, many independently published crates. Take a single
-standard, or the facade with the features you need — the cost of what you do
-not use is zero, because each standard is its own crate rather than a feature
-of a monolith.
+One integration workspace, many independently developed repositories and
+published crates. Take a single standard, or the facade with the features you
+need—the cost of what you do not use is zero because each standard is its own
+crate rather than a feature of a monolith.
 
-Standard-family repositories are progressively becoming canonical standalone
-repositories pinned here as Git submodules. IDS established the extraction
-pattern; IDS, IFC, ICDD, IDM, LOIN, MVD, DT, STEP, CDE, EPD, GAEB, CityGML,
-openBIMRL, and bSDD are now independently pinned families.
+Standard-family source is canonical only in its `openbimrs/<family>` repository.
+This integration repository consumes exact Git revisions; it does not mount,
+mirror, or own family source. Optional local clones may live under
+`packages/<family>/`, where the parent repository ignores them.
 
 ## Clone for development
 
-Clone recursively so every pinned family source is present:
+The integration repository is a normal, non-recursive clone:
 
 ```bash
-git clone --recurse-submodules https://github.com/openbimrs/openbim.git
+git clone https://github.com/openbimrs/openbim.git
 cd openbim
 scripts/gate.sh
 ```
 
-For an existing checkout, run `scripts/init-family-submodules.sh`. The helper
-preserves local restricted `packages/{icdd,idm,loin,mvd,dt}/references/` corpora
-while the children are initialized or advanced.
+Develop a family in its own repository. Keeping the checkout below `packages/`
+is only a local filesystem convention, not a Git relationship:
+
+```bash
+git clone https://github.com/openbimrs/loin.git packages/loin
+git clone https://github.com/openbimrs/pkl.git packages/pkl
+```
+
+A family change is tested and released from that repository. Update this
+integration repository only when its facade, apps, bindings, or compatibility
+pins need the new revision.
 
 ## Crates
 
@@ -48,7 +56,7 @@ while the children are initialized or advanced.
 | [`openbim-cde`](https://github.com/openbimrs/cde) | API docs pending first release | [repository](https://github.com/openbimrs/cde) | buildingSMART Foundation API 1.1 + Documents API 1.0 |
 | [`openbim-epd`](https://crates.io/crates/openbim-epd) | [docs.rs](https://docs.rs/openbim-epd) | [repository](https://github.com/openbimrs/epd) | ISO 22057 EPD data templates |
 | [`openbim-bcf`](https://crates.io/crates/openbim-bcf) | [docs.rs](https://docs.rs/openbim-bcf) | [repository](https://github.com/openbimrs/bcf) | buildingSMART BCF-XML 2.0/2.1/3.0; corpus-verified reader, writing not implemented |
-| [`openbim-icdd`](https://crates.io/crates/openbim-icdd) | [docs.rs](https://docs.rs/openbim-icdd) | [src](packages/icdd/openbim-icdd) | ISO 21597 ICDD |
+| [`openbim-icdd`](https://crates.io/crates/openbim-icdd) | [docs.rs](https://docs.rs/openbim-icdd) | [repository](https://github.com/openbimrs/icdd) | ISO 21597 ICDD |
 | [`openbim-idm`](https://crates.io/crates/openbim-idm) | [project docs](https://openbimrs.github.io/idm/) | [repository](https://github.com/openbimrs/idm) | ISO 29481-3 idmXML; lossless Rust/Python engine, publication blocked pending schema rights |
 | [`openbim-loin`](https://crates.io/crates/openbim-loin) | [docs.rs](https://docs.rs/openbim-loin) | [repository](https://github.com/openbimrs/loin) | ISO 7817-3 / EN 17412-3 LOIN |
 | [`openbim-mvd`](https://crates.io/crates/openbim-mvd) | [project docs](https://openbimrs.github.io/mvd/) | [repository](https://github.com/openbimrs/mvd) | buildingSMART mvdXML 1.1 typed codec, rules, and validation |
@@ -121,13 +129,15 @@ capability claims here are meant to be checkable, not aspirational.
 
 - [ADR 0015](docs/adr/0015-openbim-standards-as-separate-crates.md) — why one
   crate per standard rather than features of one crate.
-- [ADR 0016](docs/adr/0016-standard-family-repositories-as-submodules.md) — why
-  standalone family repositories are pinned here as submodules.
-- `packages/AGENTS.md` — the layering rules and the one-way dependency rule.
+- [ADR 0016](docs/adr/0016-standard-family-repositories-as-submodules.md) —
+  superseded record of the former submodule model.
+- [ADR 0017](docs/adr/0017-independent-family-repositories.md) — why family
+  repositories are now consumed independently without source mounts.
+- `packages/AGENTS.md` — the layering rules and local-checkout convention.
 
-Architecture is enforced by tests, not convention: `scripts/gate.sh` builds
-every standard in isolation and proves that enabling one does not drag in
-another's dependencies.
+Architecture is enforced by tests, not convention: `scripts/gate.sh` exercises
+the facade, apps, and bindings against the declared family revisions and proves
+that enabling one facade feature does not drag in another standard.
 
 ## License
 
