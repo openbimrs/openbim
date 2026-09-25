@@ -3,11 +3,13 @@
 //! This is the reference consumer: the application chooses the codec and the
 //! geometry providers, which library crates must never do.
 
-use axiolid_boolmesh::BoolmeshBoolean;
-use axiolid_compile::ScalarCompiler;
+use axiolid_contracts::ExecutionOptions;
 use axiolid_core::Tolerance as GeomTolerance;
-use axiolid_kernel::{ExecutionOptions, GeometryCompiler, MeshBoolean};
 use axiolid_mesh::TriMesh;
+use axiolid_mesh_boolean_boolmesh::BoolmeshBoolean;
+use axiolid_mesh_boolean_contract::MeshBoolean;
+use axiolid_mesh_compile::ReferenceMeshCompiler;
+use axiolid_mesh_compile_contract::MeshCompiler;
 use ifc_geometry::lower::lower_representation;
 use ifc_geometry::lower::{
     geometric_products, lower_product_items, product_world_transform, LoweringSession,
@@ -52,7 +54,7 @@ pub struct Summary {
 /// know what was actually produced.
 pub fn compile_model(model: &Model, verbose: bool) -> Summary {
     let scale = units::resolve(model);
-    let compiler = ScalarCompiler::new(BoolmeshBoolean::new());
+    let compiler = ReferenceMeshCompiler::new(BoolmeshBoolean::new());
     let options = ExecutionOptions::new(GeomTolerance::MILLIMETRE);
     let mut summary = Summary::default();
 
@@ -87,7 +89,7 @@ pub fn compile_model(model: &Model, verbose: bool) -> Summary {
 fn compile_product(
     model: &Model,
     scale: &units::UnitScale,
-    compiler: &ScalarCompiler<BoolmeshBoolean>,
+    compiler: &ReferenceMeshCompiler<BoolmeshBoolean>,
     options: &ExecutionOptions,
     id: EntityId,
 ) -> Outcome {
@@ -101,7 +103,7 @@ fn compile_product(
         Ok(lowered) => lowered,
         Err(error) => return Outcome::NotLowered(error.to_string()),
     };
-    match compiler.compile(&lowered.graph, lowered.root, options) {
+    match compiler.compile_mesh(&lowered.graph, lowered.root, options) {
         Ok(mesh) => Outcome::Meshed(mesh),
         Err(error) => Outcome::NotCompiled(error.to_string()),
     }
@@ -127,7 +129,7 @@ pub struct Product {
 /// free of relationship semantics.
 pub fn compile_products(model: &Model) -> Vec<Product> {
     let scale = units::resolve(model);
-    let compiler = ScalarCompiler::new(BoolmeshBoolean::new());
+    let compiler = ReferenceMeshCompiler::new(BoolmeshBoolean::new());
     let options = ExecutionOptions::new(GeomTolerance::MILLIMETRE);
 
     // Relating element -> its opening elements.
@@ -177,10 +179,7 @@ pub fn compile_products(model: &Model) -> Vec<Product> {
         let mesh = if tools.is_empty() {
             subject
         } else {
-            match compiler
-                .boolean_provider()
-                .subtract_many(&subject, &tools, &options)
-            {
+            match compiler.boolean().subtract_many(&subject, &tools, &options) {
                 Ok(outcome) => outcome.mesh,
                 // A failed cut must not silently yield the uncut solid: report
                 // zero voids applied so the caller can tell the difference.
@@ -219,7 +218,7 @@ fn type_name_of(model: &Model, id: EntityId) -> String {
 fn product_mesh(
     model: &Model,
     scale: &units::UnitScale,
-    compiler: &ScalarCompiler<BoolmeshBoolean>,
+    compiler: &ReferenceMeshCompiler<BoolmeshBoolean>,
     options: &ExecutionOptions,
     id: EntityId,
 ) -> Option<TriMesh> {
@@ -251,7 +250,7 @@ fn product_mesh(
         let Ok(lowered) = session.finish(root) else {
             continue;
         };
-        let Ok(mut mesh) = compiler.compile(&lowered.graph, lowered.root, options) else {
+        let Ok(mut mesh) = compiler.compile_mesh(&lowered.graph, lowered.root, options) else {
             continue;
         };
         // Lowering produces geometry in the product's local frame; the

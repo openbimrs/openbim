@@ -8,8 +8,8 @@ repositories. The format-agnostic geometry kernel is developed at
 ## Repository model
 
 This repository does not own, mirror, or mount standard-family source.
-Integration manifests consume exact canonical Git revisions so a clean clone is
-reproducible without recursive Git operations.
+Integration manifests consume families only as released crates.io versions
+(ADR 0018); `Cargo.lock` is the exact resolution.
 
 Optional local clones belong below `packages/<family>/` only as a filesystem
 convention. These paths are ignored by the parent repository. For example:

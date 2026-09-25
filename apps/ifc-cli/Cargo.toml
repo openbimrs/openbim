@@ -20,15 +20,16 @@ doc = false
 ifc-schema.workspace = true
 ifc-step.workspace = true
 ifc-model.workspace = true
-ifc-geometry = { workspace = true, features = ["lowering"] }
+ifc-geometry = { workspace = true, features = ["compile-reference-backend"] }
 ifc-properties.workspace = true
-# Applications may select execution contexts and concrete operation providers.
-# The current CLI exposes CPU runtime detection only; it claims no geometry
-# operation until a verified provider is wired here.
+# Applications may select execution contexts and concrete operation providers:
+# the reference mesh compiler with the boolmesh boolean provider.
 axiolid-backend-cpu = { workspace = true, features = ["simd"] }
 axiolid-core.workspace = true
 axiolid-mesh.workspace = true
-axiolid-compile.workspace = true
-axiolid-boolmesh.workspace = true
-axiolid-kernel = { workspace = true, features = ["mesh-boolean", "model"] }
+axiolid-mesh-compile.workspace = true
+axiolid-mesh-compile-contract.workspace = true
+axiolid-mesh-boolean-boolmesh.workspace = true
+axiolid-mesh-boolean-contract.workspace = true
+axiolid-contracts.workspace = true
 axiolid-model.workspace = true

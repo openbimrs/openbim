@@ -67,18 +67,18 @@ fn capabilities() {
     println!("operation providers");
     println!(
         "  {:<24} {:?}",
-        axiolid_compile::BACKEND_ID.as_str(),
-        axiolid_kernel::Operation::GraphCompilation
+        axiolid_mesh_compile::BACKEND_ID.as_str(),
+        axiolid_contracts::Operation::GraphCompilation
     );
     println!(
         "  {:<24} {:?}",
-        axiolid_boolmesh::BoolmeshBoolean::ID.as_str(),
-        axiolid_kernel::Operation::MeshBoolean
+        axiolid_mesh_boolean_boolmesh::BoolmeshBoolean::ID.as_str(),
+        axiolid_contracts::Operation::MeshBoolean
     );
     println!(
         "  {:<24} {:?}",
-        axiolid_compile::BACKEND_ID.as_str(),
-        axiolid_kernel::Operation::ProfileTriangulation
+        axiolid_mesh_compile::BACKEND_ID.as_str(),
+        axiolid_contracts::Operation::ProfileTriangulation
     );
 }
 

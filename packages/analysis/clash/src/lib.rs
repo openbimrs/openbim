@@ -3,7 +3,7 @@
 //! # Kernel-agnostic by construction
 //!
 //! Clash is the heaviest geometric consumer in the workspace, which makes it the
-//! best proof that the kernel boundary is real: it depends on `axiolid-kernel` with
+//! best proof that the kernel boundary is real: it depends on `axiolid-contracts` with
 //! `default-features = false` and receives its backend by injection. Swap the
 //! kernel and clash follows for free.
 //!

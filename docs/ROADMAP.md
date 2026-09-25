@@ -9,9 +9,11 @@ Every completed item requires executable evidence. Performance claims require a 
 ## 1. Independent family releases
 
 - [x] Develop standard families in independent `github.com/openbimrs/<family>` repositories.
-- [x] Consume families through published crate versions or immutable Git revisions; do not mount their source trees into this repository.
+- [x] Consume families only through published crate versions (ADR 0018); do not mount their source trees into this repository.
 - [x] Keep `packages/` available as an ignored local-clone area only.
-- [ ] Publish every facade dependency on crates.io and remove temporary Git revisions once equivalent releases exist.
+- [x] Remove all Git revision pins (ADR 0018).
+- [ ] Publish `openbim-mvd` and restore the `mvd` facade feature.
+- [ ] Release `ifc-geometry` with the composite-sweep and closure fixes, then restore the `ifc-cli` corpus expectations.
 - [ ] Automate a release-health report covering registry availability, license metadata, minimum supported Rust version, and family gate status.
 
 ## 2. Facade compatibility

@@ -11,6 +11,11 @@ section on release.
 ## [Unreleased]
 
 ### Changed
+- **Families from crates.io only (ADR 0018).** All 53 Git revision pins
+  replaced by released versions (IFC 0.2-0.4, `openbim-step` 0.7, Axiolid
+  0.3, and the other families). `ifc-cli` moved to the Axiolid 0.3 crate
+  names. The `mvd` facade feature is withdrawn until `openbim-mvd` is
+  published.
 - **Independent family repositories.** Removed all standard-family Git
   submodules and their initialization/guard machinery. The integration workspace
   now consumes exact Git revisions, while optional local clones under

@@ -13,7 +13,7 @@ need—the cost of what you do not use is zero because each standard is its own
 crate rather than a feature of a monolith.
 
 Standard-family source is canonical only in its `openbimrs/<family>` repository.
-This integration repository consumes exact Git revisions; it does not mount,
+This integration repository consumes released crates.io versions; it does not mount,
 mirror, or own family source. Optional local clones may live under
 `packages/<family>/`, where the parent repository ignores them.
 

@@ -13,4 +13,4 @@ ifc-geometry.workspace = true
 axiolid-core.workspace = true
 axiolid-mesh.workspace = true
 # CONTRACT ONLY — clash runs on whatever kernel it is handed.
-axiolid-kernel = { workspace = true, default-features = false }
+axiolid-contracts = { workspace = true, default-features = false }

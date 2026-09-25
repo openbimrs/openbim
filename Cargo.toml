@@ -10,7 +10,7 @@ members = [
 ]
 
 # Canonical standard-family repositories are developed independently and are
-# consumed below as exact Git dependencies. Local clones under packages/ are
+# consumed below as released crates.io versions (ADR 0018). Local clones under packages/ are
 # intentionally ignored by this parent workspace.
 exclude = ["bindings/_deferred-wasm"]
 
@@ -24,76 +24,75 @@ authors = ["point-grey"]
 [workspace.dependencies]
 # --- ../axiolid: format-agnostic geometry. Knows nothing about IFC. ---
 # `axiolid` is the opt-in facade. Leaf crates remain independently consumable.
-axiolid = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9", default-features = false }
-axiolid-core = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-mesh = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-model = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-primitive = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-heal = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-profile = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-curve = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-surface = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-topology = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-tessellate = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-spatial = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-measure = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-# The scalar reference implementation and correctness oracle (ADR 0012).
-axiolid-scalar = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-axiolid-compile = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-# Contract and implementations are separate crates so feature unification can
+axiolid = { version = "0.3.0", default-features = false }
+axiolid-core = { version = "0.3.0" }
+axiolid-mesh = { version = "0.3.0" }
+axiolid-model = { version = "0.3.0" }
+axiolid-primitive = { version = "0.3.0" }
+axiolid-heal = { version = "0.3.0" }
+axiolid-profile = { version = "0.3.0" }
+axiolid-curve = { version = "0.3.0" }
+axiolid-surface = { version = "0.3.0" }
+axiolid-topology = { version = "0.3.0" }
+# (axiolid-tessellate: removed in axiolid 0.3 and unused by the parent)
+axiolid-spatial = { version = "0.3.0" }
+axiolid-measure = { version = "0.3.0" }
+# (axiolid-scalar: removed in axiolid 0.3 and unused by the parent)
+# The reference mesh compiler (was axiolid-compile's ScalarCompiler).
+axiolid-mesh-compile = { version = "0.3.2" }
+axiolid-mesh-compile-contract = { version = "0.3.1" }
+# Contracts and providers are separate crates so feature unification can
 # never pull a concrete backend into a format adapter.
-axiolid-kernel = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9", default-features = false }
-axiolid-backend-cpu = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9", default-features = false }
-axiolid-backend-gpu = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9", default-features = false }
-# boolmesh-backed provider (ADR 0014). Isolated so `boolmesh` never enters
-# axiolid-kernel's graph; the contract crate stays implementation-free.
-axiolid-boolmesh = { git = "https://github.com/axiolid/axiolid-kernel.git", rev = "1db0184ba881ec1c1b0459133c2039138a235df9" }
-
+axiolid-contracts = { version = "0.3.0", default-features = false }
+axiolid-backend-cpu = { version = "0.3.0", default-features = false }
+axiolid-backend-gpu = { version = "0.3.0", default-features = false }
+# The mesh-boolean contract and its boolmesh-backed provider (ADR 0014).
+axiolid-mesh-boolean-contract = { version = "0.3.0" }
+axiolid-mesh-boolean-boolmesh = { version = "0.3.0" }
 # --- Canonical standard-family repositories. ---
-# Source is developed in independent repositories. Exact revisions keep this
-# integration workspace reproducible without mounting those repositories as
-# submodules. The version assertion catches a pin whose package metadata drifted.
-ifc-schema = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-openbim-ifc = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-step = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-xml = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-model = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-geometry = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0", default-features = false }
-ifc-properties = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-template-catalog = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-cost = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-schedule = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-material = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-style = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-structural = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-resource = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-classification = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-georef = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-systems = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-alignment = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-validate = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-author = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-ifc-spatial = { git = "https://github.com/openbimrs/ifc.git", rev = "e86d55e403ced459259e2c4244c8b97058247e91", version = "0.1.0" }
-
-openbim-step = { git = "https://github.com/openbimrs/step.git", rev = "629278f8d1fd85b080b78535dcb4fb498d347816", version = "0.4.0" }
-
+# Source is developed in independent repositories and consumed here only as
+# released crates.io versions (ADR 0018); Cargo.lock is the exact resolution.
+# Never a git or path dependency, and never a [patch] onto a local clone.
+ifc-schema = { version = "0.2.2" }
+openbim-ifc = { version = "0.4.0" }
+ifc-step = { version = "0.2.1" }
+ifc-xml = { version = "0.2.0" }
+ifc-model = { version = "0.2.2" }
+ifc-geometry = { version = "0.3.0", default-features = false }
+ifc-properties = { version = "0.2.0" }
+ifc-template-catalog = { version = "0.2.0" }
+ifc-cost = { version = "0.2.0" }
+ifc-schedule = { version = "0.2.0" }
+ifc-material = { version = "0.2.0" }
+ifc-style = { version = "0.3.0" }
+ifc-structural = { version = "0.2.0" }
+ifc-resource = { version = "0.2.0" }
+ifc-classification = { version = "0.2.0" }
+ifc-georef = { version = "0.3.0" }
+ifc-systems = { version = "0.2.0" }
+ifc-alignment = { version = "0.3.0" }
+ifc-validate = { version = "0.2.0" }
+ifc-author = { version = "0.2.0" }
+ifc-spatial = { version = "0.2.0" }
+openbim-step = { version = "0.7.0" }
 # The facade itself and shared vocabulary remain in this integration repository
 # until they receive standalone canonical repositories.
 openbim = { path = "packages/facade/openbim", default-features = false }
 openbim-core = { path = "packages/core/openbim-core", version = "0.1.0" }
-openbim-dt = { git = "https://github.com/openbimrs/dt.git", rev = "15e38f9ec6dd5c657cea9265456994abe87544ab", version = "0.2.0" }
-openbim-ids = { git = "https://github.com/openbimrs/ids.git", rev = "b3627e7321aeb16e11a05fa602391d4cd6be1d14", version = "0.1.0" }
-openbim-gaeb = { git = "https://github.com/openbimrs/gaeb.git", rev = "1873d5188b5905c608eb293884acf9c00f102a87", version = "0.1.3" }
-openbim-citygml = { git = "https://github.com/openbimrs/citygml.git", rev = "21c27b79e621e5f113a12c1b2ffcb98c3f087b7b", version = "0.1.0" }
-openbim-openbimrl = { git = "https://github.com/openbimrs/openbimrl.git", rev = "2d69e31891209d26560ab90da072357adac70e69", version = "0.1.0" }
-openbim-bsdd = { git = "https://github.com/openbimrs/bsdd.git", rev = "8d91299adf9938986cf0be57bfc9a7e072a95755", version = "0.1.0" }
-openbim-epd = { git = "https://github.com/openbimrs/epd.git", rev = "7fcd98c340e8f0536646c8983184ddd2439d4891", version = "0.1.1" }
-openbim-bcf = { git = "https://github.com/openbimrs/bcf.git", rev = "a7d64d63e0cca77a328218640b6191f1839a6410", version = "0.2.0" }
-openbim-icdd = { git = "https://github.com/openbimrs/icdd.git", rev = "93a0f3d65d291795e86b166b453247c0dcb27fd3", version = "0.2.0" }
-openbim-idm = { git = "https://github.com/openbimrs/idm.git", rev = "7824a2722abf3c3c753d83c0994e37ea10e78cab", version = "0.1.0" }
-openbim-loin = { git = "https://github.com/openbimrs/loin.git", rev = "07e486aae96346caa7eb796c2238479d1ca6cd2f", version = "0.3.0" }
-openbim-mvd = { git = "https://github.com/openbimrs/mvd.git", rev = "069bddb70b4753f0b4ad1a677b0a277d139abefe", version = "0.1.0" }
-
+openbim-dt = { version = "0.3.0" }
+openbim-ids = { version = "0.1.2" }
+openbim-gaeb = { version = "0.1.2" }
+openbim-citygml = { version = "0.1.0" }
+openbim-openbimrl = { version = "0.1.0" }
+openbim-bsdd = { version = "0.1.0" }
+openbim-epd = { version = "0.1.1" }
+openbim-bcf = { version = "0.1.0" }
+openbim-icdd = { version = "0.2.0" }
+openbim-idm = { version = "0.1.0" }
+openbim-loin = { version = "0.3.2" }
+# openbim-mvd: not on crates.io yet. ADR 0018: the parent does not
+# pin unreleased families, so the `mvd` facade feature is withdrawn
+# until openbimrs/mvd publishes a release.
 # Analysis capabilities are local integration consumers, not standards.
 clash = { path = "packages/analysis/clash" }
 diff = { path = "packages/analysis/diff" }

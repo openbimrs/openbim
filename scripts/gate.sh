@@ -57,7 +57,6 @@ for f in "--no-default-features" \
          "--no-default-features --features icdd" \
          "--no-default-features --features idm" \
          "--no-default-features --features loin" \
-         "--no-default-features --features mvd" \
          "--no-default-features --features full"; do
     # shellcheck disable=SC2086
     step "openbim build $f"  cargo build -p openbim $f

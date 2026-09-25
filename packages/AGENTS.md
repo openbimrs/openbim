@@ -20,9 +20,9 @@ git clone https://github.com/openbimrs/pkl.git packages/pkl
 Those paths are ignored by the parent. Run Git commands from the child
 repository and never stage child content in `openbim`.
 
-The integration manifest uses canonical Git revisions rather than local path
-dependencies. A local checkout therefore cannot silently change integration
-results.
+The integration manifest consumes families only as released crates.io
+versions (ADR 0018), never Git revisions or local paths. A local checkout
+therefore cannot silently change integration results.
 
 ## Tracked integration packages
 

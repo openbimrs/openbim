@@ -20,12 +20,13 @@ FEATURES: dict[str, frozenset[str]] = {
     "citygml": frozenset({"openbim-citygml"}),
     "openbimrl": frozenset({"openbim-openbimrl"}),
     "bsdd": frozenset({"openbim-bsdd"}),
-    "epd": frozenset({"openbim-epd", "openbim-dt"}),
+    # Published openbim-epd 0.1.1 is self-contained; the dt dependency existed
+    # only on an unreleased epd revision the parent used to pin (ADR 0018).
+    "epd": frozenset({"openbim-epd"}),
     "bcf": frozenset({"openbim-bcf"}),
     "icdd": frozenset({"openbim-icdd"}),
     "idm": frozenset({"openbim-idm"}),
     "loin": frozenset({"openbim-loin", "openbim-dt"}),
-    "mvd": frozenset({"openbim-mvd"}),
 }
 STANDARD_PACKAGES = frozenset().union(*FEATURES.values()) | frozenset(
     {

@@ -30,7 +30,7 @@ mod ifc_cli_support {
     }
 }
 
-/// No fixture may produce a *compile* failure.
+/// No fixture may produce a *compile* failure, except the known gaps below.
 ///
 /// Lowering gaps are expected and tracked separately: those are unimplemented
 /// IFC families, which fail honestly upstream. A compile failure means an item
@@ -47,22 +47,42 @@ fn every_lowered_item_in_the_corpus_compiles() {
         let Ok(model) = ifc_step::StepCodec.read_path(path) else {
             continue;
         };
+        let name = path.file_name().expect("named").to_string_lossy();
         let summary = compile_model(&model, false);
         total_meshed += summary.meshed;
-        if summary.not_compiled > 0 {
+        let known = KNOWN_COMPILE_GAPS
+            .iter()
+            .find(|(file, _)| *file == name)
+            .map_or(0, |(_, count)| *count);
+        // Exact, not "at most": when the release lands the gap closes and this
+        // fails, so the exception is removed instead of lingering.
+        if summary.not_compiled != known {
             offenders.push(format!(
-                "{}: {} items lowered but not compiled",
-                path.file_name().expect("named").to_string_lossy(),
+                "{name}: {} items lowered but not compiled (known gap: {known})",
                 summary.not_compiled
             ));
         }
     }
     assert!(offenders.is_empty(), "compile gaps: {offenders:#?}");
+    // 53 on the old Git pins; 51 on the published crates (the two
+    // KNOWN_COMPILE_GAPS items). Exact floor: any further loss fails.
     assert!(
-        total_meshed >= 40,
+        total_meshed >= 51,
         "corpus produced only {total_meshed} meshes; a regression in coverage"
     );
 }
+
+/// Compile gaps in the *published* crates, per ADR 0018 (the parent consumes
+/// only released versions). Each entry names the unreleased fix.
+///
+/// `issue_1485_duct_elbow_surface_curve_swept.ifc`: two composite-curve
+/// sweeps whose StartParam/EndParam published `ifc-geometry` 0.3.0 reads as
+/// lengths; axiolid 0.3 refuses the range ("sweep range exceeds trimmed
+/// directrix"). Fixed on ifc main by 971cee9, not yet released. Remove this
+/// entry, and restore 39 closed solids below, with the `ifc-geometry` release
+/// that carries it.
+const KNOWN_COMPILE_GAPS: &[(&str, usize)] =
+    &[("issue_1485_duct_elbow_surface_curve_swept.ifc", 2)];
 
 /// Signed volume via the divergence theorem.
 fn volume(mesh: &axiolid_mesh::TriMesh) -> f64 {
@@ -227,8 +247,10 @@ fn every_produced_solid_is_manifold_and_outward() {
     // instances, and the composite crankbar). The two indexed-colour mapped
     // products each preserve a closed tetrahedron plus an authored open
     // polygonal triangle, so their merged product meshes are intentionally open.
+    // 39 -> 37 under the published crates (ADR 0018): the two duct-elbow sweeps
+    // in KNOWN_COMPILE_GAPS produce no mesh until ifc 971cee9 is released.
     assert_eq!(
-        checked, 39,
+        checked, 37,
         "closed solids in the corpus; open={open_meshes:?}"
     );
     // Pin the split so a future change cannot quietly reclassify closed solids
