@@ -1,6 +1,6 @@
 # 0017 — Independent family repositories without source mounts
 
-- **Status:** Accepted
+- **Status:** Accepted; rule 3 superseded by [ADR 0018](0018-registry-only-family-dependencies.md)
 - **Date:** 2026-09-01
 - **Deciders:** Friedrich Schrödter
 - **Supersedes:** [ADR 0016](0016-standard-family-repositories-as-submodules.md)
@@ -30,8 +30,9 @@ The rules are:
 
 1. Remove all family gitlinks and `.gitmodules` from `openbim`.
 2. Remove submodule initialization, validation, and mutation machinery.
-3. Keep exact canonical Git revisions in Cargo integration dependencies while a
-   required revision is unavailable from crates.io.
+3. ~~Keep exact canonical Git revisions in Cargo integration dependencies while a
+   required revision is unavailable from crates.io.~~ Superseded by ADR 0018:
+   families are consumed only as released crates.io versions.
 4. Prefer released registry dependencies once the required capabilities are
    published; use `Cargo.lock` for the exact integration resolution.
 5. Keep optional local child clones at `packages/<family>/`. Parent Git ignores
