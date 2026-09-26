@@ -707,9 +707,9 @@ dependencies = [
 
 [[package]]
 name = "ifc-properties"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83d3b9f6056c92804483d4cb5b91e8863e96b189d98220c5cef064ab68258e18"
+checksum = "0421c0e357c09e2c468b178251aacc0beb891460944b44f9b7ebc63967898b9e"
 dependencies = [
  "ifc-model",
  "ifc-schema",

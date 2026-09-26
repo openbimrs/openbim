@@ -54,12 +54,12 @@ axiolid-mesh-boolean-boolmesh = { version = "0.3.0" }
 # released crates.io versions (ADR 0018); Cargo.lock is the exact resolution.
 # Never a git or path dependency, and never a [patch] onto a local clone.
 ifc-schema = { version = "0.2.2" }
-openbim-ifc = { version = "0.4.0" }
+openbim-ifc = { version = "0.5.0" }
 ifc-step = { version = "0.2.1" }
 ifc-xml = { version = "0.2.0" }
 ifc-model = { version = "0.2.2" }
 ifc-geometry = { version = "0.3.0", default-features = false }
-ifc-properties = { version = "0.2.0" }
+ifc-properties = { version = "0.3.0" }
 ifc-template-catalog = { version = "0.2.0" }
 ifc-cost = { version = "0.2.0" }
 ifc-schedule = { version = "0.2.0" }
@@ -73,7 +73,7 @@ ifc-systems = { version = "0.2.0" }
 ifc-alignment = { version = "0.3.0" }
 ifc-validate = { version = "0.2.0" }
 ifc-author = { version = "0.2.0" }
-ifc-spatial = { version = "0.2.0" }
+ifc-spatial = { version = "0.2.1" }
 openbim-step = { version = "0.7.0" }
 # The facade itself and shared vocabulary remain in this integration repository
 # until they receive standalone canonical repositories.
