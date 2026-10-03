@@ -34,6 +34,7 @@ references/*
 /packages/idm/
 /packages/ids/
 /packages/ifc/
+/packages/ifcx/
 /packages/loin/
 /packages/mmc/
 /packages/mvd/

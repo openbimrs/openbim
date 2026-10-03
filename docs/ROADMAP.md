@@ -61,6 +61,7 @@ Use the canonical repository for implementation work:
 - [IDM](https://github.com/openbimrs/idm)
 - [IDS](https://github.com/openbimrs/ids)
 - [IFC](https://github.com/openbimrs/ifc)
+- [IFC5 / IFCX](https://github.com/openbimrs/ifcx)
 - [LOIN](https://github.com/openbimrs/loin)
 - [MMC](https://github.com/openbimrs/mmc)
 - [MVD](https://github.com/openbimrs/mvd)

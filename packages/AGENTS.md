@@ -40,6 +40,7 @@ standard-family source:
 | Repository | Standard or role |
 | --- | --- |
 | `openbimrs/ifc` | ISO 16739 IFC |
+| `openbimrs/ifcx` | IFC5 / IFCX (layered JSON model, not an EXPRESS release) |
 | `openbimrs/step` | ISO 10303-11 EXPRESS and ISO 10303-21 syntax substrate |
 | `openbimrs/ids` | buildingSMART IDS |
 | `openbimrs/gaeb` | GAEB DA XML |
