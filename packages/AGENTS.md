@@ -57,6 +57,7 @@ standard-family source:
 | `openbimrs/mvd` | buildingSMART mvdXML |
 | `openbimrs/mmc` | Multi-model containers |
 | `openbimrs/pkl` | Apple Pkl schemas for developed OpenBIM.rs families |
+| `openbimrs/revit` | Autodesk Revit `.rvt`/`.rfa` (vendor format, read and write for interoperability) |
 
 ## Dependency rule
 

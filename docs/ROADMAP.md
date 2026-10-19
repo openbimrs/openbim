@@ -66,4 +66,5 @@ Use the canonical repository for implementation work:
 - [MMC](https://github.com/openbimrs/mmc)
 - [MVD](https://github.com/openbimrs/mvd)
 - [OpenBIMRL](https://github.com/openbimrs/openbimrl)
+- [Revit](https://github.com/openbimrs/revit)
 - [STEP](https://github.com/openbimrs/step)
