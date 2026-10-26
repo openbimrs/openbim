@@ -87,7 +87,9 @@ const KNOWN_COMPILE_GAPS: &[(&str, usize)] =
 /// Signed volume via the divergence theorem.
 fn volume(mesh: &axiolid_mesh::TriMesh) -> f64 {
     mesh.indices
-        .chunks_exact(3)
+        .as_chunks::<3>()
+        .0
+        .iter()
         .map(|t| {
             let (a, b, c) = (
                 mesh.positions[t[0] as usize],
@@ -191,7 +193,7 @@ fn every_produced_solid_is_manifold_and_outward() {
             // no directed edge may repeat.
             let open_boundary = {
                 let mut directed: HashMap<(u32, u32), i32> = HashMap::new();
-                for t in mesh.indices.chunks_exact(3) {
+                for t in mesh.indices.as_chunks::<3>().0 {
                     for &(a, b) in &[(t[0], t[1]), (t[1], t[2]), (t[2], t[0])] {
                         *directed.entry((a, b)).or_default() += 1;
                     }
@@ -202,7 +204,7 @@ fn every_produced_solid_is_manifold_and_outward() {
             };
             if open_boundary {
                 let mut directed: HashMap<(u32, u32), i32> = HashMap::new();
-                for t in mesh.indices.chunks_exact(3) {
+                for t in mesh.indices.as_chunks::<3>().0 {
                     for &(a, b) in &[(t[0], t[1]), (t[1], t[2]), (t[2], t[0])] {
                         *directed.entry((a, b)).or_default() += 1;
                     }
@@ -223,7 +225,7 @@ fn every_produced_solid_is_manifold_and_outward() {
             // flipped cap that the volume integral cannot see when the cap
             // lies in a plane through the origin.
             let mut directed: HashMap<(u32, u32), i32> = HashMap::new();
-            for t in mesh.indices.chunks_exact(3) {
+            for t in mesh.indices.as_chunks::<3>().0 {
                 for &(a, b) in &[(t[0], t[1]), (t[1], t[2]), (t[2], t[0])] {
                     *directed.entry((a, b)).or_default() += 1;
                 }

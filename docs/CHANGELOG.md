@@ -11,6 +11,7 @@ section on release.
 ## [Unreleased]
 
 ### Changed
+- Raise MSRV to Rust 1.99.
 - **Families from crates.io only (ADR 0018).** All 53 Git revision pins
   replaced by released versions (IFC 0.2-0.4, `openbim-step` 0.7, Axiolid
   0.3, and the other families). `ifc-cli` moved to the Axiolid 0.3 crate

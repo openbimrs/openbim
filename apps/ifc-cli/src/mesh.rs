@@ -295,7 +295,9 @@ pub fn signed_volume(mesh: &TriMesh) -> f64 {
         .fold(axiolid_core::Point3::ZERO, |acc, p| acc + *p)
         / mesh.positions.len() as f64;
     mesh.indices
-        .chunks_exact(3)
+        .as_chunks::<3>()
+        .0
+        .iter()
         .map(|t| {
             let a = mesh.positions[t[0] as usize] - centre;
             let b = mesh.positions[t[1] as usize] - centre;
@@ -314,7 +316,7 @@ pub fn signed_volume(mesh: &TriMesh) -> f64 {
 pub fn edge_manifold(mesh: &TriMesh) -> bool {
     use std::collections::HashSet;
     let mut seen: HashSet<(u32, u32)> = HashSet::new();
-    for t in mesh.indices.chunks_exact(3) {
+    for t in mesh.indices.as_chunks::<3>().0 {
         for e in [(t[0], t[1]), (t[1], t[2]), (t[2], t[0])] {
             if !seen.insert(e) {
                 return false;
